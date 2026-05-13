@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Desktop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    </style>
+  <script src="https://player.vimeo.com/api/player.js" defer></script>
+</head>
+<body class="bg-[#050505] select-none overflow-x-hidden">
+
+  <!-- ─── Landing ─── -->
+  <section id="landing"
+           class="h-screen w-screen flex flex-col items-center justify-center fixed top-0 left-0
+                  bg-black relative overflow-hidden">
+    <video autoplay muted loop playsinline
+           class="absolute inset-0 w-full h-full object-cover"
+           style="z-index:0;">
+      <source src="assets/vid%C3%A9os/Landing%20page_bg_9x16.mp4" type="video/mp4" media="(max-width: 640px)">
+      <source src="assets/vid%C3%A9os/Landing%20page_bg_v2.mp4" type="video/mp4">
+    </video>
+    <div class="absolute inset-0 bg-black/30" style="z-index:1;"></div>
+    <div class="text-center relative z-10">
+      <h1 class="text-5xl font-bold text-white tracking-tight mb-3" style="mix-blend-mode:difference;">MATHIEU BOUVY</h1>
+      <p class="text-lg text-gray-300">Vidéaste</p>
+      <div class="flex items-center justify-center gap-5 mt-6 text-xs text-gray-400">
+        <span>bouvy.mathieu@gmail.com</span>
+        <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+        <span>Lyon, France</span>
+      </div>
+    </div>
+    <div id="featured-projects" class="absolute bottom-0 left-0 right-0 pb-8 z-10">
+      <div class="text-center">
+        <p class="text-sm text-gray-300 uppercase tracking-[0.2em] mb-5 font-medium">Projets à l'honneur</p>
+        <div class="flex items-start justify-center gap-8">
+
+          <!-- EA_Fut -->
+          <div class="flex flex-col items-center gap-2.5 cursor-pointer group" onclick="openFeatured('eafut')">
+            <div class="w-36 h-24 rounded-lg overflow-hidden bg-black/5 border-2 border-transparent group-hover:border-gray-400 transition-all duration-300 shadow-lg group-hover:shadow-xl group-hover:scale-105 featured-glow">
+              <img src="assets/thumbnails/EA_Fut%20birthday.jpg" alt="" class="w-full h-full object-cover">
+            </div>
+            <span class="text-xs text-gray-300 group-hover:text-white transition-colors font-medium leading-tight line-clamp-2">EA Fut<br>Birthday</span>
+          </div>
+
+          <!-- ADIDAS -->
+          <div class="flex flex-col items-center gap-2.5 cursor-pointer group" onclick="openFeatured('adidas')">
+            <div class="w-36 h-24 rounded-lg overflow-hidden bg-black/5 border-2 border-transparent group-hover:border-gray-400 transition-all duration-300 shadow-lg group-hover:shadow-xl group-hover:scale-105 featured-glow">
+              <img src="assets/thumbnails/ADIDAS_Motion%20Vintage%20Market.jpg" alt="" class="w-full h-full object-cover">
+            </div>
+            <span class="text-xs text-gray-300 group-hover:text-white transition-colors font-medium leading-tight line-clamp-2">ADIDAS<br>Vintage Market</span>
+          </div>
+
+          <!-- UNIBET -->
+          <div class="flex flex-col items-center gap-2.5 cursor-pointer group" onclick="openFeatured('unibet')">
+            <div class="w-36 h-24 rounded-lg overflow-hidden bg-black/5 border-2 border-transparent group-hover:border-gray-400 transition-all duration-300 shadow-lg group-hover:shadow-xl group-hover:scale-105 featured-glow">
+              <img src="assets/thumbnails/UNIBET_Greg%20MMA.jpg" alt="" class="w-full h-full object-cover">
+            </div>
+            <span class="text-xs text-gray-300 group-hover:text-white transition-colors font-medium leading-tight line-clamp-2">UNIBET<br>Greg MMA</span>
+          </div>
+
+        </div>
+        <div class="mt-6 text-gray-300 text-[10px] tracking-wider animate-bounce">↓&nbsp;SCROLL&nbsp;↓</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Espaceur pour la landing fixed -->
+  <div id="landing-spacer" class="h-[1px] w-screen"></div>
+
+  <!-- ─── Menu Bar ─── -->
+  <header class="sticky top-0 h-9 z-[9999] flex items-center justify-between px-5 text-xs text-gray-400 menu-bar">
+    <div class="flex items-center gap-5">
+      <span class="text-gray-200 font-medium cursor-pointer" onclick="resetFilter()">Portfolio</span>
+      <span class="cursor-pointer hover:text-gray-200 transition-colors" onclick="var w=openWindow('cv');if(w)maximizeWindow(w)">CV</span>
+      <span class="cursor-pointer hover:text-gray-200 transition-colors" onclick="var w=openWindow('contact');if(w)maximizeWindow(w)">Contact</span>
+      <span class="cursor-pointer hover:text-gray-200 transition-colors menu-category" data-category="captation" onclick="filterCategory('captation')"><span style="color:#38bdf8">●</span> Captation</span>
+      <span class="cursor-pointer hover:text-gray-200 transition-colors menu-category" data-category="montage" onclick="filterCategory('montage')"><span style="color:#a78bfa">●</span> Montage</span>
+      <span class="cursor-pointer hover:text-gray-200 transition-colors menu-category" data-category="motion" onclick="filterCategory('motion')"><span style="color:#e879b0">●</span> Motion design/fx</span>
+    </div>
+    <div id="clock" class="tabular-nums text-gray-500"></div>
+  </header>
+
+  <!-- ─── Bureau ─── -->
+  <main id="desktop" class="min-h-screen w-screen bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#111111] relative z-20">
+
+    <!-- Icône : CV -->
+    <div class="desktop-icon" data-window="cv" style="top:55px;left:36px;">
+      <div class="icon-box">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+        </svg>
+      </div>
+      <span class="icon-label">CV</span>
+    </div>
+
+    <!-- Icône : Contact -->
+    <div class="desktop-icon" data-window="contact" style="top:150px;left:36px;">
+      <div class="icon-box">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+        </svg>
+      </div>
+      <span class="icon-label">Contact</span>
+    </div>
+
+    <!-- Icône : NIKON_Mono no Aware -->
+    <div class="desktop-icon" data-window="nikon" data-category="captation montage motion" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-triple overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/NIKON_Mono%20no%20Aware.jpg" alt="NIKON_Mono no Aware"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">NIKON<wbr>Mono no Aware</span>
+    </div>
+
+    <!-- Icône : PUMAxDECATHLON_Aftermovie -->
+    <div class="desktop-icon" data-window="puma" data-category="captation montage" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/PUMAxDECATHLON_Aftermovie.jpg" alt="PUMAxDECATHLON_Aftermovie"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">PUMAxDECATHLON<wbr>Aftermovie</span>
+    </div>
+
+    <!-- Icône : SAMPLE_Raska Isia -->
+    <div class="desktop-icon" data-window="youtube" data-category="montage" style="top:476px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #a78bfa;">
+        <img src="assets/thumbnails/SAMPLE_Raska%20Isia.jpg" alt="SAMPLE_Raska Isia"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">SAMPLE<wbr>Raska Isia</span>
+    </div>
+
+    <!-- Icône : EA_Fut_Birthday -->
+    <div class="desktop-icon" data-window="eafut" data-category="montage motion" style="top:596px;left:36px;">
+      <div class="icon-box icon-box-dual-vp overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/EA_Fut%20birthday.jpg" alt="EA_Fut_Birthday"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">EA<wbr>Fut<wbr>Birthday</span>
+    </div>
+
+    <!-- Icône : EA_Ratings_OM -->
+    <div class="desktop-icon" data-window="earatings" data-category="montage" style="top:596px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #a78bfa;">
+        <img src="assets/thumbnails/EA_Ratings%20OM.jpg" alt="EA_Ratings_OM"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">EA<wbr>Ratings<wbr>OM</span>
+    </div>
+
+    <!-- Icône : Manou_Vaste Monde -->
+    <div class="desktop-icon" data-window="manou" data-category="captation" style="top:716px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #38bdf8;">
+        <img src="assets/thumbnails/MANOU_Vaste%20Monde.jpg" alt="Manou_Vaste Monde"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">Manou<wbr>Vaste Monde</span>
+    </div>
+
+    <!-- Icône : OLxLALIGUE_Aftermovie -->
+    <div class="desktop-icon" data-window="ol" data-category="captation montage" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/OLxLALIGUE_Aftermovie.jpg" alt="OLxLALIGUE_Aftermovie"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">OLxLALIGUE<wbr>Aftermovie</span>
+    </div>
+
+    <!-- Icône : ADIDAS_Vintage Market -->
+    <div class="desktop-icon" data-window="adidas" data-category="motion" style="top:356px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #e879b0;">
+        <img src="assets/thumbnails/ADIDAS_Motion%20Vintage%20Market.jpg" alt="ADIDAS_Vintage Market"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">ADIDAS<wbr>Vintage Market</span>
+    </div>
+
+    <!-- Icône : HIGHLO_Bushi -->
+    <div class="desktop-icon" data-window="highlo" data-category="captation montage" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/HIGHLO_Bushi.jpg" alt="HIGHLO_Bushi"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">HIGHLO<wbr>Bushi</span>
+    </div>
+
+    <!-- Icône : JUMPMAN_fx -->
+    <div class="desktop-icon" data-window="jumpman" data-category="motion" style="top:356px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #e879b0;">
+        <img src="assets/thumbnails/JUMPMAN_fx.jpg" alt="JUMPMAN_fx"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">JUMPMAN<wbr>fx</span>
+    </div>
+
+    <!-- Icône : KANAGA_Foule Désirs -->
+    <div class="desktop-icon" data-window="kanaga" data-category="captation motion" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-dual-bp overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/KANAGA_Foule%20D%C3%A9sirs.jpg" alt="KANAGA_Foule Désirs"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">KANAGA<wbr>Foule Désirs</span>
+    </div>
+
+    <!-- Icône : LALIGUE_Lyon street food festival -->
+    <div class="desktop-icon" data-window="laligue" data-category="captation montage" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/LALIGUE_Lyon%20street%20food%20festival.jpg" alt="LALIGUE_Lyon street food festival"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">LALIGUE<wbr>Lyon street food festival</span>
+    </div>
+
+    <!-- Icône : LALIGUE_Pola freestyle -->
+    <div class="desktop-icon" data-window="pola" data-category="captation montage" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/LALIGUE_Pola%20freestyle.jpg" alt="LALIGUE_Pola freestyle"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">LALIGUE<wbr>Pola freestyle</span>
+    </div>
+
+    <!-- Icône : NIKON_2024 -->
+    <div class="desktop-icon" data-window="nikon2024" data-category="montage motion" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-dual-vp overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/NIKON_2024.jpg" alt="NIKON_2024"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">NIKON<wbr>2024</span>
+    </div>
+
+    <!-- Icône : PUMA_Crampons -->
+    <div class="desktop-icon" data-window="pumacrampons" data-category="captation montage motion" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-triple overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/PUMA_Crampons.jpg" alt="PUMA_Crampons"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">PUMA<wbr>Crampons</span>
+    </div>
+
+    <!-- Icône : PUNCHOLOGUE_Wallace Cleaver -->
+    <div class="desktop-icon" data-window="wallace" data-category="montage" style="top:356px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #a78bfa;">
+        <img src="assets/thumbnails/PUNCHOLOGUE_Wallace%20Cleaver.jpg" alt="PUNCHOLOGUE_Wallace Cleaver"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">PUNCHOLOGUE<wbr>Wallace Cleaver</span>
+    </div>
+
+    <!-- Icône : SOFIANEE_Gold digger -->
+    <div class="desktop-icon" data-window="sofianee" data-category="captation" style="top:356px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #38bdf8;">
+        <img src="assets/thumbnails/SOFIANEE_Gold%20digger.jpg" alt="SOFIANEE_Gold digger"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">SOFIANEE<wbr>Gold digger</span>
+    </div>
+
+    <!-- Icône : UDOL_Gameday -->
+    <div class="desktop-icon" data-window="udol" data-category="montage" style="top:356px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #a78bfa;">
+        <img src="assets/thumbnails/UDOL_Gameday.jpg" alt="UDOL_Gameday"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">UDOL<wbr>Gameday</span>
+    </div>
+
+    <!-- Icône : UNIBET_Greg MMA -->
+    <div class="desktop-icon" data-window="unibet" data-category="motion" style="top:356px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #e879b0;">
+        <img src="assets/thumbnails/UNIBET_Greg%20MMA.jpg" alt="UNIBET_Greg MMA"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">UNIBET<wbr>Greg MMA</span>
+    </div>
+
+    <!-- Icône : UNIBET_Greg MMA x SAmir NASRI -->
+    <div class="desktop-icon" data-window="unibetnasri" data-category="montage" style="top:356px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #a78bfa;">
+        <img src="assets/thumbnails/UNIBET_Greg%20MMA%20x%20SAmir%20NASRI.jpg" alt="UNIBET_Greg MMA x SAmir NASRI"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">UNIBET<wbr>Greg MMA x SAmir NASRI</span>
+    </div>
+
+    <!-- Icône : VILLEDELYON_Anooki -->
+    <div class="desktop-icon" data-window="anooki" data-category="captation montage" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/VILLEDELYON_Anooki.jpg" alt="VILLEDELYON_Anooki"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">VILLEDELYON<wbr>Anooki</span>
+    </div>
+
+    <!-- Icône : WHENTOCOP_Nike Air max -->
+    <div class="desktop-icon" data-window="whentocop" data-category="montage" style="top:356px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #a78bfa;">
+        <img src="assets/thumbnails/WHENTOCOP_Nike%20Air%20max.jpg" alt="WHENTOCOP_Nike Air max"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">WHENTOCOP<wbr>Nike Air max</span>
+    </div>
+
+    <!-- Icône : PLUS33FM_Motion -->
+    <div class="desktop-icon" data-window="plus33fm" data-category="motion" style="top:356px;left:36px;">
+      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #e879b0;">
+        <img src="assets/thumbnails/PLUS33FM_Motion.jpg" alt="PLUS33FM_Motion"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">PLUS33FM<wbr>Motion</span>
+    </div>
+
+    <!-- Icône : OL_Maillot Extérieur -->
+    <div class="desktop-icon" data-window="olmaillot" data-category="montage motion" style="top:356px;left:36px;">
+      <div class="icon-box icon-box-dual-vp overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:none;">
+        <img src="assets/thumbnails/OL_Maillot_Exterieur.jpg" alt="OL_Maillot Extérieur"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">OL<wbr>Nouveau Maillot</span>
+    </div>
+
+  </main>
+
+  <!-- ─── Ils m'ont fait confiance ─── -->
+  <section id="trust" class="w-screen min-h-[15vh] bg-gradient-to-b from-[#0a0a0a] to-[#050505] flex flex-col items-center justify-center px-6 pt-12 pb-0 relative z-10">
+    <div class="text-center max-w-4xl">
+      <h2 class="text-sm text-gray-400 uppercase tracking-[0.25em] mb-8 font-medium">Ils m'ont fait confiance</h2>
+      <div class="marquee-container" id="trust-logos">
+        <div class="marquee-track">
+          <img src="assets/logos/Adidas.svg" alt="Adidas" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/Decathlon.svg" alt="Decathlon" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/OL.svg" alt="Olympique Lyonnais" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/Puma.svg" alt="Puma" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/EAFC.svg" alt="EAFC" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/HighLo.svg" alt="HighLo" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/LaLigue.svg" alt="LaLigue" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/Unibet.svg" alt="Unibet" class="h-6 md:h-8 opacity-60 brightness-0 invert">
+          <img src="assets/logos/Whentocop.svg" alt="Whentocop" class="h-6 md:h-8 opacity-60 brightness-0 invert">
+          <!-- Doublon pour la boucle infinie -->
+          <img src="assets/logos/Adidas.svg" alt="Adidas" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/Decathlon.svg" alt="Decathlon" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/OL.svg" alt="Olympique Lyonnais" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/Puma.svg" alt="Puma" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/EAFC.svg" alt="EAFC" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/HighLo.svg" alt="HighLo" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/LaLigue.svg" alt="LaLigue" class="h-8 md:h-10 opacity-60 brightness-0 invert">
+          <img src="assets/logos/Unibet.svg" alt="Unibet" class="h-6 md:h-8 opacity-60 brightness-0 invert">
+          <img src="assets/logos/Whentocop.svg" alt="Whentocop" class="h-6 md:h-8 opacity-60 brightness-0 invert">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Qui suis-je ? ─── -->
+  <section id="about" class="w-screen min-h-screen bg-gradient-to-b from-[#050505] via-[#0a0a0a] to-[#050505] flex items-center justify-center px-6 -mt-[130px] pb-20 relative overflow-hidden">
+    <!-- Glow décoratif -->
+    <div class="absolute w-[600px] h-[600px] rounded-full opacity-[0.04] pointer-events-none" style="background:radial-gradient(circle,rgba(56,189,248,0.5),transparent 70%);top:-20%;left:-10%;filter:blur(60px);"></div>
+    <div class="absolute w-[600px] h-[600px] rounded-full opacity-[0.04] pointer-events-none" style="background:radial-gradient(circle,rgba(167,139,250,0.5),transparent 70%);bottom:-20%;right:-10%;filter:blur(60px);"></div>
+
+    <div class="max-w-5xl w-full flex flex-col md:flex-row items-center gap-12 md:gap-16 relative z-10">
+      <!-- Photo de profil -->
+      <div class="w-48 h-48 md:w-56 md:h-56 rounded-full flex-shrink-0 relative group">
+        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20"></div>
+        <div class="absolute inset-1.5 rounded-full overflow-hidden border-2 border-white/[0.08]">
+          <img src="assets/photos/pdp.jpg" alt="Mathieu Bouvy" class="w-full h-full object-cover">
+        </div>
+      </div>
+
+      <!-- Texte -->
+      <div class="flex-1 text-center md:text-left space-y-5">
+        <h2 class="text-2xl md:text-3xl font-bold text-white tracking-tight">
+          Qui suis-je&nbsp;?
+        </h2>
+        <div class="w-12 h-[2px] bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full mx-auto md:mx-0"></div>
+
+        <div class="space-y-4 text-sm text-gray-400 leading-relaxed">
+          <p class="text-gray-500 italic">
+            Je suis <span class="text-gray-300 not-italic">Mathieu Bouvy</span>, vidéaste basé à Lyon.
+          </p>
+          <p class="text-gray-500">
+            Passionné par l'image et la narration, j'accompagne les marques et les artistes dans la création de contenus audiovisuels.
+            De la captation à la post-production, en passant par le motion design et l'étalonnage, chaque projet est pour moi une nouvelle histoire à raconter.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

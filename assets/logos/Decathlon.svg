@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48.7 41.1">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3643ba;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1" data-name="Layer 1">
+    <path id="Logo_Decathlon" data-name="Logo Decathlon" class="cls-1" d="M36,0C20,0,0,16.6,0,30.4c0,7.1,5.5,10.7,12.7,10.7,5.3,0,11.7-1.9,17.9-5.7V7.9c-1.6,2.8-9.4,14.2-15.6,20.2-3.2,3.1-5.7,4.4-7.8,4.4-2.4,0-3.6-1.6-3.6-4.1C3.6,17.3,22.3,2.8,34.7,2.8c5.1,0,8.4,2.3,8.4,6.7,0,4-2.7,9.1-7.4,13.8v8.5c8.2-6.4,13-14.7,13-21.3-.1-6.9-5.5-10.5-12.7-10.5Z"/>
+  </g>
+</svg>
