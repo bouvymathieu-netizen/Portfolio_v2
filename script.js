@@ -1326,6 +1326,16 @@ document.addEventListener('mousedown', e => {
 document.addEventListener('mouseup', () => { circlePaused = false; });
 shuffleProjectIcons();
 
+// ─── Recalculer le cercle au resize ───
+window.addEventListener('resize', () => {
+  if (isMobile) return;
+  if (document.querySelectorAll('.desktop-icon[data-category]').length === 0) return;
+  circleCenterX = window.innerWidth / 2;
+  circleCenterY = window.innerHeight / 2;
+  circleRadius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.3);
+  updateCirclePositions();
+});
+
 // ─── Ouvrir un projet à l'honneur + scroller vers le bureau ───
 function openFeatured(type) {
   const win = openWindow(type);
