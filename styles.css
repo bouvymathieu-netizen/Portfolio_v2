@@ -633,17 +633,17 @@ textarea.contact-field {
   /* Desktop icons grid — labels toujours visibles */
   .desktop-icon {
     position: absolute !important;
-    padding: 3px !important;
-    width: 68px !important;
+    padding: 2px !important;
+    width: 76px !important;
   }
   #desktop.mobile-grid {
     display: flex !important;
     flex-wrap: wrap !important;
     align-content: flex-start !important;
     justify-content: center !important;
-    gap: 16px 10px !important;
-    padding-left: 8px !important;
-    padding-right: 8px !important;
+    gap: 6px 4px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
   }
   #desktop.mobile-grid .desktop-icon {
     position: relative !important;
@@ -653,7 +653,7 @@ textarea.contact-field {
   }
   .desktop-icon .icon-label {
     font-size: 8px;
-    max-width: 64px;
+    max-width: 72px;
     opacity: 1 !important;
     color: rgba(255,255,255,0.85) !important;
     text-shadow: 0 1px 6px rgba(0,0,0,0.8);
@@ -664,9 +664,9 @@ textarea.contact-field {
     color: #fff;
   }
   .icon-box {
-    width: 48px !important;
-    height: 48px !important;
-    border-radius: 8px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 0 !important;
     border-width: 1px !important;
   }
   .icon-box img {
