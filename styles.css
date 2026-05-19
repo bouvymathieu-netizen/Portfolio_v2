@@ -592,12 +592,12 @@ textarea.contact-field {
 
   /* Desktop */
   #desktop {
-    min-height: 130vh;
+    min-height: 100vh;
     height: auto !important;
     padding: 0 !important;
     display: block !important;
     padding-top: 56px !important;
-    padding-bottom: 140px !important;
+    padding-bottom: 100px !important;
   }
   #desktop::before {
     display: none !important;
