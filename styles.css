@@ -532,6 +532,8 @@ textarea.contact-field {
   .menu-bar .flex.items-center {
     gap: 0.8rem !important;
     flex-shrink: 0;
+    justify-content: center;
+    width: 100%;
   }
   .menu-bar .flex.items-center > span {
     white-space: nowrap;
