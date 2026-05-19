@@ -664,14 +664,14 @@ textarea.contact-field {
     left: 12px !important;
     right: 12px !important;
     transform: none !important;
-    padding: 8px 12px !important;
-    bottom: 60px !important;
+    padding: 14px 16px !important;
+    bottom: 80px !important;
   }
   #logos-panel .marquee-track {
-    gap: 2rem !important;
+    gap: 3rem !important;
   }
   #logos-panel .brand-logo {
-    height: 20px !important;
+    height: 28px !important;
   }
 
   /* Bouton Qui suis-je mobile — au-dessus des logos */
