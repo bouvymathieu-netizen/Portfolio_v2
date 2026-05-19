@@ -595,11 +595,29 @@ textarea.contact-field {
     min-height: 100vh;
     height: auto !important;
     padding: 0 !important;
+    background: none !important;
     display: block !important;
     padding-top: 56px !important;
     padding-bottom: 100px !important;
   }
   #desktop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('assets/photos/Background_Desktop.jpg') center/cover no-repeat;
+    filter: blur(8px);
+    z-index: 0;
+    display: block !important;
+  }
+
+  /* Cacher l'overlay PNG sur mobile */
+  #desktop > img[src*="détouré"],
+  #desktop > img[src*="detoure"] {
+    display: none !important;
+  }
+
+  /* Cacher le bouton Qui suis-je dans le menu mobile */
+  .menu-bar [onclick="scrollToAbout()"] {
     display: none !important;
   }
 
