@@ -1506,7 +1506,22 @@ if (sidebar && sidebarDragbar && !isMobile) {
 function scrollToAbout() {
   document.body.classList.remove('overflow-hidden');
   document.getElementById('retour-btn')?.classList.remove('hidden');
+  // Sur mobile, libérer aussi le desktop du fullscreen lock
+  if (isMobile) {
+    document.getElementById('desktop').style.overflow = 'visible';
+    document.getElementById('desktop').style.height = 'auto';
+  }
   setTimeout(() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' }), 10);
+}
+
+function retourAuBureau() {
+  document.getElementById('retour-btn')?.classList.add('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (isMobile) {
+    document.getElementById('desktop').style.overflow = 'hidden';
+    document.getElementById('desktop').style.height = '100dvh';
+  }
+  setTimeout(() => document.body.classList.add('overflow-hidden'), 300);
 }
 
 // ─── Contact ───

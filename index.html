@@ -136,6 +136,9 @@
       </svg>
     </button>
 
+<!-- ─── Qui suis-je (mobile only) ─── -->
+<button id="about-mobile-btn" onclick="scrollToAbout()" style="display:none;">Qui suis-je ?</button>
+
 <!-- ─── Logos (panneau glass flottant) ─── -->
 		    <div id="logos-panel" class="absolute" style="bottom:10px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(10,10,10,0.25);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 20px;min-width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.3);pointer-events:auto;">
 		      <div class="marquee-container" id="trust-logos">
@@ -390,7 +393,7 @@
     </div>
 </main>
 <section id="about" class="w-screen min-h-screen bg-gradient-to-b from-[#050505] via-[#0a0a0a] to-[#050505] flex items-center justify-center px-6 -mt-[130px] pb-20 relative overflow-hidden">
-    <button id="retour-btn" onclick="document.getElementById('retour-btn').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>document.body.classList.add('overflow-hidden'),300)" class="fixed bottom-8 left-1/2 -translate-x-1/2 text-red-400 hover:text-red-300 transition-colors text-xs cursor-pointer z-50 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-lg hidden">
+    <button id="retour-btn" onclick="retourAuBureau()" class="fixed bottom-8 left-1/2 -translate-x-1/2 text-red-400 hover:text-red-300 transition-colors text-xs cursor-pointer z-50 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-lg hidden">
       ↑ Retour au bureau
     </button>
     <!-- Glow décoratif -->
