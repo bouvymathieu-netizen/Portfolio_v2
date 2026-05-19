@@ -1535,6 +1535,7 @@ function scrollToAbout() {
   document.body.classList.remove('overflow-hidden');
   document.getElementById('retour-btn')?.classList.remove('hidden');
   document.getElementById('about-mobile-btn')?.classList.add('hidden');
+  document.getElementById('logos-panel')?.classList.add('hidden');
   // Sur mobile, libérer aussi le desktop du fullscreen lock
   if (isMobile) {
     document.getElementById('desktop').style.overflow = 'visible';
@@ -1546,6 +1547,7 @@ function scrollToAbout() {
 function retourAuBureau() {
   document.getElementById('retour-btn')?.classList.add('hidden');
   document.getElementById('about-mobile-btn')?.classList.remove('hidden');
+  document.getElementById('logos-panel')?.classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (isMobile) {
     document.getElementById('desktop').style.overflow = 'hidden';
