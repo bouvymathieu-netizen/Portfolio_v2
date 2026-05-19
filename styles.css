@@ -707,16 +707,31 @@ textarea.contact-field {
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
   }
 
-  /* ─── Paysage : inverser boutons et logos ─── */
+  /* ─── Paysage : boutons en bas en ligne ─── */
   @media (orientation: landscape) and (max-height: 600px) {
+    /* Disposition horizontale : [Qui suis-je] [logos] [☰] */
+    #about-mobile-btn {
+      bottom: 16px !important;
+      left: 12px !important;
+      transform: none !important;
+      font-size: 11px !important;
+      padding: 6px 16px !important;
+    }
     #logos-panel {
       bottom: 16px !important;
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+      width: auto !important;
+      min-width: auto !important;
+      max-width: calc(100vw - 240px) !important;
+      padding: 8px 14px !important;
     }
-    #about-mobile-btn {
-      bottom: 80px !important;
+    #logos-panel .brand-logo {
+      height: 22px !important;
     }
     .mobile-menu-btn {
-      bottom: 80px !important;
+      bottom: 16px !important;
       right: 12px !important;
     }
     /* Ajuster le menu bar pour qu'il soit plus compact */
