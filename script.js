@@ -24,6 +24,12 @@ const openWindows = {}; // type → element, pour éviter les doublons
 
 const isMobile = window.matchMedia('(max-width: 768px), (max-height: 600px)').matches;
 
+// Sur mobile : verrouiller le scroll dès le départ
+if (isMobile) {
+  document.documentElement.style.setProperty('overflow', 'hidden', 'important');
+  document.body.style.setProperty('overflow', 'hidden', 'important');
+}
+
 // ─── Icônes ───
 const icons = document.querySelectorAll('.desktop-icon');
 
@@ -1540,6 +1546,8 @@ function scrollToAbout() {
   if (isMobile) {
     document.getElementById('desktop').style.overflow = 'visible';
     document.getElementById('desktop').style.height = 'auto';
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
   }
   setTimeout(() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' }), 10);
 }
@@ -1552,6 +1560,8 @@ function retourAuBureau() {
   if (isMobile) {
     document.getElementById('desktop').style.overflow = 'hidden';
     document.getElementById('desktop').style.height = '100dvh';
+    document.documentElement.style.setProperty('overflow', 'hidden', 'important');
+    document.body.style.setProperty('overflow', 'hidden', 'important');
   }
   setTimeout(() => document.body.classList.add('overflow-hidden'), 300);
 }

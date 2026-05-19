@@ -600,6 +600,7 @@ textarea.contact-field {
   #desktop {
     height: 100dvh !important;
     overflow: hidden !important;
+    touch-action: none;
     padding: 0 !important;
     padding-top: 56px !important;
     padding-bottom: 0 !important;
