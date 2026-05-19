@@ -1370,6 +1370,22 @@ if (marqueeTrack) {
     smoothVel += e.deltaY * 0.5;
   }, { passive: false });
 
+  // Sur mobile : le swipe accélère aussi le marquee
+  let marqueeTouchY = 0;
+  let marqueeTouching = false;
+  document.addEventListener('touchstart', e => {
+    if (e.target.closest('.desktop-icon') || e.target.closest('.window') || e.target.closest('.menu-bar')) return;
+    marqueeTouchY = e.touches[0].clientY;
+    marqueeTouching = true;
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!marqueeTouching) return;
+    const dy = e.touches[0].clientY - marqueeTouchY;
+    smoothVel += dy * 0.4;
+    marqueeTouchY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', () => { marqueeTouching = false; }, { passive: true });
+
   function tickMarquee() {
     smoothVel += (0 - smoothVel) * 0.1;
     const speed = BASE_SPEED + smoothVel * SCROLL_GAIN;
