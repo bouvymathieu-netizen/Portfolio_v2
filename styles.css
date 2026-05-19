@@ -707,6 +707,41 @@ textarea.contact-field {
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
   }
 
+  /* ─── Paysage : inverser boutons et logos ─── */
+  @media (orientation: landscape) and (max-height: 600px) {
+    #logos-panel {
+      bottom: 16px !important;
+    }
+    #about-mobile-btn {
+      bottom: 80px !important;
+    }
+    .mobile-menu-btn {
+      bottom: 80px !important;
+      right: 12px !important;
+    }
+    /* Ajuster le menu bar pour qu'il soit plus compact */
+    .menu-bar {
+      padding: 4px 8px !important;
+      top: 6px !important;
+    }
+    .menu-bar .flex.items-center > span {
+      font-size: 10px !important;
+      padding: 4px 6px !important;
+    }
+    /* Icônes plus petites en paysage */
+    .desktop-icon {
+      width: 68px !important;
+      padding: 2px !important;
+    }
+    .desktop-icon .icon-box {
+      width: 52px !important;
+      height: 52px !important;
+    }
+    .desktop-icon .icon-label {
+      font-size: 8px !important;
+    }
+  }
+
   /* Fenêtres → plein écran */
   .window {
     position: fixed !important;
