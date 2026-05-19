@@ -1386,6 +1386,34 @@ if (marqueeTrack) {
   }, { passive: true });
   document.addEventListener('touchend', () => { marqueeTouching = false; }, { passive: true });
 
+  // Sur mobile : swipe horizontal direct sur la zone des logos
+  const marqueeContainer = document.querySelector('.marquee-container');
+  if (marqueeContainer) {
+    let logoTouchX = 0;
+    let logoTouchStartPos = 0;
+    let logoTouching = false;
+
+    marqueeContainer.addEventListener('touchstart', e => {
+      logoTouchX = e.touches[0].clientX;
+      logoTouchStartPos = marqueePos;
+      logoTouching = true;
+    }, { passive: true });
+
+    marqueeContainer.addEventListener('touchmove', e => {
+      if (!logoTouching) return;
+      const dx = logoTouchX - e.touches[0].clientX;
+      marqueePos = logoTouchStartPos + dx;
+      smoothVel = 0;
+      const wrap = marqueeTrack.scrollWidth / 2;
+      if (marqueePos >= wrap) marqueePos -= wrap;
+      if (marqueePos < 0) marqueePos += wrap;
+      e.preventDefault();
+    }, { passive: false });
+
+    marqueeContainer.addEventListener('touchend', () => { logoTouching = false; }, { passive: true });
+    marqueeContainer.addEventListener('touchcancel', () => { logoTouching = false; }, { passive: true });
+  }
+
   function tickMarquee() {
     smoothVel += (0 - smoothVel) * 0.1;
     const speed = BASE_SPEED + smoothVel * SCROLL_GAIN;
