@@ -92,6 +92,7 @@ icons.forEach(icon => {
 
     longPressTimer = setTimeout(() => {
       longPressActive = true;
+      circlePaused = true;
       const rect = icon.getBoundingClientRect();
       dragState = {
         type: 'icon',
@@ -127,6 +128,7 @@ icons.forEach(icon => {
       dragState = null;
       icon.classList.remove('dragging');
       longPressActive = false;
+      circlePaused = false;
     } else if (touchStartPos) {
       // Tap simple → ouvre la fenêtre
       const type = icon.dataset.window;
@@ -141,6 +143,7 @@ icons.forEach(icon => {
       dragState = null;
       icon.classList.remove('dragging');
       longPressActive = false;
+      circlePaused = false;
     }
     touchStartPos = null;
   }, { passive: true });
@@ -1217,27 +1220,10 @@ function shuffleProjectIcons() {
   const projectIcons = document.querySelectorAll('.desktop-icon[data-category]');
   if (!projectIcons.length) return;
 
-  if (isMobile) {
-    // Flexbox géré par CSS — on retire juste les positions absolues
-    const allIcons = document.querySelectorAll('.desktop-icon');
-    allIcons.forEach(icon => {
-      icon.style.left = '';
-      icon.style.top = '';
-      icon.style.zIndex = '';
-      const box = icon.querySelector('.icon-box');
-      if (box) box.style.scale = '';
-      const label = icon.querySelector('.icon-label');
-      if (label) label.style.scale = '';
-    });
-    DESKTOP.classList.add('mobile-grid');
-    DESKTOP.style.minHeight = '';
-    if (circleAnimId) { cancelAnimationFrame(circleAnimId); circleAnimId = null; }
-    return;
-  }
-
+  // Sur mobile, on garde aussi le cercle — plus grand et qui dépasse
   const cx = window.innerWidth / 2;
   const cy = window.innerHeight / 2;
-  const radius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.3);
+  const radius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.45);
   const count = projectIcons.length;
   const step = (2 * Math.PI) / count;
 
@@ -1278,8 +1264,10 @@ function updateCirclePositions() {
 
     const x = circleCenterX + circleRadius * cosA;
     const y = circleCenterY + radiusY * sinA;
-    icon.style.left = `${x - 40}px`;
-    icon.style.top = `${y - 45}px`;
+    const halfW = icon.offsetWidth / 2 || 44;
+    const halfH = icon.offsetHeight / 2 || 50;
+    icon.style.left = `${x - halfW}px`;
+    icon.style.top = `${y - halfH}px`;
 
     const depthScale = 1 + 0.3 * sinA;
     const box = icon.querySelector('.icon-box');
@@ -1300,6 +1288,27 @@ function startCircleRotation() {
     e.preventDefault();
     scrollVel += e.deltaY * 0.3;
   }, { passive: false });
+
+  // Sur mobile : le swipe vertical fait tourner le cercle
+  let touchStartY = 0;
+  let touchActive = false;
+  document.addEventListener('touchstart', e => {
+    // Ignorer si on touche une icône, une fenêtre ou le menu
+    if (e.target.closest('.desktop-icon')) return;
+    if (e.target.closest('.window')) return;
+    if (e.target.closest('.menu-bar')) return;
+    if (e.target.closest('#logos-panel')) return;
+    touchStartY = e.touches[0].clientY;
+    touchActive = true;
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!touchActive) return;
+    const dy = e.touches[0].clientY - touchStartY;
+    scrollVel += dy * 0.5;
+    touchStartY = e.touches[0].clientY;
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('touchend', () => { touchActive = false; }, { passive: true });
 
   function tick(now) {
     const dt = now - last;
@@ -1328,11 +1337,14 @@ shuffleProjectIcons();
 
 // ─── Recalculer le cercle au resize ───
 window.addEventListener('resize', () => {
-  if (isMobile) return;
   if (document.querySelectorAll('.desktop-icon[data-category]').length === 0) return;
   circleCenterX = window.innerWidth / 2;
   circleCenterY = window.innerHeight / 2;
-  circleRadius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.3);
+  if (isMobile) {
+    circleRadius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.45);
+  } else {
+    circleRadius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.3);
+  }
   updateCirclePositions();
 });
 
