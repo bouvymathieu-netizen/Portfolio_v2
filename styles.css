@@ -617,7 +617,10 @@ textarea.contact-field {
     display: none !important;
   }
 
-  /* Cacher le bouton Qui suis-je dans le menu mobile */
+  /* Cacher le séparateur et le bouton Qui suis-je dans le menu mobile */
+  .menu-bar span.text-gray-600 {
+    display: none !important;
+  }
   .menu-bar [onclick="scrollToAbout()"] {
     display: none !important;
   }
