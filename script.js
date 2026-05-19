@@ -1304,7 +1304,7 @@ function startCircleRotation() {
   document.addEventListener('touchmove', e => {
     if (!touchActive) return;
     const dy = e.touches[0].clientY - touchStartY;
-    scrollVel += dy * 2.0;
+    scrollVel += dy * 1.0;
     touchStartY = e.touches[0].clientY;
     e.preventDefault();
   }, { passive: false });
@@ -1381,7 +1381,7 @@ if (marqueeTrack) {
   document.addEventListener('touchmove', e => {
     if (!marqueeTouching) return;
     const dy = e.touches[0].clientY - marqueeTouchY;
-    smoothVel += dy * 1.5;
+    smoothVel += dy * 0.8;
     marqueeTouchY = e.touches[0].clientY;
   }, { passive: true });
   document.addEventListener('touchend', () => { marqueeTouching = false; }, { passive: true });
