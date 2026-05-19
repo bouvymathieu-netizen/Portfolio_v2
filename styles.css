@@ -656,15 +656,16 @@ textarea.contact-field {
     transform: scale(1.08);
   }
 
-  /* Logos panel — au-dessus du bouton */
+  /* Logos panel — tout en bas */
   #logos-panel {
+    position: fixed !important;
     min-width: auto !important;
     width: calc(100vw - 24px) !important;
     left: 12px !important;
     right: 12px !important;
     transform: none !important;
     padding: 8px 12px !important;
-    bottom: 64px !important;
+    bottom: 16px !important;
   }
   #logos-panel .marquee-track {
     gap: 2rem !important;
@@ -677,7 +678,7 @@ textarea.contact-field {
   #about-mobile-btn {
     display: block !important;
     position: fixed;
-    bottom: 16px;
+    bottom: calc(16px + 44px + 10px);
     left: 50%;
     transform: translateX(-50%);
     z-index: 99;
