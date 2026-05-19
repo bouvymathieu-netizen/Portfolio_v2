@@ -590,15 +590,15 @@ textarea.contact-field {
     display: block;
   }
 
-  /* Desktop */
+  /* Desktop — exact viewport height, scrollable content */
   #desktop {
-    min-height: 0;
-    height: auto !important;
+    height: 100dvh !important;
+    overflow-y: auto !important;
     padding: 0 !important;
     background: none !important;
     display: block !important;
     padding-top: 56px !important;
-    padding-bottom: 80px !important;
+    padding-bottom: 0 !important;
   }
   #desktop::before {
     content: '';
@@ -695,8 +695,9 @@ textarea.contact-field {
     transform: scale(1.08);
   }
 
-  /* Logos panel — responsive */
+  /* Logos panel — fixed en bas */
   #logos-panel {
+    position: fixed !important;
     min-width: auto !important;
     width: calc(100vw - 24px) !important;
     left: 12px !important;
