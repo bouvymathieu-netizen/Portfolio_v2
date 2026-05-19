@@ -2,62 +2,145 @@ body {
   font-family: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
 }
 
-/* ─── Landing glows ─── */
-.glow {
+/* ─── Sidebar ─── */
+.sidebar {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  will-change: transform;
-}
-.glow-1 {
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(56,189,248,0.35), transparent 70%);
-  top: -10%;
-  left: -15%;
-  animation: floatA 14s ease-in-out infinite alternate;
-}
-.glow-2 {
-  width: 700px;
-  height: 700px;
-  background: radial-gradient(circle, rgba(167,139,250,0.3), transparent 70%);
-  bottom: -15%;
-  right: -12%;
-  animation: floatB 18s ease-in-out infinite alternate;
-}
-.glow-3 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(56,189,248,0.15), transparent 70%);
   top: 50%;
-  left: 40%;
-  animation: floatC 16s ease-in-out infinite alternate;
+  transform: translateY(-50%);
+  left: 16px;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.3);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0 12px 12px;
+  min-width: 160px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
-
-@keyframes floatA {
-  0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(60px, -40px) scale(1.08); }
-  66%  { transform: translate(-30px, 50px) scale(0.95); }
-  100% { transform: translate(40px, -20px) scale(1.05); }
+.sidebar-dragbar {
+  height: 24px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  user-select: none;
 }
-@keyframes floatB {
-  0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(-50px, 30px) scale(1.06); }
-  66%  { transform: translate(40px, -50px) scale(0.93); }
-  100% { transform: translate(-30px, 20px) scale(1.02); }
+.sidebar-dragbar::after {
+  content: '';
+  width: 20px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
 }
-@keyframes floatC {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(70px, 40px) scale(1.1); }
-  100% { transform: translate(-40px, -30px) scale(0.92); }
+.sidebar-dragbar:active {
+  cursor: grabbing;
+}
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sidebar-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.sidebar-thumb {
+  width: 44px;
+  height: 33px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.03);
+}
+.sidebar-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sidebar-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  min-width: 0;
+}
+.sidebar-title {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar-sub {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar-icon {
+  font-size: 16px;
+  width: 44px;
+  height: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.sidebar-item:hover .sidebar-icon {
+  opacity: 0.9;
+}
+.sidebar-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 6px 0;
 }
 
 /* ─── Menu Bar ─── */
 .menu-bar {
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: rgba(10, 10, 10, 0.35);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 6px 4px;
+  display: inline-flex;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+.menu-bar .menu-category {
+  color: rgba(255, 255, 255, 0.5);
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+.menu-bar .menu-category:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* ─── Desktop Icons ─── */
@@ -119,6 +202,11 @@ body {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   padding: 1px 4px;
   border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.desktop-icon:hover .icon-label {
+  opacity: 1;
 }
 .desktop-icon.selected .icon-label {
   background: rgba(59, 130, 246, 0.3);
@@ -143,6 +231,9 @@ body {
 }
 .window.closing {
   animation: windowOut 0.18s ease-in forwards;
+}
+.window.minimized {
+  display: none;
 }
 .window.maximized {
   border-radius: 0;
@@ -295,19 +386,6 @@ textarea.contact-field {
   font-weight: 500;
 }
 
-/* ─── Pixel grid overlay ─── */
-#desktop::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-  background-size: 24px 24px;
-  pointer-events: none;
-}
-
 /* ─── Barre bicolore pour projet multi-catégorie ─── */
 .icon-box-dual {
   position: relative;
@@ -324,15 +402,15 @@ textarea.contact-field {
 .icon-box-dual::before {
   left: 0;
   width: 50%;
-  background: #38bdf8;
+  background: #b91c1c;
 }
 .icon-box-dual::after {
   right: 0;
   width: 50%;
-  background: #a78bfa;
+  background: #dc2626;
 }
 
-/* ─── Barre bleu/rose (captation + motion) ─── */
+/* ─── Barre rouge/jaune (captation + motion) ─── */
 .icon-box-dual-bp {
   position: relative;
 }
@@ -348,15 +426,15 @@ textarea.contact-field {
 .icon-box-dual-bp::before {
   left: 0;
   width: 50%;
-  background: #38bdf8;
+  background: #b91c1c;
 }
 .icon-box-dual-bp::after {
   right: 0;
   width: 50%;
-  background: #e879b0;
+  background: #ca8a04;
 }
 
-/* ─── Barre violet/rose (montage + motion) ─── */
+/* ─── Barre rouge/jaune (montage + motion) ─── */
 .icon-box-dual-vp {
   position: relative;
 }
@@ -372,12 +450,12 @@ textarea.contact-field {
 .icon-box-dual-vp::before {
   left: 0;
   width: 50%;
-  background: #a78bfa;
+  background: #dc2626;
 }
 .icon-box-dual-vp::after {
   right: 0;
   width: 50%;
-  background: #e879b0;
+  background: #ca8a04;
 }
 
 /* ─── Barre tricolore pour projet 3 catégories ─── */
@@ -393,71 +471,7 @@ textarea.contact-field {
   height: 2px;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to right, #38bdf8 33.33%, #a78bfa 33.33%, #a78bfa 66.66%, #e879b0 66.66%);
-}
-
-/* ─── Featured projects ─── */
-#featured-projects {
-  transform-origin: bottom center;
-}
-
-#featured-projects .featured-glow {
-  box-shadow:
-    0 0 30px rgba(255, 255, 255, 0.15),
-    0 0 60px rgba(255, 255, 255, 0.08),
-    0 0 100px rgba(255, 255, 255, 0.04);
-  transition: box-shadow 0.3s ease;
-}
-#featured-projects .group:hover .featured-glow {
-  box-shadow:
-    0 0 40px rgba(255, 255, 255, 0.25),
-    0 0 80px rgba(255, 255, 255, 0.15),
-    0 0 120px rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-/* ─── Trust logos placeholders ─── */
-.trust-logo-placeholder {
-  width: 80px;
-  height: 80px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  position: relative;
-  animation: trustPulse 3s ease-in-out infinite;
-}
-.trust-logo-placeholder::after {
-  content: '';
-  position: absolute;
-  inset: 20px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.04);
-}
-.trust-logo-placeholder:nth-child(2) { animation-delay: 0.4s; }
-.trust-logo-placeholder:nth-child(3) { animation-delay: 0.8s; }
-.trust-logo-placeholder:nth-child(4) { animation-delay: 1.2s; }
-.trust-logo-placeholder:nth-child(5) { animation-delay: 1.6s; }
-.trust-logo-placeholder:nth-child(6) { animation-delay: 2.0s; }
-
-@keyframes trustPulse {
-  0%, 100% {
-    opacity: 0.4;
-    border-color: rgba(255, 255, 255, 0.06);
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    border-color: rgba(255, 255, 255, 0.12);
-    transform: scale(1.03);
-  }
-}
-
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
+  background: linear-gradient(to right, #b91c1c 33.33%, #dc2626 33.33%, #dc2626 66.66%, #ca8a04 66.66%);
 }
 
 /* ─── Marquee logos ─── */
@@ -475,13 +489,13 @@ textarea.contact-field {
   width: fit-content;
   will-change: transform;
 }
-
-/* ─── Glass card (CV) ─── */
-.glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
-  padding: 14px;
+.brand-logo {
+  cursor: pointer;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+.brand-logo.brand-active {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(16%) sepia(99%) saturate(7404%) hue-rotate(4deg) brightness(95%) contrast(118%);
 }
 
 /* ─── 📱 Mobile (< 640px) ─── */
@@ -495,37 +509,8 @@ textarea.contact-field {
     box-sizing: border-box;
   }
 
-  /* Landing */
-  #landing h1 {
-    font-size: 1.75rem !important;
-  }
-  #landing p.text-lg {
-    font-size: 0.875rem !important;
-  }
-  #featured-projects {
-    padding-bottom: 1rem !important;
-  }
-  #featured-projects .flex.items-start {
-    gap: 0.75rem !important;
-    overflow-x: auto;
-    padding: 0 1rem;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-  }
-  #featured-projects .flex.items-start > div {
-    scroll-snap-align: start;
-    flex-shrink: 0;
-  }
-  #featured-projects .w-36 {
-    width: 7rem !important;
-  }
-  #featured-projects .h-24 {
-    height: 4.5rem !important;
-  }
-
   /* Menu bar */
   .menu-bar {
-    padding: 0 0.75rem !important;
     gap: 0.5rem;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -537,9 +522,6 @@ textarea.contact-field {
   .menu-bar .flex.items-center > span {
     white-space: nowrap;
     font-size: 10px;
-  }
-  #clock {
-    display: none !important;
   }
 
   /* Desktop icons → position absolue (comme desktop) */

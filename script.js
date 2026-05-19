@@ -8,10 +8,12 @@ function updateClock() {
   const month = months[now.getMonth()];
   const h = String(now.getHours()).padStart(2, '0');
   const m = String(now.getMinutes()).padStart(2, '0');
-  document.getElementById('clock').textContent = `${day} ${date} ${month}  ${h}:${m}`;
+  const clockDesktop = document.getElementById('clock-desktop');
+  if (clockDesktop) clockDesktop.textContent = `${day} ${date} ${month}  ${h}:${m}`;
 }
 updateClock();
 setInterval(updateClock, 10000);
+
 
 // ─── État global ───
 let zIndex = 100;
@@ -44,13 +46,16 @@ if (!isMobile) {
 icons.forEach(icon => {
   icon.addEventListener('mousedown', e => {
     if (e.button !== 0) return;
-
+    icon.dataset._dragged = 'false';
     const rect = icon.getBoundingClientRect();
     dragState = {
       type: 'icon',
       element: icon,
       offsetX: e.clientX - rect.left,
       offsetY: e.clientY - rect.top,
+      startX: e.clientX,
+      startY: e.clientY,
+      detached: false,
     };
     icon.classList.add('dragging');
     e.preventDefault();
@@ -58,10 +63,14 @@ icons.forEach(icon => {
 });
 }
 
-// ─── Double-clic → fenêtre (desktop) ───
+// ─── Clic → fenêtre (desktop) ───
 if (!isMobile) {
 icons.forEach(icon => {
-  icon.addEventListener('dblclick', () => {
+  icon.addEventListener('click', () => {
+    if (icon.dataset._dragged === 'true') {
+      icon.dataset._dragged = 'false';
+      return;
+    }
     const type = icon.dataset.window;
     if (type) openWindow(type);
   });
@@ -143,8 +152,11 @@ function openWindow(type) {
   // Évite les doublons : si une fenêtre du même type existe déjà, on la ramène au premier plan
   if (openWindows[type] && document.body.contains(openWindows[type])) {
     const existing = openWindows[type];
+    existing.classList.remove('minimized');
     zIndex++;
     existing.style.zIndex = zIndex;
+    // marquer la fenêtre comme focus
+    document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
     return existing;
   }
 
@@ -178,20 +190,21 @@ function openWindow(type) {
     unibetnasri:{ w: 380, h: 675, title: 'UNIBET<wbr>Greg MMA x SAmir NASRI' },
     anooki: { w: 380, h: 675, title: 'VILLEDELYON<wbr>Anooki' },
     whentocop:{ w: 380, h: 675, title: 'WHENTOCOP<wbr>Nike Air max' },
-    plus33fm:{ w: 380, h: 675, title: 'PLUS33FM<wbr>Motion' },
+    plus33fm:{ w: 380, h: 675, title: 'PLUS33<wbr>Motion' },
+    plus33logos:{ w: 720, h: 454, title: 'PLUS33<wbr>Logos Animées' },
     olmaillot:{ w: 720, h: 454, title: 'OL<wbr>Nouveau Maillot' },
     cv:     { w: 600, h: 800, title: 'CV' },
     contact:{ w: 440, h: 460, title: 'Contact' },
   };
-  const cfg = sizes[type] || sizes.video;
+  const cfg = sizes[type] || sizes.vimeo;
   const offset = 30 + windowCount * 24;
 
   win.style.width = `${cfg.w}px`;
   win.style.height = `${cfg.h}px`;
-  win.style.zIndex = baseZ;
-  // centre avec léger décalage cumulé
-  win.style.left = `${Math.min(offset, window.innerWidth - cfg.w - 40)}px`;
-  win.style.top = `${Math.min(60 + offset, window.innerHeight - cfg.h - 40)}px`;
+    win.style.zIndex = baseZ;
+  // centré
+  win.style.left = `${(window.innerWidth - cfg.w) / 2}px`;
+  win.style.top = `${(window.innerHeight - cfg.h) / 2}px`;
 
   // Contenu
   let bodyHTML = '';
@@ -581,11 +594,11 @@ function openWindow(type) {
       bodyHTML = `
         <div class="space-y-4 p-5">
           <p class="text-xs text-gray-400">Laissez-moi un message.</p>
-          <form onsubmit="return false;">
+          <form onsubmit="sendContact(event)">
             <div class="space-y-3">
-              <input type="text" placeholder="Nom" class="contact-field">
-              <input type="email" placeholder="Email" class="contact-field">
-              <textarea placeholder="Message" class="contact-field" rows="4"></textarea>
+              <input type="text" placeholder="Nom" class="contact-field" id="contact-name">
+              <input type="email" placeholder="Email" class="contact-field" id="contact-email">
+              <textarea placeholder="Message" class="contact-field" rows="4" id="contact-msg"></textarea>
             </div>
             <button type="submit"
                     class="mt-5 w-full py-2.5 rounded-lg text-sm font-medium transition-all duration-200
@@ -869,13 +882,30 @@ function openWindow(type) {
           </div>
         </div>`;
       break;
+
+    case 'plus33logos':
+      bodyHTML = `
+        <div class="flex flex-col h-full">
+          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/OLX8yLoVE88?autoplay=1"
+                    title="PLUS33_Logos Animées" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="origin" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
+            <span class="block">Plus33FM — Logos Animées.</span>
+          </div>
+        </div>`;
+      break;
+
   }
 
   win.innerHTML = `
     <div class="window-titlebar">
       <div class="window-controls">
         <button class="window-btn window-btn-close" data-action="close" title="Fermer"></button>
-        <button class="window-btn window-btn-minimize" data-action="minimize" title="Restaurer"></button>
+        <button class="window-btn window-btn-minimize" data-action="minimize" title="Réduire"></button>
         <button class="window-btn window-btn-maximize" data-action="maximize" title="Agrandir"></button>
       </div>
       <span class="window-title">${cfg.title}</span>
@@ -900,7 +930,10 @@ function openWindow(type) {
       e.stopPropagation();
       const action = btn.dataset.action;
       if (action === 'close') closeWindow(win);
-      else if (action === 'minimize') restoreWindow(win);
+      else if (action === 'minimize') {
+        if (win.classList.contains('maximized')) restoreWindow(win);
+        else win.classList.add('minimized');
+      }
       else if (action === 'maximize') maximizeWindow(win);
     });
   });
@@ -1039,22 +1072,27 @@ document.addEventListener('mousemove', e => {
   let x = e.clientX - dragState.offsetX - doff.left;
   let y = e.clientY - dragState.offsetY - doff.top;
 
+  // Détacher du cercle si le drag dépasse 10px
+  if (dragState.type === 'icon') {
+    const dx = e.clientX - dragState.startX;
+    const dy = e.clientY - dragState.startY;
+    // Marquer comme dragé pour éviter l'ouverture de fenêtre
+    if (dx*dx + dy*dy > 16) dragState.element.dataset._dragged = 'true';
+    if (!dragState.detached && dragState.element.dataset.category && dx*dx + dy*dy > 100) {
+      dragState.detached = true;
+      dragState.element.dataset.detached = 'true';
+      dragState.element.style.zIndex = 90;
+      const box = dragState.element.querySelector('.icon-box');
+      if (box) box.style.scale = '1';
+      const label = dragState.element.querySelector('.icon-label');
+      if (label) label.style.scale = '1';
+      // Si le cercle était en pause, le relancer
+      circlePaused = false;
+    }
+  }
+
   if (dragState.type === 'window') {
     y = Math.max(0, y);
-
-    // Auto-scroll quand la souris approche du bord haut/bas
-    const EDGE = 45;
-    const vh = window.innerHeight;
-    let scrollDelta = 0;
-
-    if (e.clientY < EDGE) {
-      scrollDelta = -Math.round(14 * (1 - e.clientY / EDGE));
-    } else if (e.clientY > vh - EDGE) {
-      const dist = vh - e.clientY;
-      scrollDelta = Math.round(14 * (1 - dist / EDGE));
-    }
-
-    if (scrollDelta) window.scrollBy(0, scrollDelta);
   }
 
   el.style.left = `${x}px`;
@@ -1081,23 +1119,10 @@ let activeCategory = null;
 
 function resetFilter() {
   activeCategory = null;
+  activeBrand = null;
   document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('dimmed'));
   document.querySelectorAll('.menu-category').forEach(el => el.classList.remove('active-category'));
-
-  // Rouvrir la fenêtre d'accueil si elle a été fermée (desktop only)
-  if (!isMobile) {
-  if (!openWindows.vimeo || !document.body.contains(openWindows.vimeo)) {
-    const vimeoWin = openWindow('vimeo');
-    if (vimeoWin) {
-      vimeoWin.style.left = `${window.innerWidth - 680}px`;
-      vimeoWin.style.top = '100px';
-    }
-  } else {
-    // Sinon la ramener au premier plan
-    zIndex++;
-    openWindows.vimeo.style.zIndex = zIndex;
-  }
-  }
+  document.querySelectorAll('.brand-logo').forEach(l => l.classList.remove('brand-active'));
 }
 
 function filterCategory(cat) {
@@ -1123,9 +1148,71 @@ function filterCategory(cat) {
   document.querySelectorAll('.menu-category').forEach(el => {
     el.classList.toggle('active-category', el.dataset.category === cat);
   });
+
+  // Reset brand filter si actif
+  if (activeBrand) {
+    activeBrand = null;
+    document.querySelectorAll('.brand-logo').forEach(l => l.classList.remove('brand-active'));
+  }
 }
 
-// ─── Positions aléatoires des projets au chargement ───
+// ─── Filtre par marque ───
+const brandProjects = {
+  adidas: ['adidas', 'olmaillot'],
+  decathlon: ['puma'],
+  ol: ['ol', 'olmaillot'],
+  puma: ['puma', 'pumacrampons'],
+  eafc: ['eafut', 'earatings'],
+  highlo: ['highlo'],
+  laligue: ['laligue', 'pola'],
+  unibet: ['unibet', 'unibetnasri'],
+  whentocop: ['whentocop'],
+};
+
+let activeBrand = null;
+
+function filterBrand(brand) {
+  const icons = document.querySelectorAll('.desktop-icon');
+
+  if (activeBrand === brand) {
+    activeBrand = null;
+    icons.forEach(icon => icon.classList.remove('dimmed'));
+    document.querySelectorAll('.brand-logo').forEach(l => l.classList.remove('brand-active'));
+    return;
+  }
+
+  activeBrand = brand;
+
+  if (activeCategory) {
+    activeCategory = null;
+    document.querySelectorAll('.menu-category').forEach(el => el.classList.remove('active-category'));
+  }
+
+  const windows = brandProjects[brand] || [];
+  icons.forEach(icon => {
+    if (!icon.dataset.window) return;
+    icon.classList.toggle('dimmed', !windows.includes(icon.dataset.window));
+  });
+
+  document.querySelectorAll('.brand-logo').forEach(l => {
+    l.classList.toggle('brand-active', l.dataset.brand === brand);
+  });
+}
+
+// Click handlers sur les logos
+document.querySelectorAll('.brand-logo').forEach(logo => {
+  logo.addEventListener('click', () => filterBrand(logo.dataset.brand));
+});
+
+// ─── Variables globales pour la rotation du cercle ───
+let circleAngle = 0;
+let circleCenterX = 0;
+let circleCenterY = 0;
+let circleRadius = 0;
+let circleAnimId = null;
+let circlePaused = false;
+
+// ─── Positionnement en cercle des projets + rotation lente ───
 function shuffleProjectIcons() {
   const projectIcons = document.querySelectorAll('.desktop-icon[data-category]');
   if (!projectIcons.length) return;
@@ -1167,52 +1254,99 @@ function shuffleProjectIcons() {
     const totalRows = Math.ceil(allIcons.length / cols);
     const gridHeight = startY + totalRows * (iconH + gapY);
     DESKTOP.style.minHeight = `${gridHeight + 60}px`;
+    if (circleAnimId) { cancelAnimationFrame(circleAnimId); circleAnimId = null; }
     return;
   }
 
-  // Zone de placement : limité à la hauteur du bureau
-  const topMin = 300;
-  const topMax = window.innerHeight - 150;
-  const leftMin = 36;
-  const leftMax = Math.min(window.innerWidth * 0.8, window.innerWidth - 140);
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  const radius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.3);
+  const count = projectIcons.length;
+  const step = (2 * Math.PI) / count;
 
-  // Zone de la fenêtre Portfolio Homepage à éviter
-  const vimeoZone = {
-    left: window.innerWidth - 680,
-    top: 100,
-    right: window.innerWidth - 680 + 640,
-    bottom: 100 + 409,
-  };
-  const ICON_W = 80;
-  const ICON_H = 100;
+  // Créer les angles de base (un cercle complet)
+  const angles = Array.from({ length: count }, (_, i) => i * step - Math.PI / 2);
 
-  // Génère des positions avec un espacement minimum
-  const positions = [];
-  const minGap = 75;
-
-  for (let i = 0; i < projectIcons.length; i++) {
-    let attempts = 0;
-    let pos;
-    do {
-      pos = {
-        left: leftMin + Math.random() * (leftMax - leftMin),
-        top: topMin + Math.random() * (topMax - topMin),
-      };
-      attempts++;
-    } while (
-      attempts < 50 &&
-      (positions.some(p => Math.abs(p.left - pos.left) < minGap && Math.abs(p.top - pos.top) < minGap) ||
-       pos.left + ICON_W > vimeoZone.left && pos.left < vimeoZone.right &&
-       pos.top + ICON_H > vimeoZone.top && pos.top < vimeoZone.bottom)
-    );
-    positions.push(pos);
+  // Fisher-Yates shuffle des angles
+  for (let i = angles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [angles[i], angles[j]] = [angles[j], angles[i]];
   }
 
+  // Stocker l'angle de chaque icône
   projectIcons.forEach((icon, i) => {
-    icon.style.left = `${positions[i].left}px`;
-    icon.style.top = `${positions[i].top}px`;
+    icon.dataset.angle = angles[i];
+  });
+
+  // Sauvegarder les paramètres du cercle pour la rotation
+  circleCenterX = cx;
+  circleCenterY = cy;
+  circleRadius = radius;
+
+  // Position initiale + démarrer la rotation
+  circleAngle = 0;
+  updateCirclePositions();
+  startCircleRotation();
+}
+
+function updateCirclePositions() {
+  const icons = document.querySelectorAll('.desktop-icon[data-category]');
+  const radiusY = circleRadius * 0.45;
+
+  icons.forEach(icon => {
+    if (icon.dataset.detached === 'true') return;
+    const angle = parseFloat(icon.dataset.angle) + circleAngle;
+    const sinA = Math.sin(angle);
+    const cosA = Math.cos(angle);
+
+    const x = circleCenterX + circleRadius * cosA;
+    const y = circleCenterY + radiusY * sinA;
+    icon.style.left = `${x - 40}px`;
+    icon.style.top = `${y - 45}px`;
+
+    const depthScale = 1 + 0.3 * sinA;
+    const box = icon.querySelector('.icon-box');
+    if (box) box.style.scale = depthScale;
+    const label = icon.querySelector('.icon-label');
+    if (label) label.style.scale = depthScale;
+    icon.style.zIndex = Math.round(50 + 30 * sinA);
   });
 }
+
+function startCircleRotation() {
+  if (circleAnimId) cancelAnimationFrame(circleAnimId);
+  let last = performance.now();
+  let scrollVel = 0;
+
+  // Le scroll alimente uniquement la rotation du cercle, pas la page
+  document.addEventListener('wheel', e => {
+    e.preventDefault();
+    scrollVel += e.deltaY * 0.3;
+  }, { passive: false });
+
+  function tick(now) {
+    const dt = now - last;
+    last = now;
+
+    // Decay naturelle de la vélocité
+    scrollVel += (0 - scrollVel) * 0.08;
+
+    const speed = dt * 0.00002 + scrollVel * 0.0006;
+
+    if (!circlePaused && (!dragState || dragState.detached)) {
+      circleAngle += speed;
+      updateCirclePositions();
+    }
+    circleAnimId = requestAnimationFrame(tick);
+  }
+  tick(performance.now());
+}
+
+// Pause la rotation pendant le drag d'une icône (sauf si déjà détachée)
+document.addEventListener('mousedown', e => {
+  if (e.target.closest('.desktop-icon[data-category]') && !e.target.closest('[data-detached]')) circlePaused = true;
+});
+document.addEventListener('mouseup', () => { circlePaused = false; });
 shuffleProjectIcons();
 
 // ─── Ouvrir un projet à l'honneur + scroller vers le bureau ───
@@ -1223,78 +1357,22 @@ function openFeatured(type) {
   }, 150);
 }
 
-// ─── Fenêtre d'accueil ouverte au chargement ───
-if (!isMobile) {
-const vimeoWin = openWindow('vimeo');
-if (vimeoWin) {
-  vimeoWin.style.left = `${window.innerWidth - 680}px`;
-  vimeoWin.style.top = '100px';
-}
-}
-
-// ─── Parallaxe landing → desktop ───
-const landingSection = document.getElementById('landing');
-const landingContent = landingSection.querySelector('.text-center');
-const scrollIndicator = landingSection.querySelector('.animate-bounce');
-
-let parallaxTicking = false;
-
-function updateParallax() {
-  const scrollY = window.scrollY;
-  const vh = window.innerHeight;
-  const maxScroll = vh * 0.08; // la parallaxe se termine après 8% de scroll (chevauchenment avec le bureau)
-  const progress = Math.min(scrollY / maxScroll, 1);
-
-  // Le contenu de la landing se déplace vers le haut et s'efface
-  landingContent.style.transform = `translateY(${-scrollY * 0.5}px)`;
-  landingContent.style.opacity = `${1 - progress * 1.2}`;
-
-  // La landing scale et s'arrondit
-  landingSection.style.transform = `scale(${1 - progress * 0.06})`;
-  landingSection.style.borderRadius = `${progress * 30}px`;
-  landingSection.style.filter = `brightness(${1 - progress * 0.2})`;
-
-  // Scroll indicator disparaît rapidement
-  if (scrollIndicator) {
-    scrollIndicator.style.opacity = `${Math.max(0, 1 - progress * 4)}`;
-  }
-
-  // Featured projects : scale + léger mouvement vertical au scroll
-  const featured = document.getElementById('featured-projects');
-  if (featured) {
-    const scale = 1 + progress * 0.2;        // 1.0 → 1.2
-    const translateY = progress * -20;         // remonte légèrement
-    featured.style.transform = `scale(${scale}) translateY(${translateY}px)`;
-  }
-
-}
-
-document.addEventListener('scroll', () => {
-  if (!parallaxTicking) {
-    requestAnimationFrame(() => {
-      updateParallax();
-      parallaxTicking = false;
-    });
-    parallaxTicking = true;
-  }
-}, { passive: true });
-
 // ─── Scroll-driven marquee ───
 const marqueeTrack = document.querySelector('.marquee-track');
 if (marqueeTrack) {
   let marqueePos = 0;
-  let lastScrollY = window.scrollY;
   let smoothVel = 0;
 
   const BASE_SPEED = 0.25;
-  const SCROLL_GAIN = 0.12;
+  const SCROLL_GAIN = 0.15;
+
+  // Le scroll alimente aussi la vitesse du marquee
+  document.addEventListener('wheel', e => {
+    smoothVel += e.deltaY * 0.5;
+  }, { passive: false });
 
   function tickMarquee() {
-    const sy = window.scrollY;
-    const delta = sy - lastScrollY;
-    lastScrollY = sy;
-
-    smoothVel += (delta - smoothVel) * 0.12;
+    smoothVel += (0 - smoothVel) * 0.1;
     const speed = BASE_SPEED + smoothVel * SCROLL_GAIN;
     marqueePos += speed;
 
@@ -1357,3 +1435,52 @@ if (marqueeTrack) {
   });
 })();
 
+// ─── Drag sidebar ───
+const sidebar = document.querySelector('.sidebar');
+const sidebarDragbar = document.querySelector('.sidebar-dragbar');
+if (sidebar && sidebarDragbar && !isMobile) {
+  let sd = false, sX, sY, sL, sT;
+
+  sidebarDragbar.addEventListener('mousedown', e => {
+    if (e.button !== 0) return;
+    sd = true;
+    const r = sidebar.getBoundingClientRect();
+    const dr = DESKTOP.getBoundingClientRect();
+    sX = e.clientX;
+    sY = e.clientY;
+    sL = r.left - dr.left;
+    sT = r.top - dr.top;
+    sidebar.style.left = sL + 'px';
+    sidebar.style.top = sT + 'px';
+    sidebar.style.transform = 'none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!sd) return;
+    sidebar.style.left = (sL + e.clientX - sX) + 'px';
+    sidebar.style.top = (sT + e.clientY - sY) + 'px';
+  });
+
+  document.addEventListener('mouseup', () => { sd = false; });
+}
+
+
+
+
+// ─── Navigation ───
+function scrollToAbout() {
+  document.body.classList.remove('overflow-hidden');
+  document.getElementById('retour-btn')?.classList.remove('hidden');
+  setTimeout(() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' }), 10);
+}
+
+// ─── Contact ───
+function sendContact(e) {
+  e.preventDefault();
+  const name = document.getElementById('contact-name')?.value.trim() || '';
+  const email = document.getElementById('contact-email')?.value.trim() || '';
+  const msg = document.getElementById('contact-msg')?.value.trim() || '';
+  const body = `Nom: ${name}\nEmail: ${email}\n\n${msg}`;
+  window.location.href = `mailto:bouvy.mathieu@gmail.com?subject=Portfolio&body=${encodeURIComponent(body)}`;
+}
