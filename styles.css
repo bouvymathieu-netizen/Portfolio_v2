@@ -613,6 +613,9 @@ textarea.contact-field {
   #clock-desktop {
     display: none !important;
   }
+  #portfolio-title {
+    display: none !important;
+  }
 
   /* Icônes : plus grosses pour le cercle mobile */
   .desktop-icon {
@@ -633,7 +636,7 @@ textarea.contact-field {
   .icon-box {
     width: 68px !important;
     height: 68px !important;
-    border-radius: 10px !important;
+    border-radius: 0 !important;
     border-width: 1px !important;
   }
   .icon-box img {
