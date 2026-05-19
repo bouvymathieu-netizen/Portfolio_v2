@@ -669,6 +669,11 @@ textarea.contact-field {
     transform: none !important;
     padding: 14px 16px !important;
     bottom: 80px !important;
+    transition: opacity 0.35s ease;
+  }
+  #logos-panel.fade-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
   #logos-panel .marquee-track {
     gap: 3rem !important;
