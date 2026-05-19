@@ -22,7 +22,7 @@ let windowCount = 0;
 const DESKTOP = document.getElementById('desktop');
 const openWindows = {}; // type → element, pour éviter les doublons
 
-const isMobile = window.matchMedia('(max-width: 640px), (max-height: 500px)').matches;
+const isMobile = window.matchMedia('(max-width: 768px), (max-height: 600px)').matches;
 
 // ─── Icônes ───
 const icons = document.querySelectorAll('.desktop-icon');
@@ -1218,42 +1218,19 @@ function shuffleProjectIcons() {
   if (!projectIcons.length) return;
 
   if (isMobile) {
-    // Toutes les icônes dans la grille, y compris CV et Contact
+    // Flexbox géré par CSS — on retire juste les positions absolues
     const allIcons = document.querySelectorAll('.desktop-icon');
-    const isLandscape = window.innerHeight < window.innerWidth;
-    const cols = isLandscape ? 8 : 4;
-    const gapX = isLandscape ? 10 : 12;
-    const gapY = isLandscape ? 14 : 24;
-    const iconW = 80;
-    const iconH = 100;
-    // Centrer la grille horizontalement
-    const vw = window.innerWidth;
-    const gridW = cols * iconW + (cols - 1) * gapX;
-    const startX = Math.max(12, (vw - gridW) / 2);
-    const startY = 80;
-
-    // CV et Contact toujours en premiers (les plus grands)
-    const cv = Array.from(allIcons).find(el => el.dataset.window === 'cv');
-    const contact = Array.from(allIcons).find(el => el.dataset.window === 'contact');
-    const rest = Array.from(allIcons).filter(el => el !== cv && el !== contact);
-    // Mélanger le reste
-    for (let i = rest.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [rest[i], rest[j]] = [rest[j], rest[i]];
-    }
-    const shuffled = [cv, contact, ...rest];
-
-    shuffled.forEach((icon, i) => {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-      icon.style.left = `${startX + col * (iconW + gapX)}px`;
-      icon.style.top = `${startY + row * (iconH + gapY)}px`;
+    allIcons.forEach(icon => {
+      icon.style.left = '';
+      icon.style.top = '';
+      icon.style.zIndex = '';
+      const box = icon.querySelector('.icon-box');
+      if (box) box.style.scale = '';
+      const label = icon.querySelector('.icon-label');
+      if (label) label.style.scale = '';
     });
-
-    // Étendre le bureau pour contenir toutes les icônes (position absolute ne pousse pas le parent)
-    const totalRows = Math.ceil(allIcons.length / cols);
-    const gridHeight = startY + totalRows * (iconH + gapY);
-    DESKTOP.style.minHeight = `${gridHeight + 60}px`;
+    DESKTOP.classList.add('mobile-grid');
+    DESKTOP.style.minHeight = '';
     if (circleAnimId) { cancelAnimationFrame(circleAnimId); circleAnimId = null; }
     return;
   }
@@ -1467,6 +1444,25 @@ if (sidebar && sidebarDragbar && !isMobile) {
 
 
 
+
+// ─── Mobile sidebar toggle ───
+(function() {
+  const btn = document.getElementById('mobile-menu-btn');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (!btn || !sidebar || !overlay) return;
+
+  function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('visible'); }
+  function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('visible'); }
+
+  btn.addEventListener('click', openSidebar);
+  overlay.addEventListener('click', closeSidebar);
+
+  // Close on window resize to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 640) closeSidebar();
+  });
+})();
 
 // ─── Navigation ───
 function scrollToAbout() {
