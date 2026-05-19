@@ -592,13 +592,13 @@ textarea.contact-field {
 
   /* Desktop */
   #desktop {
-    min-height: 100vh;
+    min-height: 0;
     height: auto !important;
     padding: 0 !important;
     background: none !important;
     display: block !important;
     padding-top: 56px !important;
-    padding-bottom: 100px !important;
+    padding-bottom: 80px !important;
   }
   #desktop::before {
     content: '';
