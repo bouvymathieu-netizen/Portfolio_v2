@@ -83,11 +83,16 @@ icons.forEach(icon => {
 });
 }
 
-// ─── Mobile : appui long → drag, tap simple → fenêtre ───
+// ─── Mobile : appui long → drag, tap simple → fenêtre, swipe → rotation cercle ───
 if (isMobile) {
 let longPressTimer = null;
 let longPressActive = false;
 let touchStartPos = null;
+let iconSwipeActive = false;
+let swipeStartAngle = 0;
+let swipeRefX = 0;
+let swipePrevX = 0;
+let swipeLastDx = 0;
 
 icons.forEach(icon => {
   icon.addEventListener('touchstart', e => {
@@ -95,6 +100,7 @@ icons.forEach(icon => {
     const t = e.touches[0];
     touchStartPos = { x: t.clientX, y: t.clientY };
     longPressActive = false;
+    iconSwipeActive = false;
 
     longPressTimer = setTimeout(() => {
       longPressActive = true;
@@ -121,9 +127,26 @@ icons.forEach(icon => {
       const t = e.touches[0];
       const dx = t.clientX - touchStartPos.x;
       const dy = t.clientY - touchStartPos.y;
-      if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+      if (iconSwipeActive) {
+        // Swipe en cours : positionner le cercle directement comme le marquee
+        const totalDx = t.clientX - swipeRefX;
+        circleAngle = swipeStartAngle - totalDx * 0.004;
+        updateCirclePositions();
+        swipeLastDx = t.clientX - swipePrevX;
+        swipePrevX = t.clientX;
+        e.preventDefault();
+      } else if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
         clearTimeout(longPressTimer);
-        touchStartPos = null;
+        iconSwipeActive = true;
+        swipeStartAngle = circleAngle;
+        swipeRefX = t.clientX;
+        swipePrevX = t.clientX;
+        swipeLastDx = 0;
+        // Pas de circlePaused ici : le cercle continue de tourner légèrement pendant le swipe
+        const totalDx = t.clientX - swipeRefX;
+        circleAngle = swipeStartAngle - totalDx * 0.004;
+        updateCirclePositions();
+        e.preventDefault();
       }
     }
   }, { passive: false });
@@ -135,6 +158,10 @@ icons.forEach(icon => {
       icon.classList.remove('dragging');
       longPressActive = false;
       circlePaused = false;
+    } else if (iconSwipeActive) {
+      // Fin du swipe : appliquer le momentum basé sur le dernier delta
+      scrollVel = -swipeLastDx * 0.6;
+      iconSwipeActive = false;
     } else if (touchStartPos) {
       // Tap simple → ouvre la fenêtre
       const type = icon.dataset.window;
@@ -151,6 +178,7 @@ icons.forEach(icon => {
       longPressActive = false;
       circlePaused = false;
     }
+    iconSwipeActive = false;
     touchStartPos = null;
   }, { passive: true });
 });
@@ -1220,16 +1248,20 @@ let circleCenterY = 0;
 let circleRadius = 0;
 let circleAnimId = null;
 let circlePaused = false;
+let scrollVel = 0;
 
 // ─── Positionnement en cercle des projets + rotation lente ───
 function shuffleProjectIcons() {
   const projectIcons = document.querySelectorAll('.desktop-icon[data-category]');
   if (!projectIcons.length) return;
 
-  // Sur mobile, on garde aussi le cercle — plus grand et qui dépasse
-  const cx = window.innerWidth / 2;
-  const cy = window.innerHeight / 2;
-  const radius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.45);
+  // Utiliser les dimensions réelles du desktop pour un centrage parfait
+  const dw = DESKTOP.clientWidth;
+  const dh = DESKTOP.clientHeight;
+  const cx = dw / 2;
+  const cy = dh / 2;
+  const radiusMultiplier = isMobile ? 0.45 : 0.27;
+  const radius = Math.min(380, Math.min(dw, dh) * radiusMultiplier);
   const count = projectIcons.length;
   const step = (2 * Math.PI) / count;
 
@@ -1275,19 +1307,27 @@ function updateCirclePositions() {
     icon.style.left = `${x - halfW}px`;
     icon.style.top = `${y - halfH}px`;
 
-    const depthScale = 1 + 0.3 * sinA;
+    const depth = (sinA + 1) / 2; // 0 (fond) → 1 (avant)
+    const depthScale = 1 + 0.42 * sinA;
     const box = icon.querySelector('.icon-box');
-    if (box) box.style.scale = depthScale;
+    if (box) {
+      box.style.scale = depthScale;
+      // Léger halo lumineux sur l'icône la plus en avant
+      const glow = Math.max(0, sinA) * 18;
+      box.style.boxShadow = glow > 0 ? `0 0 ${glow}px rgba(255,255,255,${0.04 + depth * 0.06})` : 'none';
+    }
     const label = icon.querySelector('.icon-label');
     if (label) label.style.scale = depthScale;
-    icon.style.zIndex = Math.round(50 + 30 * sinA);
+    icon.style.zIndex = Math.round(50 + 40 * sinA);
+    // Fondu doux : l'icône derrière s'estompe quand une autre passe devant
+    icon.style.opacity = 0.78 + 0.22 * depth;
   });
 }
 
 function startCircleRotation() {
   if (circleAnimId) cancelAnimationFrame(circleAnimId);
   let last = performance.now();
-  let scrollVel = 0;
+  scrollVel = 0;
 
   // Le scroll alimente uniquement la rotation du cercle, pas la page
   document.addEventListener('wheel', e => {
@@ -1339,17 +1379,25 @@ document.addEventListener('mousedown', e => {
   if (e.target.closest('.desktop-icon[data-category]') && !e.target.closest('[data-detached]')) circlePaused = true;
 });
 document.addEventListener('mouseup', () => { circlePaused = false; });
-shuffleProjectIcons();
+
+// Attendre que le layout soit stable avant de positionner les icônes (évite le décalage au lancement)
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    shuffleProjectIcons();
+  });
+});
 
 // ─── Recalculer le cercle au resize ───
 window.addEventListener('resize', () => {
   if (document.querySelectorAll('.desktop-icon[data-category]').length === 0) return;
-  circleCenterX = window.innerWidth / 2;
-  circleCenterY = window.innerHeight / 2;
+  const dw = DESKTOP.clientWidth;
+  const dh = DESKTOP.clientHeight;
+  circleCenterX = dw / 2;
+  circleCenterY = dh / 2;
   if (isMobile) {
-    circleRadius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.45);
+    circleRadius = Math.min(380, Math.min(dw, dh) * 0.45);
   } else {
-    circleRadius = Math.min(380, Math.min(window.innerWidth, window.innerHeight) * 0.3);
+    circleRadius = Math.min(380, Math.min(dw, dh) * 0.27);
   }
   updateCirclePositions();
 });
