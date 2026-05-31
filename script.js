@@ -250,7 +250,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 overflow-hidden mb-3" style="position:relative;">
-            <iframe src="https://player.vimeo.com/video/1055991297?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1"
+            <iframe src="https://player.vimeo.com/video/1055991297?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;loop=1"
                     frameborder="0"
                     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                     referrerpolicy="strict-origin-when-cross-origin"
@@ -266,7 +266,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/DBd60DzZuKg?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/DBd60DzZuKg?autoplay=1"
                     title="NIKON_Mono no Aware" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -308,7 +308,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/I2QqF8yEKqE?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/I2QqF8yEKqE?autoplay=1"
                     title="PUMA_x_DECATHLON_Aftermovie" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -334,7 +334,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/_PudK3T0x7E?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/_PudK3T0x7E?autoplay=1"
                     title="OL_x_LALIGUE_Aftermovie" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -360,7 +360,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/6qIcuHd1Vzc?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/6qIcuHd1Vzc?autoplay=1"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -395,7 +395,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/MqOMdPY08zU?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/MqOMdPY08zU?autoplay=1"
                     title="EA_Fut_Birthday" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -426,7 +426,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/gJcIfowmhUU?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/gJcIfowmhUU?autoplay=1"
                     title="EA_Ratings_OM" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -460,7 +460,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 overflow-hidden mb-3" style="position:relative;">
-            <iframe src="https://player.vimeo.com/video/1104271031?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1"
+            <iframe src="https://player.vimeo.com/video/1104271031?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1"
                     frameborder="0"
                     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                     referrerpolicy="strict-origin-when-cross-origin"
@@ -652,7 +652,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/SM4wgYJgu90?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/SM4wgYJgu90?autoplay=1"
                     title="ADIDAS_Vintage Market" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -684,7 +684,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/iFTW1UsKPcA?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/iFTW1UsKPcA?autoplay=1"
                     title="JUMPMAN_fx" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -700,7 +700,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/QhXHbWDuPns?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/QhXHbWDuPns?autoplay=1"
                     title="KANAGA_Foule Désirs" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -716,7 +716,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/YolF_YnCvR4?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/YolF_YnCvR4?autoplay=1"
                     title="LALIGUE_Lyon street food festival" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -732,7 +732,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/hjx62AR7fRA?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/hjx62AR7fRA?autoplay=1"
                     title="LALIGUE_Pola freestyle" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -748,7 +748,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/VENqrlGnch0?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/VENqrlGnch0?autoplay=1"
                     title="NIKON_2024" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -764,7 +764,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/RX4TBKkIyHw?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/RX4TBKkIyHw?autoplay=1"
                     title="PUMA_Crampons" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -780,7 +780,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/9aXbaUvzN_g?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/9aXbaUvzN_g?autoplay=1"
                     title="PUNCHOLOGUE_Wallace Cleaver" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -796,7 +796,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/eTLyLNciZJ4?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/eTLyLNciZJ4?autoplay=1"
                     title="SOFIANEE_Gold digger" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -812,7 +812,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/hrv_cswZlZQ?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/hrv_cswZlZQ?autoplay=1"
                     title="UDOL_Gameday" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -828,7 +828,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/Cc8gvhsg1XU?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/Cc8gvhsg1XU?autoplay=1"
                     title="UNIBET_Greg MMA" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -844,7 +844,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/FI33Ajr09xE?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/FI33Ajr09xE?autoplay=1"
                     title="UNIBET_Greg MMA x SAmir NASRI" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -860,7 +860,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/gncKO_CvF60?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/gncKO_CvF60?autoplay=1"
                     title="VILLEDELYON_Anooki" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -892,7 +892,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/3L9IsKxEKFI?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/3L9IsKxEKFI?autoplay=1"
                     title="PLUS33FM_Motion" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -908,7 +908,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/kr7wSxyoZwE?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/kr7wSxyoZwE?autoplay=1"
                     title="OL_Nouveau Maillot" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>
@@ -924,7 +924,7 @@ function openWindow(type) {
       bodyHTML = `
         <div class="flex flex-col h-full">
           <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/OLX8yLoVE88?autoplay=1&amp;mute=1"
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/OLX8yLoVE88?autoplay=1"
                     title="PLUS33_Logos Animées" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="origin" allowfullscreen>

@@ -781,6 +781,8 @@ textarea.contact-field {
   }
   .window-body {
     max-height: calc(100% - 33px) !important;
+	    -webkit-overflow-scrolling: touch;
+	    overflow-y: auto !important;
   }
   .window-btn-minimize {
     display: none !important;
@@ -802,12 +804,29 @@ textarea.contact-field {
     width: 100% !important;
     flex-direction: row !important;
     flex-wrap: wrap;
-    padding: 0.75rem !important;
-    gap: 0.75rem;
+    padding: 0.5rem !important;
+    gap: 0.5rem;
   }
   .window .w-\[35\%\] > div {
     flex: 1;
-    min-width: 120px;
+    min-width: 100px;
+	  .window .flex.h-full {
+	    overflow-y: auto !important;
+	    -webkit-overflow-scrolling: touch;
+	  }
+	  .window .text-sm {
+	    font-size: 0.7rem !important;
+	  }
+	  .window .text-xs {
+	    font-size: 0.6rem !important;
+	  }
+	  .window .text-2xl {
+	    font-size: 1.1rem !important;
+	  }
+	  .window .w-16.h-16 {
+	    width: 2.5rem !important;
+	    height: 2.5rem !important;
+	  }
   }
 
   /* Qui suis-je — version mobile */
