@@ -1214,7 +1214,11 @@ function filterBrand(brand) {
   if (activeBrand === brand) {
     activeBrand = null;
     icons.forEach(icon => icon.classList.remove('dimmed'));
-    document.querySelectorAll('.brand-logo').forEach(l => l.classList.remove('brand-active'));
+    document.querySelectorAll('.brand-logo').forEach(l => {
+      l.classList.remove('brand-active');
+      l.style.opacity = '';
+      l.style.filter = '';
+    });
     return;
   }
 
@@ -1232,7 +1236,15 @@ function filterBrand(brand) {
   });
 
   document.querySelectorAll('.brand-logo').forEach(l => {
-    l.classList.toggle('brand-active', l.dataset.brand === brand);
+    const isMatch = l.dataset.brand === brand;
+    l.classList.toggle('brand-active', isMatch);
+    if (isMatch) {
+      l.style.opacity = '1';
+      l.style.filter = '';
+    } else {
+      l.style.opacity = '0.2';
+      l.style.filter = 'brightness(0) invert(0.6)';
+    }
   });
 }
 
@@ -1320,7 +1332,12 @@ function updateCirclePositions() {
     if (label) label.style.scale = depthScale;
     icon.style.zIndex = Math.round(50 + 40 * sinA);
     // Fondu doux : l'icône derrière s'estompe quand une autre passe devant
-    icon.style.opacity = 0.78 + 0.22 * depth;
+    // Respecter le filtre dimmed si actif
+    if (!icon.classList.contains('dimmed')) {
+      icon.style.opacity = 0.78 + 0.22 * depth;
+    } else {
+      icon.style.opacity = '';
+    }
   });
 }
 

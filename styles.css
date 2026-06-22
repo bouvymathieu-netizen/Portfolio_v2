@@ -2,7 +2,7 @@ body {
   font-family: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
 }
 
-/* ─── Sidebar ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Sidebar Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .sidebar {
   position: absolute;
   top: 50%;
@@ -115,7 +115,7 @@ body {
   margin: 6px 0;
 }
 
-/* ─── Menu Bar ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Menu Bar Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .menu-bar {
   position: absolute;
   top: 20px;
@@ -143,7 +143,7 @@ body {
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* ─── Desktop Icons ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Desktop Icons Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .desktop-icon {
   position: absolute;
   display: flex;
@@ -213,7 +213,7 @@ body {
   color: #fff;
 }
 
-/* ─── Windows ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Windows Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .window {
   position: absolute;
   border-radius: 6px;
@@ -292,7 +292,7 @@ body {
 .window-btn-minimize{ background: #febc2e; }
 .window-btn-maximize{ background: #28c840; }
 
-/* ─── Window title ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Window title Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .window-title {
   font-size: 12px;
   font-weight: 500;
@@ -322,7 +322,7 @@ body {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* ─── Video Player ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Video Player Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .video-container video {
   width: 100%;
   height: 100%;
@@ -330,7 +330,7 @@ body {
   background: #000;
 }
 
-/* ─── Contact form ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Contact form Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .contact-field {
   width: 100%;
   background: transparent;
@@ -353,7 +353,7 @@ textarea.contact-field {
   min-height: 80px;
 }
 
-/* ─── Resize handles ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Resize handles Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .resize-handle {
   position: absolute;
   z-index: 20;
@@ -375,18 +375,26 @@ textarea.contact-field {
   cursor: sw-resize;
 }
 
-/* ─── Filtre catégorie ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Filtre catÃƒÂ©gorie Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* Filtre (catégorie & marque) */
 .desktop-icon.dimmed {
-  opacity: 0.15;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
+  opacity: 0.2;
+  transition: opacity 0.4s ease;
+}
+.desktop-icon.dimmed:hover {
+  opacity: 0.35;
+}
+.desktop-icon:not(.dimmed) {
+  opacity: 1 !important;
+  transition: opacity 0.4s ease;
+}
 }
 .menu-category.active-category {
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
 }
 
-/* ─── Barre bicolore pour projet multi-catégorie ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Barre bicolore pour projet multi-catÃƒÂ©gorie Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .icon-box-dual {
   position: relative;
 }
@@ -410,7 +418,7 @@ textarea.contact-field {
   background: #dc2626;
 }
 
-/* ─── Barre rouge/jaune (captation + motion) ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Barre rouge/jaune (captation + motion) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .icon-box-dual-bp {
   position: relative;
 }
@@ -434,7 +442,7 @@ textarea.contact-field {
   background: #ca8a04;
 }
 
-/* ─── Barre rouge/jaune (montage + motion) ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Barre rouge/jaune (montage + motion) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .icon-box-dual-vp {
   position: relative;
 }
@@ -458,7 +466,7 @@ textarea.contact-field {
   background: #ca8a04;
 }
 
-/* ─── Barre tricolore pour projet 3 catégories ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Barre tricolore pour projet 3 catÃƒÂ©gories Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .icon-box-triple {
   position: relative;
 }
@@ -474,7 +482,7 @@ textarea.contact-field {
   background: linear-gradient(to right, #b91c1c 33.33%, #dc2626 33.33%, #dc2626 66.66%, #ca8a04 66.66%);
 }
 
-/* ─── Marquee logos ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Marquee logos Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .marquee-container {
   width: 100%;
   overflow: hidden;
@@ -498,7 +506,7 @@ textarea.contact-field {
   filter: brightness(0) saturate(100%) invert(16%) sepia(99%) saturate(7404%) hue-rotate(4deg) brightness(95%) contrast(118%);
 }
 
-/* ─── 📱 Mobile (< 768px) ─── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Ã°Å¸â€œÂ± Mobile (< 768px) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 @media (max-width: 768px), (max-height: 600px) {
   html, body {
     overflow: auto !important;
@@ -515,7 +523,7 @@ textarea.contact-field {
     box-sizing: border-box;
   }
 
-  /* Menu bar — fenêtre flottante glass */
+  /* Menu bar Ã¢â‚¬â€ fenÃƒÂªtre flottante glass */
   .menu-bar {
     position: absolute !important;
     top: 12px !important;
@@ -562,7 +570,7 @@ textarea.contact-field {
     box-shadow: 0 4px 16px rgba(0,0,0,0.4);
   }
 
-  /* Sidebar → drawer latéral (droite) */
+  /* Sidebar Ã¢â€ â€™ drawer latÃƒÂ©ral (droite) */
   .sidebar {
     position: fixed !important;
     top: 0 !important;
@@ -584,7 +592,7 @@ textarea.contact-field {
   .sidebar-dragbar {
     display: none !important;
   }
-  /* Overlay sombre derrière la sidebar */
+  /* Overlay sombre derriÃƒÂ¨re la sidebar */
   .sidebar-overlay {
     display: none;
     position: fixed;
@@ -596,7 +604,7 @@ textarea.contact-field {
     display: block;
   }
 
-  /* Desktop — full screen locké comme sur l'ordi */
+  /* Desktop Ã¢â‚¬â€ full screen lockÃƒÂ© comme sur l'ordi */
   #desktop {
     height: 100dvh !important;
     overflow: hidden !important;
@@ -606,7 +614,7 @@ textarea.contact-field {
     padding-bottom: 0 !important;
   }
 
-  /* Cacher le séparateur et le bouton Qui suis-je dans le menu mobile */
+  /* Cacher le sÃƒÂ©parateur et le bouton Qui suis-je dans le menu mobile */
   .menu-bar .text-gray-600.mx-2 {
     display: none !important;
   }
@@ -625,7 +633,7 @@ textarea.contact-field {
     display: none !important;
   }
 
-  /* Icônes : plus grosses pour le cercle mobile */
+  /* IcÃƒÂ´nes : plus grosses pour le cercle mobile */
   .desktop-icon {
     padding: 4px !important;
     width: 88px !important;
@@ -663,7 +671,7 @@ textarea.contact-field {
     transform: scale(1.08);
   }
 
-  /* Logos panel — au-dessus du bouton */
+  /* Logos panel Ã¢â‚¬â€ au-dessus du bouton */
   #logos-panel {
     position: fixed !important;
     min-width: auto !important;
@@ -686,7 +694,7 @@ textarea.contact-field {
     height: 28px !important;
   }
 
-  /* Bouton Qui suis-je mobile — au-dessus des logos */
+  /* Bouton Qui suis-je mobile Ã¢â‚¬â€ au-dessus des logos */
   #about-mobile-btn {
     display: block !important;
     position: fixed;
@@ -707,9 +715,9 @@ textarea.contact-field {
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
   }
 
-  /* ─── Paysage : boutons en bas en ligne ─── */
+  /* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Paysage : boutons en bas en ligne Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
   @media (orientation: landscape) and (max-height: 600px) {
-    /* Disposition horizontale : [Qui suis-je] [logos] [☰] */
+    /* Disposition horizontale : [Qui suis-je] [logos] [Ã¢ËœÂ°] */
     #about-mobile-btn {
       bottom: 16px !important;
       left: 12px !important;
@@ -743,7 +751,7 @@ textarea.contact-field {
       font-size: 10px !important;
       padding: 4px 6px !important;
     }
-    /* Icônes plus petites en paysage */
+    /* IcÃƒÂ´nes plus petites en paysage */
     .desktop-icon {
       width: 68px !important;
       padding: 2px !important;
@@ -757,7 +765,7 @@ textarea.contact-field {
     }
   }
 
-  /* Fenêtres → plein écran */
+  /* FenÃƒÂªtres Ã¢â€ â€™ plein ÃƒÂ©cran */
   .window {
     position: fixed !important;
     top: 36px !important;
@@ -796,7 +804,7 @@ textarea.contact-field {
     100% { opacity: 0; transform: translateY(20px); }
   }
 
-  /* CV fenêtre en mobile */
+  /* CV fenÃƒÂªtre en mobile */
   .window .flex.h-full {
     flex-direction: column !important;
   }
@@ -829,7 +837,7 @@ textarea.contact-field {
 	  }
   }
 
-  /* Qui suis-je — version mobile */
+  /* Qui suis-je Ã¢â‚¬â€ version mobile */
   #about {
     margin-top: 0 !important;
     padding: 4rem 1.25rem !important;
@@ -853,7 +861,7 @@ textarea.contact-field {
   }
 }
 
-/* Masqué par défaut sur desktop */
+/* MasquÃƒÂ© par dÃƒÂ©faut sur desktop */
 .mobile-menu-btn {
   display: none;
 }
