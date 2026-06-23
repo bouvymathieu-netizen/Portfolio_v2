@@ -3,27 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mathieu Bouvy — Portfolio vidéo</title>
-  <meta name="description" content="Vidéaste basé à Lyon — Captation, Montage, Motion design. Découvrez mes projets.">
-  <!-- Open Graph -->
-  <meta property="og:title" content="Mathieu Bouvy — Portfolio vidéo">
-  <meta property="og:description" content="Vidéaste basé à Lyon — Captation, Montage, Motion design. Découvrez mes projets.">
-  <meta property="og:image" content="https://bouvymathieu-netizen.github.io/Portfolio_v2/assets/photos/Background_Desktop.jpg">
-  <meta property="og:image:width" content="1920">
-  <meta property="og:image:height" content="1080">
-  <meta property="og:url" content="https://bouvymathieu-netizen.github.io/Portfolio_v2/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Mathieu Bouvy">
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Mathieu Bouvy — Portfolio vidéo">
-  <meta name="twitter:description" content="Vidéaste basé à Lyon — Captation, Montage, Motion design. Découvrez mes projets.">
-  <meta name="twitter:image" content="https://bouvymathieu-netizen.github.io/Portfolio_v2/assets/photos/Background_Desktop.jpg">
+  <title>Portfolio — Desktop</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=14">
+  <link rel="stylesheet" href="styles.css?v=2">
   <script src="https://player.vimeo.com/api/player.js" defer></script>
 </head>
 <body class="bg-[#050505] select-none overflow-hidden">
@@ -47,7 +32,7 @@
     </h1>
 
     <!-- ─── Portfolio ─── -->
-    <span id="portfolio-title" style="position:absolute;top:28px;right:24px;z-index:3;font-family:'CS Caleb Mono',monospace;font-weight:400;font-size:0.9rem;color:#dc2626;letter-spacing:0.1em;">Portfolio</span>
+    <span style="position:absolute;top:28px;right:24px;z-index:3;font-family:'CS Caleb Mono',monospace;font-weight:400;font-size:0.9rem;color:#dc2626;letter-spacing:0.1em;">Portfolio</span>
 
     <!-- ─── Horloge ─── -->
     <span id="clock-desktop" style="position:absolute;bottom:24px;right:24px;z-index:100;font-family:'CS Caleb Mono',monospace;font-weight:400;font-size:0.9rem;color:#dc2626;">Dim 1 Jan  00:00</span>
@@ -62,31 +47,31 @@
       <div class="sidebar-dragbar"></div>
       <div class="sidebar-section">
         <p class="sidebar-label">Projets à l'honneur</p>
-        <div class="sidebar-item" onclick="openFeatured('puma')">
+        <div class="sidebar-item" onclick="openFeatured('plus33logos')">
           <div class="sidebar-thumb">
-            <img src="assets/thumbnails/PUMAxDECATHLON_Aftermovie.jpg" alt="">
+            <img src="assets/thumbnails/PLUS33_Logos_Animees.jpg" alt="">
           </div>
           <div class="sidebar-text">
-            <span class="sidebar-title">PUMA</span>
-            <span class="sidebar-sub">x DECATHLON</span>
+            <span class="sidebar-title">PLUS33</span>
+            <span class="sidebar-sub">Logos Animées</span>
           </div>
         </div>
-        <div class="sidebar-item" onclick="openFeatured('ol')">
+        <div class="sidebar-item" onclick="openFeatured('adidas')">
           <div class="sidebar-thumb">
-            <img src="assets/thumbnails/OLxLALIGUE_Aftermovie.jpg" alt="">
+            <img src="assets/thumbnails/ADIDAS_Motion%20Vintage%20Market.jpg" alt="">
           </div>
           <div class="sidebar-text">
-            <span class="sidebar-title">OL</span>
-            <span class="sidebar-sub">x LALIGUE</span>
+            <span class="sidebar-title">ADIDAS</span>
+            <span class="sidebar-sub">Vintage Market</span>
           </div>
         </div>
-        <div class="sidebar-item" onclick="openFeatured('laligue')">
+        <div class="sidebar-item" onclick="openFeatured('unibet')">
           <div class="sidebar-thumb">
-            <img src="assets/thumbnails/LALIGUE_Lyon%20street%20food%20festival.jpg" alt="">
+            <img src="assets/thumbnails/UNIBET_Greg%20MMA.jpg" alt="">
           </div>
           <div class="sidebar-text">
-            <span class="sidebar-title">LALIGUE</span>
-            <span class="sidebar-sub">Lyon street food festival</span>
+            <span class="sidebar-title">UNIBET</span>
+            <span class="sidebar-sub">Greg MMA</span>
           </div>
         </div>
       </div>
@@ -124,22 +109,7 @@
       </div>
     </div>
 
-    	        <!-- ─── Mobile sidebar overlay ─── -->
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
-
-    <!-- ─── Mobile menu button ─── -->
-    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="4" y1="7" x2="20" y2="7"/>
-        <line x1="4" y1="12" x2="20" y2="12"/>
-        <line x1="4" y1="17" x2="20" y2="17"/>
-      </svg>
-    </button>
-
-<!-- ─── Qui suis-je (mobile only) ─── -->
-<button id="about-mobile-btn" onclick="scrollToAbout()" style="display:none;">Qui suis-je ?</button>
-
-<!-- ─── Logos (panneau glass flottant) ─── -->
+    	    <!-- ─── Logos (panneau glass flottant) ─── -->
 		    <div id="logos-panel" class="absolute" style="bottom:10px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(10,10,10,0.25);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 20px;min-width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.3);pointer-events:auto;">
 		      <div class="marquee-container" id="trust-logos">
 		          <div class="marquee-track" style="gap:3rem;">
@@ -393,7 +363,7 @@
     </div>
 </main>
 <section id="about" class="w-screen min-h-screen bg-gradient-to-b from-[#050505] via-[#0a0a0a] to-[#050505] flex items-center justify-center px-6 -mt-[130px] pb-20 relative overflow-hidden">
-    <button id="retour-btn" onclick="retourAuBureau()" class="fixed bottom-8 left-1/2 -translate-x-1/2 text-red-400 hover:text-red-300 transition-colors text-xs cursor-pointer z-50 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-lg hidden">
+    <button id="retour-btn" onclick="document.getElementById('retour-btn').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>document.body.classList.add('overflow-hidden'),300)" class="fixed bottom-8 left-1/2 -translate-x-1/2 text-red-400 hover:text-red-300 transition-colors text-xs cursor-pointer z-50 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-lg hidden">
       ↑ Retour au bureau
     </button>
     <!-- Glow décoratif -->
@@ -432,6 +402,6 @@
     </div>
         </section>
 
-  <script src="script.js?v=15"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>

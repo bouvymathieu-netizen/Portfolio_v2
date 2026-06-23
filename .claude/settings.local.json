@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(python -m http.server 8000 --directory \"C:\\\\Users\\\\Utilisateur\\\\mon-portfolio\")",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(ls \"$env:USERPROFILE\\\\Downloads\" -ErrorAction SilentlyContinue)",
+      "PowerShell(Expand-Archive *)",
+      "PowerShell(New-Item *)",
+      "PowerShell(Copy-Item *)",
+      "PowerShell(curl -s -o $null -w \"%{http_code}\" http://localhost:8000/assets/fonts/TBJInterval-Bold.woff2)",
+      "PowerShell(curl.exe -s -o $null -w \"%{http_code}\" http://localhost:8000/assets/fonts/TBJInterval-Bold.woff2)",
+      "PowerShell(Add-Type -AssemblyName PresentationCore; $uri = [Uri]\"C:\\\\Users\\\\Utilisateur\\\\mon-portfolio\\\\assets\\\\fonts\\\\TBJInterval-Bold.otf\"; $glyph = [Windows.Media.GlyphTypeface]::new\\($uri\\); Write-Output \"Family: $\\($glyph.FamilyNames.Values -join ', '\\)\"; Write-Output \"Weight: $\\($glyph.Weight\\)\"; Write-Output \"Style: $\\($glyph.Style\\)\")",
+      "PowerShell(\\(curl.exe -s -D - \"http://localhost:8000/assets/fonts/TBJInterval-Bold.woff2\" -o NUL\\) 2>&1)",
+      "PowerShell(ls \"$env:TEMP\\\\caleb-font\" -Recurse)",
+      "PowerShell(Add-Type -AssemblyName PresentationCore; $uri = [Uri]\"$env:TEMP\\\\caleb-font\\\\CS Caleb Mono\\\\CSCalebMono-Regular.otf\"; $glyph = [Windows.Media.GlyphTypeface]::new\\($uri\\); Write-Output \"Family: $\\($glyph.FamilyNames.Values -join ', '\\)\"; Write-Output \"Weight: $\\($glyph.Weight\\)\")",
+      "PowerShell(Get-Content *)",
+      "Bash(node *)",
+      "Bash(PowerShell *)",
+      "Bash(Get-Content script.js -Encoding UTF8 -TotalCount 207)",
+      "Bash(Select-Object -Last 15)",
+      "PowerShell(Set-Content *)",
+      "Bash(Get-Content \"C:\\\\Users\\\\Utilisateur\\\\mon-portfolio\\\\script.js\" -Tail 230)",
+      "Bash(Select-Object -First 30)",
+      "Bash(python3 *)",
+      "PowerShell(python C:\\\\Users\\\\Utilisateur\\\\mon-portfolio\\\\_add_project.py)",
+      "PowerShell(python C:\\\\Users\\\\Utilisateur\\\\mon-portfolio\\\\_fix_plus33.py)",
+      "PowerShell(Set-Location *)",
+      "Bash(curl -s http://localhost:8000/)",
+      "Bash(python *)",
+      "Bash(curl -s http://localhost:8000/script.js?v=2)",
+      "Bash(start *)",
+      "Bash(curl -s -o \"C:\\\\Users\\\\Utilisateur\\\\mon-portfolio\\\\assets\\\\thumbnails\\\\PLUS33_Logos_Animees.jpg\" \"https://img.youtube.com/vi/OLX8yLoVE88/maxresdefault.jpg\")",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(gh repo *)",
+      "Bash(curl *)",
+      "Bash(env)",
+      "PowerShell(Get-Command *)"
+    ]
+  }
+}
