@@ -983,7 +983,7 @@ function shuffleProjectIcons() {
   const dh = DESKTOP.clientHeight;
   const cx = dw / 2;
   const cy = dh / 2;
-  const radiusMultiplier = isMobile ? 0.50 : 0.37;
+  const radiusMultiplier = isMobile ? 0.55 : 0.37;
   const radius = Math.min(480, Math.min(dw, dh) * radiusMultiplier);
   const count = projectIcons.length;
   const step = (2 * Math.PI) / count;
@@ -1133,7 +1133,7 @@ window.addEventListener('resize', () => {
   circleCenterX = dw / 2;
   circleCenterY = dh / 2;
   if (isMobile) {
-    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.50);
+    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.55);
   } else {
     circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.37);
   }
