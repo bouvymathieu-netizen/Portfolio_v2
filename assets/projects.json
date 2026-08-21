@@ -144,7 +144,7 @@
     "w": 380,
     "h": 675,
     "media": [
-      { "type": "video", "provider": "youtube", "id": "FI33Ajr09xE", "label": "Vidéo" }
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Unibet%20-%20Greg%20x%20Samir/UNIBET_Greg%20MMA%20x%20SAmir%20NASRI.mp4", "label": "Vidéo" }
     ],
     "description": "Unibet — Greg MMA x SAmir NASRI.",
     "credits": []
@@ -158,7 +158,9 @@
       { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/OL%20-%20Maillot%20Away/D%C3%A9couvrez%20notre%20nouveau%20maillot%20ext%C3%A9rieur%20%20Olympique%20Lyonnais.mp4", "label": "Vidéo" }
     ],
     "description": "OL — Nouveau maillot extérieur.",
-    "credits": []
+    "credits": [
+      "Réalisation : @spireprod — Toute la post-production : @mathieu.bouvy"
+    ]
   },
   {
     "id": "boatpartysplit",

@@ -76,6 +76,7 @@ let swipeStartAngle = 0;
 let swipeRefX = 0;
 let swipePrevX = 0;
 let swipeLastDx = 0;
+let swipeVel = 0;
 
 icons.forEach(icon => {
   icon.addEventListener('touchstart', e => {
@@ -116,6 +117,7 @@ icons.forEach(icon => {
         circleAngle = swipeStartAngle - totalDx * 0.004;
         updateCirclePositions();
         swipeLastDx = t.clientX - swipePrevX;
+        swipeVel = swipeVel * 0.6 + swipeLastDx * 0.4;
         swipePrevX = t.clientX;
         e.preventDefault();
       } else if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
@@ -125,6 +127,7 @@ icons.forEach(icon => {
         swipeRefX = t.clientX;
         swipePrevX = t.clientX;
         swipeLastDx = 0;
+        swipeVel = 0;
         // Pas de circlePaused ici : le cercle continue de tourner légèrement pendant le swipe
         const totalDx = t.clientX - swipeRefX;
         circleAngle = swipeStartAngle - totalDx * 0.004;
@@ -143,7 +146,7 @@ icons.forEach(icon => {
       circlePaused = false;
     } else if (iconSwipeActive) {
       // Fin du swipe : appliquer le momentum basé sur le dernier delta
-      scrollVel = -swipeLastDx * 0.6;
+      scrollVel = -swipeVel * 12;
       iconSwipeActive = false;
     } else if (touchStartPos) {
       // Tap simple → ouvre la fenêtre
@@ -980,7 +983,7 @@ function shuffleProjectIcons() {
   const dh = DESKTOP.clientHeight;
   const cx = dw / 2;
   const cy = dh / 2;
-  const radiusMultiplier = isMobile ? 0.55 : 0.37;
+  const radiusMultiplier = isMobile ? 0.50 : 0.37;
   const radius = Math.min(480, Math.min(dw, dh) * radiusMultiplier);
   const count = projectIcons.length;
   const step = (2 * Math.PI) / count;
@@ -1032,9 +1035,11 @@ function updateCirclePositions() {
     const depthScale = ICON_SCALE * (1 + 0.42 * sinA);
     const box = icon.querySelector('.icon-box');
     if (box) {
-      // Léger halo lumineux sur l'icône la plus en avant
-      const glow = Math.max(0, sinA) * 18;
-      box.style.boxShadow = glow > 0 ? `0 0 ${glow}px rgba(255,255,255,${0.04 + depth * 0.06})` : 'none';
+      // Léger halo lumineux sur l'icône la plus en avant (désactivé sur mobile pour les perfs)
+      if (!isMobile) {
+        const glow = Math.max(0, sinA) * 18;
+        box.style.boxShadow = glow > 0 ? `0 0 ${glow}px rgba(255,255,255,${0.04 + depth * 0.06})` : 'none';
+      }
     }
     icon.style.scale = depthScale;
     icon.style.zIndex = Math.round(50 + 40 * sinA);
@@ -1087,12 +1092,14 @@ function startCircleRotation() {
     last = now;
 
     // Decay naturelle de la vélocité
-    scrollVel += (0 - scrollVel) * 0.08;
+    scrollVel += (0 - scrollVel) * 0.04;
 
-    // Élargit le cercle selon la vitesse de scroll (revient à la base quand lent/arrêté)
-    const speedFactor = Math.min(Math.abs(scrollVel) / MAX_SCROLL_SPEED, 1);
-    const targetRadius = circleBaseRadius * (1 + RADIUS_EXPAND * speedFactor);
-    circleRadius += (targetRadius - circleRadius) * 0.1;
+    // Élargit le cercle selon la vitesse de scroll (désactivé sur mobile)
+    if (!isMobile) {
+      const speedFactor = Math.min(Math.abs(scrollVel) / MAX_SCROLL_SPEED, 1);
+      const targetRadius = circleBaseRadius * (1 + RADIUS_EXPAND * speedFactor);
+      circleRadius += (targetRadius - circleRadius) * 0.1;
+    }
 
     const speed = dt * 0.00002 + scrollVel * 0.0006;
 
@@ -1126,7 +1133,7 @@ window.addEventListener('resize', () => {
   circleCenterX = dw / 2;
   circleCenterY = dh / 2;
   if (isMobile) {
-    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.55);
+    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.50);
   } else {
     circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.37);
   }
@@ -1169,11 +1176,15 @@ if (marqueeTrack) {
   if (marqueeContainer) {
     let logoTouchX = 0;
     let logoTouchStartPos = 0;
+    let logoTouchPrevX = 0;
+    let logoVel = 0;
     let logoTouching = false;
 
     marqueeContainer.addEventListener('touchstart', e => {
       logoTouchX = e.touches[0].clientX;
       logoTouchStartPos = marqueePos;
+      logoTouchPrevX = e.touches[0].clientX;
+      logoVel = 0;
       logoTouching = true;
     }, { passive: true });
 
@@ -1181,6 +1192,9 @@ if (marqueeTrack) {
       if (!logoTouching) return;
       const dx = logoTouchX - e.touches[0].clientX;
       marqueePos = logoTouchStartPos + dx;
+      const deltaX = logoTouchPrevX - e.touches[0].clientX;
+      logoVel = logoVel * 0.6 + deltaX * 0.4;
+      logoTouchPrevX = e.touches[0].clientX;
       smoothVel = 0;
       if (wrap > 0) {
         if (marqueePos >= wrap) marqueePos -= wrap;
@@ -1189,7 +1203,11 @@ if (marqueeTrack) {
       e.preventDefault();
     }, { passive: false });
 
-    marqueeContainer.addEventListener('touchend', () => { logoTouching = false; }, { passive: true });
+    marqueeContainer.addEventListener('touchend', () => {
+      logoTouching = false;
+      // Inertie : on continue sur la lancée du swipe
+      smoothVel = logoVel / SCROLL_GAIN;
+    }, { passive: true });
     marqueeContainer.addEventListener('touchcancel', () => { logoTouching = false; }, { passive: true });
   }
 
@@ -1200,7 +1218,7 @@ if (marqueeTrack) {
       if (w > 0) wrap = w;
     }
 
-    smoothVel += (0 - smoothVel) * 0.1;
+    smoothVel += (0 - smoothVel) * 0.05;
     const speed = BASE_SPEED + smoothVel * SCROLL_GAIN;
     marqueePos += speed;
 
@@ -1700,6 +1718,7 @@ let introPlayed = false;
 function playIntro() {
   if (introPlayed || !circleBaseRadius) return;
   introPlayed = true;
+  if (isMobile) return; // pas d'animation d'ouverture sur mobile
   circleRadius = circleBaseRadius * 1.6;
   scrollVel = 80;
 }
