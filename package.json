@@ -1,0 +1,13 @@
+{
+  "name": "mon-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "photos": "node scripts/optimize-photos.mjs",
+    "backstage": "node scripts/optimize-backstage.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}

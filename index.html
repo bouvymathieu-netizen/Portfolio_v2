@@ -8,7 +8,7 @@
   <!-- Open Graph -->
   <meta property="og:title" content="Mathieu Bouvy — Portfolio vidéo">
   <meta property="og:description" content="Vidéaste basé à Lyon — Captation, Montage, Motion design. Découvrez mes projets.">
-  <meta property="og:image" content="https://bouvymathieu-netizen.github.io/Portfolio_v2/assets/photos/Background_Desktop.jpg">
+  <meta property="og:image" content="https://bouvymathieu-netizen.github.io/Portfolio_v2/assets/photos/Background_Desktop_v2.jpg">
   <meta property="og:image:width" content="1920">
   <meta property="og:image:height" content="1080">
   <meta property="og:url" content="https://bouvymathieu-netizen.github.io/Portfolio_v2/">
@@ -18,111 +18,94 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Mathieu Bouvy — Portfolio vidéo">
   <meta name="twitter:description" content="Vidéaste basé à Lyon — Captation, Montage, Motion design. Découvrez mes projets.">
-  <meta name="twitter:image" content="https://bouvymathieu-netizen.github.io/Portfolio_v2/assets/photos/Background_Desktop.jpg">
+  <meta name="twitter:image" content="https://bouvymathieu-netizen.github.io/Portfolio_v2/assets/photos/Background_Desktop_v2.jpg">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=14">
+  <link rel="stylesheet" href="styles.css?v=17">
   <script src="https://player.vimeo.com/api/player.js" defer></script>
 </head>
 <body class="bg-[#050505] select-none overflow-hidden">
 
+  <!-- ─── Écran de chargement ─── -->
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+  </div>
+
   <!-- ─── Bureau ─── -->
-  <main id="desktop" class="h-screen w-screen relative z-20" style="background: url('assets/photos/Background_Desktop.jpg') center/cover no-repeat;">
-    <!-- ─── Menu Bar ─── -->
-    <header class="menu-bar">
-      <div class="flex items-center gap-6 text-xs">
-        <span class="cursor-pointer hover:text-gray-200 transition-colors menu-category" data-category="captation" onclick="filterCategory('captation')"><span style="color:#b91c1c">●</span> Captation</span>
-        <span class="cursor-pointer hover:text-gray-200 transition-colors menu-category" data-category="montage" onclick="filterCategory('montage')"><span style="color:#dc2626">●</span> Montage</span>
-        <span class="cursor-pointer hover:text-gray-200 transition-colors menu-category" data-category="motion" onclick="filterCategory('motion')"><span style="color:#ca8a04">●</span> Motion design/fx</span>
-        <span class="text-gray-600 mx-2">|</span>
-        <span onclick="scrollToAbout()" class="cursor-pointer text-gray-400 hover:text-white transition-colors text-xs mr-3" style="white-space:nowrap;">Qui suis-je ?</span>
+  <main id="desktop" class="h-screen w-screen relative z-20" style="background: url('assets/photos/Background_Desktop_v2.jpg') center/cover no-repeat;">
+    <!-- ─── Groupe top centré : toggle + menu ─── -->
+    <div class="top-center">
+      <div class="mode-toggle" id="mode-toggle">
+        <span class="mode-toggle-indicator"></span>
+        <button class="mode-toggle-btn active" data-mode="video" onclick="setMode('video')">Vidéo</button>
+        <button class="mode-toggle-btn" data-mode="photo" onclick="setMode('photo')">Photo</button>
       </div>
-    </header>
+      <div class="sidebar">
+        <button class="burger-btn" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="4" y1="7" x2="20" y2="7"/>
+            <line x1="4" y1="12" x2="20" y2="12"/>
+            <line x1="4" y1="17" x2="20" y2="17"/>
+          </svg>
+        </button>
+        <div class="sidebar-section">
+          <div class="sidebar-item" onclick="scrollToAbout()">
+            <div class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+            </div>
+            <span class="sidebar-title">À propos</span>
+          </div>
+          <div class="sidebar-item" onclick="openWindow('cv')">
+            <div class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <span class="sidebar-title">CV</span>
+          </div>
+          <div class="sidebar-item" onclick="openWindow('contact')">
+            <div class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <span class="sidebar-title">Contact</span>
+          </div>
+          <div class="sidebar-divider"></div>
+          <div class="sidebar-item" onclick="window.open('https://www.instagram.com/mathieu.bouvy/','_blank')">
+            <div class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.9)" stroke="none">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </div>
+            <span class="sidebar-title">Instagram</span>
+          </div>
+        </div>
+      </div>
+    </div>
         <!-- ─── Titre ─── -->
-    <h1 style="position:absolute;top:24px;left:24px;z-index:3;text-align:left;margin:0;">
-      <span style="font-family:'CS Caleb Mono',monospace;font-weight:400;color:#dc2626;font-size:0.9rem;">Mathieu Bouvy</span>
+    <h1 style="position:absolute;top:24px;left:24px;z-index:100;text-align:left;margin:0;">
+      <span style="font-family:'CS Caleb Mono',monospace;font-weight:400;color:#C32933;font-size:0.9rem;">Mathieu Bouvy</span>
       <span style="display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:0.65rem;color:rgba(255,255,255,0.5);margin-top:2px;">Vidéaste</span>
     </h1>
 
     <!-- ─── Portfolio ─── -->
-    <span id="portfolio-title" style="position:absolute;top:28px;right:24px;z-index:3;font-family:'CS Caleb Mono',monospace;font-weight:400;font-size:0.9rem;color:#dc2626;letter-spacing:0.1em;">Portfolio</span>
-
-    <!-- ─── Horloge ─── -->
-    <span id="clock-desktop" style="position:absolute;bottom:24px;right:24px;z-index:100;font-family:'CS Caleb Mono',monospace;font-weight:400;font-size:0.9rem;color:#dc2626;">Dim 1 Jan  00:00</span>
+    <span id="portfolio-title" style="position:absolute;top:28px;right:24px;z-index:100;font-family:'CS Caleb Mono',monospace;font-weight:400;font-size:0.9rem;color:#C32933;letter-spacing:0.1em;">Portfolio</span>
 
     <!-- ─── Overlay de premier plan (détourage) ─── -->
-    <img src="assets/photos/Background_Desktop_détouré.png" alt=""
+    <img src="assets/photos/Background_Desktop_détouré_v2.png" alt=""
          class="absolute inset-0 w-full h-full pointer-events-none"
          style="object-fit: cover; z-index: 50;">
-
-    <!-- ─── Sidebar ─── -->
-    <div class="sidebar">
-      <div class="sidebar-dragbar"></div>
-      <div class="sidebar-section">
-        <p class="sidebar-label">Projets à l'honneur</p>
-        <div class="sidebar-item" onclick="openFeatured('puma')">
-          <div class="sidebar-thumb">
-            <img src="assets/thumbnails/PUMAxDECATHLON_Aftermovie.jpg" alt="">
-          </div>
-          <div class="sidebar-text">
-            <span class="sidebar-title">PUMA</span>
-            <span class="sidebar-sub">x DECATHLON</span>
-          </div>
-        </div>
-        <div class="sidebar-item" onclick="openFeatured('ol')">
-          <div class="sidebar-thumb">
-            <img src="assets/thumbnails/OLxLALIGUE_Aftermovie.jpg" alt="">
-          </div>
-          <div class="sidebar-text">
-            <span class="sidebar-title">OL</span>
-            <span class="sidebar-sub">x LALIGUE</span>
-          </div>
-        </div>
-        <div class="sidebar-item" onclick="openFeatured('laligue')">
-          <div class="sidebar-thumb">
-            <img src="assets/thumbnails/LALIGUE_Lyon%20street%20food%20festival.jpg" alt="">
-          </div>
-          <div class="sidebar-text">
-            <span class="sidebar-title">LALIGUE</span>
-            <span class="sidebar-sub">Lyon street food festival</span>
-          </div>
-        </div>
-      </div>
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-section">
-        <div class="sidebar-item" onclick="openWindow('cv')">
-          <div class="sidebar-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-            </svg>
-          </div>
-          <span class="sidebar-title">CV</span>
-        </div>
-        <div class="sidebar-item" onclick="openWindow('contact')">
-          <div class="sidebar-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-          </div>
-          <span class="sidebar-title">Contact</span>
-        </div>
-        <div class="sidebar-divider"></div>
-        <div class="sidebar-item" onclick="window.open('https://www.instagram.com/mathieu.bouvy/','_blank')">
-          <div class="sidebar-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.9)" stroke="none">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-            </svg>
-          </div>
-          <span class="sidebar-title">Instagram</span>
-        </div>
-      </div>
-    </div>
 
     	        <!-- ─── Mobile sidebar overlay ─── -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
@@ -136,302 +119,205 @@
       </svg>
     </button>
 
-<!-- ─── Qui suis-je (mobile only) ─── -->
-<button id="about-mobile-btn" onclick="scrollToAbout()" style="display:none;">Qui suis-je ?</button>
+<!-- ─── À propos (mobile only) ─── -->
 
 <!-- ─── Logos (panneau glass flottant) ─── -->
-		    <div id="logos-panel" class="absolute" style="bottom:10px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(10,10,10,0.25);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 20px;min-width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.3);pointer-events:auto;">
+		    <div id="logos-panel" class="absolute" style="bottom:10px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(10,10,10,0.25);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 12px;width:400px;max-width:calc(100vw - 24px);box-shadow:0 8px 32px rgba(0,0,0,0.3);pointer-events:auto;">
 		      <div class="marquee-container" id="trust-logos">
-		          <div class="marquee-track" style="gap:3rem;">
-	            <img src="assets/logos/Adidas.svg" alt="Adidas" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="adidas" style="flex-shrink:0;">
-	            <img src="assets/logos/Decathlon.svg" alt="Decathlon" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="decathlon" style="flex-shrink:0;">
-	            <img src="assets/logos/OL.svg" alt="Olympique Lyonnais" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="ol" style="flex-shrink:0;">
-	            <img src="assets/logos/Puma.svg" alt="Puma" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="puma" style="flex-shrink:0;">
-	            <img src="assets/logos/EAFC.svg" alt="EAFC" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="eafc" style="flex-shrink:0;">
-	            <img src="assets/logos/HighLo.svg" alt="HighLo" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="highlo" style="flex-shrink:0;">
-	            <img src="assets/logos/LaLigue.svg" alt="LaLigue" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="laligue" style="flex-shrink:0;">
-	            <img src="assets/logos/Unibet.svg" alt="Unibet" class="h-6 opacity-50 brightness-0 invert brand-logo" data-brand="unibet" style="flex-shrink:0;">
-	            <img src="assets/logos/Whentocop.svg" alt="Whentocop" class="h-6 opacity-50 brightness-0 invert brand-logo" data-brand="whentocop" style="flex-shrink:0;">
+		          <div class="marquee-track">
+	            <img src="assets/logos/Adidas.svg" alt="Adidas" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="adidas" style="flex-shrink:0;">
+	            
+	            <img src="assets/logos/OL.svg" alt="Olympique Lyonnais" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="ol" style="flex-shrink:0;">
+	            
+	            <img src="assets/logos/EAFC.svg" alt="EAFC" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="eafc" style="flex-shrink:0;">
+	            <img src="assets/logos/HighLo.svg" alt="HighLo" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="highlo" style="flex-shrink:0;">
+	            
+	            <img src="assets/logos/Unibet.svg" alt="Unibet" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="unibet" style="flex-shrink:0;">
+	            <img src="assets/logos/Boat%20Party%20Split.svg" alt="Boat Party Split" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="boatpartysplit" style="flex-shrink:0;">
+	            <img src="assets/logos/Intersport.svg" alt="Intersport" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="intersport" style="flex-shrink:0;">
+	            
 	            <!-- Doublon -->
-	            <img src="assets/logos/Adidas.svg" alt="Adidas" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="adidas" style="flex-shrink:0;">
-	            <img src="assets/logos/Decathlon.svg" alt="Decathlon" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="decathlon" style="flex-shrink:0;">
-	            <img src="assets/logos/OL.svg" alt="Olympique Lyonnais" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="ol" style="flex-shrink:0;">
-	            <img src="assets/logos/Puma.svg" alt="Puma" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="puma" style="flex-shrink:0;">
-	            <img src="assets/logos/EAFC.svg" alt="EAFC" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="eafc" style="flex-shrink:0;">
-	            <img src="assets/logos/HighLo.svg" alt="HighLo" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="highlo" style="flex-shrink:0;">
-	            <img src="assets/logos/LaLigue.svg" alt="LaLigue" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="laligue" style="flex-shrink:0;">
-	            <img src="assets/logos/Unibet.svg" alt="Unibet" class="h-6 opacity-50 brightness-0 invert brand-logo" data-brand="unibet" style="flex-shrink:0;">
-	            <img src="assets/logos/Whentocop.svg" alt="Whentocop" class="h-6 opacity-50 brightness-0 invert brand-logo" data-brand="whentocop" style="flex-shrink:0;">
+	            <img src="assets/logos/Adidas.svg" alt="Adidas" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="adidas" style="flex-shrink:0;">
+	            
+	            <img src="assets/logos/OL.svg" alt="Olympique Lyonnais" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="ol" style="flex-shrink:0;">
+	            
+	            <img src="assets/logos/EAFC.svg" alt="EAFC" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="eafc" style="flex-shrink:0;">
+	            <img src="assets/logos/HighLo.svg" alt="HighLo" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="highlo" style="flex-shrink:0;">
+	            
+	            <img src="assets/logos/Unibet.svg" alt="Unibet" class="h-7 opacity-50 brightness-0 invert brand-logo" data-brand="unibet" style="flex-shrink:0;">
+	            <img src="assets/logos/Boat%20Party%20Split.svg" alt="Boat Party Split" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="boatpartysplit" style="flex-shrink:0;">
+	            <img src="assets/logos/Intersport.svg" alt="Intersport" class="h-8 opacity-50 brightness-0 invert brand-logo" data-brand="intersport" style="flex-shrink:0;">
+	            
 	          </div>
 	        </div>
 	    </div>
 <!-- Icône : NIKON_Mono no Aware -->
     <div class="desktop-icon" data-window="nikon" data-category="captation montage motion">
-      <div class="icon-box icon-box-triple overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:none;">
+      <div class="icon-box icon-box-triple overflow-hidden" style="width:64px;height:48px;border-radius:0;">
         <img src="assets/thumbnails/NIKON_Mono%20no%20Aware.jpg" alt="NIKON_Mono no Aware"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">NIKON<wbr>Mono no Aware</span>
-    </div>
-
-    <!-- Icône : PUMAxDECATHLON_Aftermovie -->
-    <div class="desktop-icon" data-window="puma" data-category="captation montage">
-      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
-        <img src="assets/thumbnails/PUMAxDECATHLON_Aftermovie.jpg" alt="PUMAxDECATHLON_Aftermovie"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">PUMAxDECATHLON<wbr>Aftermovie</span>
+      <span class="icon-label">NIKON Mono no Aware</span>
     </div>
 
     <!-- Icône : SAMPLE_Raska Isia -->
     <div class="desktop-icon" data-window="youtube" data-category="montage" style="top:476px;left:36px;">
-      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #dc2626;">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;">
         <img src="assets/thumbnails/SAMPLE_Raska%20Isia.jpg" alt="SAMPLE_Raska Isia"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">SAMPLE<wbr>Raska Isia</span>
+      <span class="icon-label">SAMPLE Raska Isia</span>
     </div>
 
     <!-- Icône : EA_Fut_Birthday -->
     <div class="desktop-icon" data-window="eafut" data-category="montage motion" style="top:596px;left:36px;">
-      <div class="icon-box icon-box-dual-vp overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+      <div class="icon-box icon-box-dual-vp overflow-hidden" style="width:64px;height:48px;border-radius:0;">
         <img src="assets/thumbnails/EA_Fut%20birthday.jpg" alt="EA_Fut_Birthday"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">EA<wbr>Fut<wbr>Birthday</span>
+      <span class="icon-label">EA Fut Birthday</span>
     </div>
 
     <!-- Icône : EA_Ratings_OM -->
     <div class="desktop-icon" data-window="earatings" data-category="montage" style="top:596px;left:36px;">
-      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #dc2626;">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;">
         <img src="assets/thumbnails/EA_Ratings%20OM.jpg" alt="EA_Ratings_OM"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">EA<wbr>Ratings<wbr>OM</span>
+      <span class="icon-label">EA Ratings OM</span>
     </div>
 
     <!-- Icône : Manou_Vaste Monde -->
     <div class="desktop-icon" data-window="manou" data-category="captation" style="top:716px;left:36px;">
-      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #b91c1c;">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;">
         <img src="assets/thumbnails/MANOU_Vaste%20Monde.jpg" alt="Manou_Vaste Monde"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">Manou<wbr>Vaste Monde</span>
-    </div>
-
-    <!-- Icône : OLxLALIGUE_Aftermovie -->
-    <div class="desktop-icon" data-window="ol" data-category="captation montage">
-      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
-        <img src="assets/thumbnails/OLxLALIGUE_Aftermovie.jpg" alt="OLxLALIGUE_Aftermovie"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">OLxLALIGUE<wbr>Aftermovie</span>
-    </div>
-
-    <!-- Icône : ADIDAS_Vintage Market -->
-    <div class="desktop-icon" data-window="adidas" data-category="motion">
-      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #ca8a04;">
-        <img src="assets/thumbnails/ADIDAS_Motion%20Vintage%20Market.jpg" alt="ADIDAS_Vintage Market"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">ADIDAS<wbr>Vintage Market</span>
+      <span class="icon-label">Manou Vaste Monde</span>
     </div>
 
     <!-- Icône : HIGHLO_Bushi -->
     <div class="desktop-icon" data-window="highlo" data-category="captation montage">
-      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
+      <div class="icon-box icon-box-dual overflow-hidden" style="width:64px;height:48px;border-radius:0;">
         <img src="assets/thumbnails/HIGHLO_Bushi.jpg" alt="HIGHLO_Bushi"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">HIGHLO<wbr>Bushi</span>
-    </div>
-
-    <!-- Icône : JUMPMAN_fx -->
-    <div class="desktop-icon" data-window="jumpman" data-category="motion">
-      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #ca8a04;">
-        <img src="assets/thumbnails/JUMPMAN_fx.jpg" alt="JUMPMAN_fx"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">JUMPMAN<wbr>fx</span>
-    </div>
-
-    <!-- Icône : KANAGA_Foule Désirs -->
-    <div class="desktop-icon" data-window="kanaga" data-category="captation motion">
-      <div class="icon-box icon-box-dual-bp overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
-        <img src="assets/thumbnails/KANAGA_Foule%20D%C3%A9sirs.jpg" alt="KANAGA_Foule Désirs"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">KANAGA<wbr>Foule Désirs</span>
-    </div>
-
-    <!-- Icône : LALIGUE_Lyon street food festival -->
-    <div class="desktop-icon" data-window="laligue" data-category="captation montage">
-      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
-        <img src="assets/thumbnails/LALIGUE_Lyon%20street%20food%20festival.jpg" alt="LALIGUE_Lyon street food festival"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">LALIGUE<wbr>Lyon street food festival</span>
-    </div>
-
-    <!-- Icône : LALIGUE_Pola freestyle -->
-    <div class="desktop-icon" data-window="pola" data-category="captation montage">
-      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
-        <img src="assets/thumbnails/LALIGUE_Pola%20freestyle.jpg" alt="LALIGUE_Pola freestyle"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">LALIGUE<wbr>Pola freestyle</span>
+      <span class="icon-label">HIGHLO Bushi</span>
     </div>
 
     <!-- Icône : NIKON_2024 -->
     <div class="desktop-icon" data-window="nikon2024" data-category="montage motion">
-      <div class="icon-box icon-box-dual-vp overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:none;">
+      <div class="icon-box icon-box-dual-vp overflow-hidden" style="width:64px;height:48px;border-radius:0;">
         <img src="assets/thumbnails/NIKON_2024.jpg" alt="NIKON_2024"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">NIKON<wbr>2024</span>
-    </div>
-
-    <!-- Icône : PUMA_Crampons -->
-    <div class="desktop-icon" data-window="pumacrampons" data-category="captation montage motion">
-      <div class="icon-box icon-box-triple overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:none;">
-        <img src="assets/thumbnails/PUMA_Crampons.jpg" alt="PUMA_Crampons"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">PUMA<wbr>Crampons</span>
-    </div>
-
-    <!-- Icône : PUNCHOLOGUE_Wallace Cleaver -->
-    <div class="desktop-icon" data-window="wallace" data-category="montage">
-      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #dc2626;">
-        <img src="assets/thumbnails/PUNCHOLOGUE_Wallace%20Cleaver.jpg" alt="PUNCHOLOGUE_Wallace Cleaver"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">PUNCHOLOGUE<wbr>Wallace Cleaver</span>
-    </div>
-
-    <!-- Icône : SOFIANEE_Gold digger -->
-    <div class="desktop-icon" data-window="sofianee" data-category="captation">
-      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #b91c1c;">
-        <img src="assets/thumbnails/SOFIANEE_Gold%20digger.jpg" alt="SOFIANEE_Gold digger"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">SOFIANEE<wbr>Gold digger</span>
-    </div>
-
-    <!-- Icône : UDOL_Gameday -->
-    <div class="desktop-icon" data-window="udol" data-category="montage">
-      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #dc2626;">
-        <img src="assets/thumbnails/UDOL_Gameday.jpg" alt="UDOL_Gameday"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">UDOL<wbr>Gameday</span>
-    </div>
-
-    <!-- Icône : UNIBET_Greg MMA -->
-    <div class="desktop-icon" data-window="unibet" data-category="motion">
-      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #ca8a04;">
-        <img src="assets/thumbnails/UNIBET_Greg%20MMA.jpg" alt="UNIBET_Greg MMA"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">UNIBET<wbr>Greg MMA</span>
+      <span class="icon-label">Behind The Screen</span>
     </div>
 
     <!-- Icône : UNIBET_Greg MMA x SAmir NASRI -->
     <div class="desktop-icon" data-window="unibetnasri" data-category="montage">
-      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #dc2626;">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;">
         <img src="assets/thumbnails/UNIBET_Greg%20MMA%20x%20SAmir%20NASRI.jpg" alt="UNIBET_Greg MMA x SAmir NASRI"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">UNIBET<wbr>Greg MMA x SAmir NASRI</span>
+      <span class="icon-label">UNIBET Greg MMA x SAmir NASRI</span>
     </div>
-
-    <!-- Icône : VILLEDELYON_Anooki -->
-    <div class="desktop-icon" data-window="anooki" data-category="captation montage">
-      <div class="icon-box icon-box-dual overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:none;">
-        <img src="assets/thumbnails/VILLEDELYON_Anooki.jpg" alt="VILLEDELYON_Anooki"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">VILLEDELYON<wbr>Anooki</span>
-    </div>
-
-    <!-- Icône : WHENTOCOP_Nike Air max -->
-    <div class="desktop-icon" data-window="whentocop" data-category="montage">
-      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #dc2626;">
-        <img src="assets/thumbnails/WHENTOCOP_Nike%20Air%20max.jpg" alt="WHENTOCOP_Nike Air max"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">WHENTOCOP<wbr>Nike Air max</span>
-    </div>
-
-    <!-- Icône : PLUS33_Logos Animées -->
-    <div class="desktop-icon" data-window="plus33fm" data-category="motion">
-      <div class="icon-box overflow-hidden" style="width:44px;height:78px;border-radius:0;border-top:2px solid #ca8a04;">
-        <img src="assets/thumbnails/PLUS33FM_Motion.jpg" alt="PLUS33_Logos Animées"
-             class="w-full h-full object-cover" style="border-radius:0;">
-      </div>
-      <span class="icon-label">PLUS33<wbr>Logos Animées</span>
-    </div>
-
 
     <!-- Icône : OL_Maillot Extérieur -->
     <div class="desktop-icon" data-window="olmaillot" data-category="montage motion">
-      <div class="icon-box icon-box-dual-vp overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:none;">
+      <div class="icon-box icon-box-dual-vp overflow-hidden" style="width:64px;height:48px;border-radius:0;">
         <img src="assets/thumbnails/OL_Maillot_Exterieur.jpg" alt="OL_Maillot Extérieur"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">OL<wbr>Nouveau Maillot</span>
+      <span class="icon-label">OL Nouveau Maillot</span>
     </div>
 
-  
-	    <!-- Icône : PLUS33_Logos Animées -->
-    <div class="desktop-icon" data-window="plus33logos" data-category="motion">
-      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;border-top:2px solid #ca8a04;">
-        <img src="assets/thumbnails/PLUS33_Logos_Animees.jpg" alt="PLUS33_Logos Animées"
+    <!-- Icône : Boat Party Split -->
+    <div class="desktop-icon" data-window="boatpartysplit" data-category="captation montage">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;">
+        <img src="assets/gallery/thumb/09-06-2026-29.webp" alt="Boat Party Split"
              class="w-full h-full object-cover" style="border-radius:0;">
       </div>
-      <span class="icon-label">PLUS33<wbr>Logos Animées</span>
+      <span class="icon-label">Boat Party Split</span>
     </div>
+
+    <!-- Icône : Intersport x Adidas -->
+    <div class="desktop-icon" data-window="intersportadidas" data-category="captation montage">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;">
+        <img src="assets/thumbnails/Intersport_x_Adidas.jpg" alt="Intersport x Adidas"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">Intersport x Adidas</span>
+    </div>
+
+    <!-- Icône : Lyon en mode Funk -->
+    <div class="desktop-icon" data-window="lyonenmodefunk" data-category="captation montage">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;">
+        <img src="assets/thumbnails/Lyon_en_mode_Funk.jpg" alt="Lyon en mode Funk"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">Lyon en mode Funk</span>
+    </div>
+
+    <!-- Icône : RCSA -->
+    <div class="desktop-icon" data-window="rcsa" data-category="captation montage">
+      <div class="icon-box overflow-hidden" style="width:64px;height:48px;border-radius:0;">
+        <img src="assets/thumbnails/RCSA.jpg" alt="RCSA"
+             class="w-full h-full object-cover" style="border-radius:0;">
+      </div>
+      <span class="icon-label">RCSA</span>
+    </div>
+
+    <!-- ─── Galerie Photo ─── -->
+    <section id="photo-view" class="photo-view" aria-label="Galerie photo">
+      <div class="photo-grid" id="photo-grid"></div>
+    </section>
 </main>
+
+  <!-- ─── Lightbox ─── -->
+  <div id="lightbox" class="lightbox" aria-label="Visionneuse">
+    <button class="lightbox-close" data-action="close" aria-label="Fermer">&times;</button>
+    <button class="lightbox-nav lightbox-prev" data-action="prev" aria-label="Précédent">&#8249;</button>
+    <img id="lightbox-img" src="" alt="">
+    <button class="lightbox-nav lightbox-next" data-action="next" aria-label="Suivant">&#8250;</button>
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+    <span class="lightbox-count" id="lightbox-count"></span>
+  </div>
+
 <section id="about" class="w-screen min-h-screen bg-gradient-to-b from-[#050505] via-[#0a0a0a] to-[#050505] flex items-center justify-center px-6 -mt-[130px] pb-20 relative overflow-hidden">
-    <button id="retour-btn" onclick="retourAuBureau()" class="fixed bottom-8 left-1/2 -translate-x-1/2 text-red-400 hover:text-red-300 transition-colors text-xs cursor-pointer z-50 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-lg hidden">
+    <button id="retour-btn" onclick="retourAuBureau()" class="fixed bottom-8 left-1/2 -translate-x-1/2 text-[#C32933] hover:text-[#d8555f] transition-colors text-xs cursor-pointer z-50 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-lg hidden">
       ↑ Retour au bureau
     </button>
     <!-- Glow décoratif -->
-    <div class="absolute w-[600px] h-[600px] rounded-full opacity-[0.04] pointer-events-none" style="background:radial-gradient(circle,rgba(220,38,38,0.5),transparent 70%);top:-20%;left:-10%;filter:blur(60px);"></div>
-    <div class="absolute w-[600px] h-[600px] rounded-full opacity-[0.04] pointer-events-none" style="background:radial-gradient(circle,rgba(185,28,28,0.5),transparent 70%);bottom:-20%;right:-10%;filter:blur(60px);"></div>
+    <div class="absolute w-[600px] h-[600px] rounded-full opacity-[0.04] pointer-events-none" style="background:radial-gradient(circle,rgba(195,41,51,0.5),transparent 70%);top:-20%;left:-10%;filter:blur(60px);"></div>
+    <div class="absolute w-[600px] h-[600px] rounded-full opacity-[0.04] pointer-events-none" style="background:radial-gradient(circle,rgba(143,29,36,0.5),transparent 70%);bottom:-20%;right:-10%;filter:blur(60px);"></div>
 
     <div class="max-w-5xl w-full flex flex-col md:flex-row items-center gap-12 md:gap-16 relative z-10">
       <!-- Photo de profil -->
       <div class="w-48 h-48 md:w-56 md:h-56 rounded-full flex-shrink-0 relative group">
-        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-red-500/20 to-red-700/20"></div>
+        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-[#C32933]/20 to-[#8f1d24]/20"></div>
         <div class="absolute inset-1.5 rounded-full overflow-hidden border-2 border-white/[0.08]">
-          <img src="assets/photos/pdp.jpg" alt="Mathieu Bouvy" class="w-full h-full object-cover">
+          <img src="assets/photos/pdp_v2.jpg" alt="Mathieu Bouvy" class="w-full h-full object-cover">
         </div>
       </div>
 
       <!-- Texte -->
       <div class="flex-1 text-center md:text-left space-y-5">
         <h2 class="text-2xl md:text-3xl font-bold text-white tracking-tight">
-          Qui suis-je&nbsp;?
+          À propos
         </h2>
-        <div class="w-12 h-[2px] bg-gradient-to-r from-red-500 to-red-700 rounded-full mx-auto md:mx-0"></div>
+        <div class="w-12 h-[2px] bg-gradient-to-r from-[#C32933] to-[#8f1d24] rounded-full mx-auto md:mx-0"></div>
 
         <div class="space-y-4 text-sm text-gray-400 leading-relaxed">
           <p class="text-gray-500">
-            Je suis Mathieu Bouvy, vidéaste basé à Lyon.
+            Photographe vidéaste basé à Lyon.
           </p>
           <p class="text-gray-500">
-            J'accompagne les marques et les artistes dans la création de contenus audiovisuels, de la réalisation à la post-production.
-          </p>
-          <p class="text-gray-500">
-            J'ai commencé la vidéo très jeune avec des montages YouTube autour du jeu vidéo, avant d'apprendre à utiliser une caméra au skatepark en filmant mes amis. Cette passion m'a ensuite conduit à suivre une formation en audiovisuel à la sortie du lycée, puis à démarrer mon activité en indépendant.
-          </p>
-          <p class="text-gray-500">
-            Aujourd'hui, j'aime expérimenter, raconter des histoires en images et repousser mes limites à chaque projet.
+            Je travaille principalement dans le sport, la musique et le lifestyle.
           </p>
     </div>
         </section>
 
-  <script src="script.js?v=15"></script>
+  <script src="script.js?v=17"></script>
 </body>
 </html>

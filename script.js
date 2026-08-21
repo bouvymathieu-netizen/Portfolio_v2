@@ -1,20 +1,3 @@
-// ─── Clock ───
-function updateClock() {
-  const now = new Date();
-  const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-  const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
-  const day = days[now.getDay()];
-  const date = now.getDate();
-  const month = months[now.getMonth()];
-  const h = String(now.getHours()).padStart(2, '0');
-  const m = String(now.getMinutes()).padStart(2, '0');
-  const clockDesktop = document.getElementById('clock-desktop');
-  if (clockDesktop) clockDesktop.textContent = `${day} ${date} ${month}  ${h}:${m}`;
-}
-updateClock();
-setInterval(updateClock, 10000);
-
-
 // ─── État global ───
 let zIndex = 100;
 let dragState = null;   // { type, element, offsetX, offsetY }
@@ -53,12 +36,12 @@ icons.forEach(icon => {
   icon.addEventListener('mousedown', e => {
     if (e.button !== 0) return;
     icon.dataset._dragged = 'false';
-    const rect = icon.getBoundingClientRect();
+    const doff = DESKTOP.getBoundingClientRect();
     dragState = {
       type: 'icon',
       element: icon,
-      offsetX: e.clientX - rect.left,
-      offsetY: e.clientY - rect.top,
+      offsetX: e.clientX - doff.left - icon.offsetLeft,
+      offsetY: e.clientY - doff.top - icon.offsetTop,
       startX: e.clientX,
       startY: e.clientY,
       detached: false,
@@ -105,12 +88,12 @@ icons.forEach(icon => {
     longPressTimer = setTimeout(() => {
       longPressActive = true;
       circlePaused = true;
-      const rect = icon.getBoundingClientRect();
+      const doff = DESKTOP.getBoundingClientRect();
       dragState = {
         type: 'icon',
         element: icon,
-        offsetX: t.clientX - rect.left,
-        offsetY: t.clientY - rect.top,
+        offsetX: t.clientX - doff.left - icon.offsetLeft,
+        offsetY: t.clientY - doff.top - icon.offsetTop,
       };
       icon.classList.add('dragging');
     }, 350);
@@ -203,37 +186,13 @@ function openWindow(type) {
   const win = document.createElement('div');
   win.className = 'window';
 
+  const project = PROJECTS[type];
   const sizes = {
     vimeo:  { w: 640, h: 409, title: 'Portfolio_Homepage' },
-    manou:  { w: 640, h: 360, title: 'Manou<wbr>Vaste Monde' },
-    nikon:  { w: 720, h: 500, title: 'NIKON<wbr>Mono no Aware' },
-    puma:   { w: 380, h: 675, title: 'PUMAxDECATHLON<wbr>Aftermovie' },
-    ol:     { w: 380, h: 675, title: 'OLxLALIGUE<wbr>Aftermovie' },
-    youtube:{ w: 720, h: 454, title: 'SAMPLE<wbr>Raska Isia' },
-    eafut:  { w: 380, h: 725, title: 'EA<wbr>Fut<wbr>Birthday' },
-    earatings:{ w: 720, h: 454, title: 'EA<wbr>Ratings<wbr>OM' },
-    adidas: { w: 380, h: 675, title: 'ADIDAS<wbr>Vintage Market' },
-    highlo: { w: 380, h: 675, title: 'HIGHLO<wbr>Bushi' },
-    jumpman:{ w: 380, h: 675, title: 'JUMPMAN<wbr>fx' },
-    kanaga: { w: 380, h: 675, title: 'KANAGA<wbr>Foule Désirs' },
-    laligue:{ w: 380, h: 675, title: 'LALIGUE<wbr>Lyon street food festival' },
-    pola:   { w: 380, h: 675, title: 'LALIGUE<wbr>Pola freestyle' },
-    nikon2024:{ w: 720, h: 454, title: 'NIKON<wbr>2024' },
-    pumacrampons:{ w: 720, h: 454, title: 'PUMA<wbr>Crampons' },
-    wallace: { w: 720, h: 454, title: 'PUNCHOLOGUE<wbr>Wallace Cleaver' },
-    sofianee:{ w: 720, h: 454, title: 'SOFIANEE<wbr>Gold digger' },
-    udol:   { w: 380, h: 675, title: 'UDOL<wbr>Gameday' },
-    unibet: { w: 380, h: 675, title: 'UNIBET<wbr>Greg MMA' },
-    unibetnasri:{ w: 380, h: 675, title: 'UNIBET<wbr>Greg MMA x SAmir NASRI' },
-    anooki: { w: 380, h: 675, title: 'VILLEDELYON<wbr>Anooki' },
-    whentocop:{ w: 380, h: 675, title: 'WHENTOCOP<wbr>Nike Air max' },
-    plus33fm:{ w: 380, h: 675, title: 'PLUS33<wbr>Motion' },
-    plus33logos:{ w: 720, h: 454, title: 'PLUS33<wbr>Logos Animées' },
-    olmaillot:{ w: 720, h: 454, title: 'OL<wbr>Nouveau Maillot' },
     cv:     { w: 600, h: 800, title: 'CV' },
     contact:{ w: 440, h: 460, title: 'Contact' },
   };
-  const cfg = sizes[type] || sizes.vimeo;
+  const cfg = project ? { w: project.w, h: project.h, title: project.title } : (sizes[type] || sizes.vimeo);
   const offset = 30 + windowCount * 24;
 
   win.style.width = `${cfg.w}px`;
@@ -245,6 +204,9 @@ function openWindow(type) {
 
   // Contenu
   let bodyHTML = '';
+  if (project) {
+    bodyHTML = buildProjectBody(project);
+  } else {
   switch (type) {
     case 'vimeo':
       bodyHTML = `
@@ -294,58 +256,6 @@ function openWindow(type) {
                 </iframe>
               </div>
               <span class="block text-gray-600 text-xs mt-2">Making of</span>
-            </div>
-
-            <button onclick="var d=this.previousElementSibling,dots=d.previousElementSibling.querySelector('.dots');d.classList.toggle('hidden');dots.classList.toggle('hidden');this.textContent=d.classList.contains('hidden')?'▼ Développer les crédits':'▲ Réduire les crédits'"
-                    class="text-gray-600 hover:text-gray-400 transition-colors mt-1 block text-xs">
-              ▼ Développer les crédits
-            </button>
-          </div>
-        </div>`;
-      break;
-
-    case 'puma':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/I2QqF8yEKqE?autoplay=1"
-                    title="PUMA_x_DECATHLON_Aftermovie" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Retour en image sur la Draft organisée par @said_piedscarres et @yannoujr pour sélectionner les meilleures pépites pour la 1vs1 Cup cet été. <span class="dots">...</span></span>
-
-            <div class="hidden text-gray-500 mt-1 leading-relaxed space-y-1">
-              <span class="block">Client : @greengardenops</span>
-              <span class="block">Captation & Montage : @mathieu.bouvy</span>
-            </div>
-
-            <button onclick="var d=this.previousElementSibling,dots=d.previousElementSibling.querySelector('.dots');d.classList.toggle('hidden');dots.classList.toggle('hidden');this.textContent=d.classList.contains('hidden')?'▼ Développer les crédits':'▲ Réduire les crédits'"
-                    class="text-gray-600 hover:text-gray-400 transition-colors mt-1 block text-xs">
-              ▼ Développer les crédits
-            </button>
-          </div>
-        </div>`;
-      break;
-
-    case 'ol':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/_PudK3T0x7E?autoplay=1"
-                    title="OL_x_LALIGUE_Aftermovie" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Les coulisses de notre shooting Third avec les commerçants et habitants du Vieux Lyon 🎥 <span class="dots">...</span></span>
-
-            <div class="hidden text-gray-500 mt-1 leading-relaxed space-y-1">
-              <span class="block">Client : @greengardenops</span>
-              <span class="block">Captation & Montage : @mathieu.bouvy</span>
             </div>
 
             <button onclick="var d=this.previousElementSibling,dots=d.previousElementSibling.querySelector('.dots');d.classList.toggle('hidden');dots.classList.toggle('hidden');this.textContent=d.classList.contains('hidden')?'▼ Développer les crédits':'▲ Réduire les crédits'"
@@ -507,13 +417,13 @@ function openWindow(type) {
             <!-- Avatar -->
             <div class="flex flex-col items-center gap-3">
               <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white/[0.08]">
-                <img src="assets/photos/pdp.jpg" alt="Mathieu Bouvy" class="w-full h-full object-cover">
+                <img src="assets/photos/pdp_v2.jpg" alt="Mathieu Bouvy" class="w-full h-full object-cover">
               </div>
             </div>
 
             <!-- Contact -->
             <div>
-              <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color:#38bdf8">Contact</h3>
+              <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color:#C32933">Contact</h3>
               <div class="space-y-1.5 text-xs text-gray-400">
                 <p class="text-white font-medium text-sm">MATHIEU BOUVY</p>
                 <p class="text-gray-500 text-xs">Vidéaste</p>
@@ -525,21 +435,21 @@ function openWindow(type) {
 
             <!-- Compétences -->
             <div>
-              <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color:#38bdf8">Compétences</h3>
+              <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color:#C32933">Compétences</h3>
               <div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(56,189,248,0.15);">Montage vidéo</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(167,139,250,0.15);">Motion Design</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(56,189,248,0.15);">Photographie</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(167,139,250,0.15);">Sport & Lifestyle</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(56,189,248,0.15);">Jeu Vidéo</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(167,139,250,0.15);">YouTube / Reels</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(56,189,248,0.15);">Concerts</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(195,41,51,0.15);">Montage vidéo</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(195,41,51,0.15);">Motion Design</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(195,41,51,0.15);">Photographie</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(195,41,51,0.15);">Sport & Lifestyle</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(195,41,51,0.15);">Jeu Vidéo</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(195,41,51,0.15);">YouTube / Reels</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/5 text-gray-300" style="border:1px solid rgba(195,41,51,0.15);">Concerts</span>
               </div>
             </div>
 
             <!-- Langues -->
             <div>
-              <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color:#38bdf8">Langues</h3>
+              <h3 class="text-xs font-semibold uppercase tracking-wider mb-2" style="color:#C32933">Langues</h3>
               <div class="space-y-1 text-xs text-gray-400">
                 <p>Français <span class="text-gray-600">— Natif</span></p>
                 <p>Anglais <span class="text-gray-600">— Professionnel</span></p>
@@ -558,10 +468,10 @@ function openWindow(type) {
 
             <!-- Expériences -->
             <div>
-              <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:#a78bfa">Expériences</h3>
+              <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:#C32933">Expériences</h3>
               <div class="space-y-4">
 
-                <div class="border-l-2 pl-3" style="border-color:rgba(167,139,250,0.3)">
+                <div class="border-l-2 pl-3" style="border-color:rgba(195,41,51,0.3)">
                   <div class="flex items-start justify-between gap-2">
                     <p class="text-white font-medium text-sm">Punchologue</p>
                     <span class="text-gray-600 text-xs whitespace-nowrap pt-0.5">Déc 2022 — Sept 2024</span>
@@ -570,7 +480,7 @@ function openWindow(type) {
                   <p class="text-gray-500 text-xs mt-1 leading-relaxed">Montage YouTube/Reels et photos de concerts.</p>
                 </div>
 
-                <div class="border-l-2 pl-3" style="border-color:rgba(167,139,250,0.3)">
+                <div class="border-l-2 pl-3" style="border-color:rgba(195,41,51,0.3)">
                   <div class="flex items-start justify-between gap-2">
                     <p class="text-white font-medium text-sm">Green Garden Digital</p>
                     <span class="text-gray-600 text-xs whitespace-nowrap pt-0.5">Sept 2023 — Oct 2025</span>
@@ -579,7 +489,7 @@ function openWindow(type) {
                   <p class="text-gray-500 text-xs mt-1 leading-relaxed">Projets sport, lifestyle et jeux vidéo.</p>
                 </div>
 
-                <div class="border-l-2 pl-3" style="border-color:rgba(167,139,250,0.3)">
+                <div class="border-l-2 pl-3" style="border-color:rgba(195,41,51,0.3)">
                   <div class="flex items-start justify-between gap-2">
                     <p class="text-white font-medium text-sm">Freelance</p>
                     <span class="text-gray-600 text-xs whitespace-nowrap pt-0.5">Oct 2025 — Présent</span>
@@ -593,13 +503,13 @@ function openWindow(type) {
 
             <!-- Formations -->
             <div>
-              <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:#a78bfa">Formations</h3>
+              <h3 class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:#C32933">Formations</h3>
               <div class="space-y-3">
-                <div class="border-l-2 pl-3" style="border-color:rgba(167,139,250,0.3)">
+                <div class="border-l-2 pl-3" style="border-color:rgba(195,41,51,0.3)">
                   <p class="text-white text-sm">Bachelor Audiovisuel</p>
                   <p class="text-gray-500 text-xs">2021 — 2024 · Ynov Lyon</p>
                 </div>
-                <div class="border-l-2 pl-3" style="border-color:rgba(167,139,250,0.3)">
+                <div class="border-l-2 pl-3" style="border-color:rgba(195,41,51,0.3)">
                   <p class="text-white text-sm">Baccalauréat Général</p>
                   <p class="text-gray-500 text-xs">Option Cinéma Audiovisuel</p>
                 </div>
@@ -648,22 +558,6 @@ function openWindow(type) {
         </div>`;
       break;
 
-    case 'adidas':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/SM4wgYJgu90?autoplay=1"
-                    title="ADIDAS_Vintage Market" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Adidas — Vintage Market.</span>
-          </div>
-        </div>`;
-      break;
-
     case 'highlo':
       bodyHTML = `
         <div class="flex flex-col h-full">
@@ -676,70 +570,6 @@ function openWindow(type) {
           </div>
           <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
             <span class="block">HighLo — Bushi.</span>
-          </div>
-        </div>`;
-      break;
-
-    case 'jumpman':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/iFTW1UsKPcA?autoplay=1"
-                    title="JUMPMAN_fx" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Jumpman — fx.</span>
-          </div>
-        </div>`;
-      break;
-
-    case 'kanaga':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/QhXHbWDuPns?autoplay=1"
-                    title="KANAGA_Foule Désirs" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Kanaga — Foule Désirs.</span>
-          </div>
-        </div>`;
-      break;
-
-    case 'laligue':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/YolF_YnCvR4?autoplay=1"
-                    title="LALIGUE_Lyon street food festival" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">LaLigue — Lyon street food festival.</span>
-          </div>
-        </div>`;
-      break;
-
-    case 'pola':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/hjx62AR7fRA?autoplay=1"
-                    title="LALIGUE_Pola freestyle" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">LaLigue — Pola freestyle.</span>
           </div>
         </div>`;
       break;
@@ -760,38 +590,6 @@ function openWindow(type) {
         </div>`;
       break;
 
-    case 'pumacrampons':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/RX4TBKkIyHw?autoplay=1"
-                    title="PUMA_Crampons" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">PUMA — Crampons.</span>
-          </div>
-        </div>`;
-      break;
-
-    case 'wallace':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/9aXbaUvzN_g?autoplay=1"
-                    title="PUNCHOLOGUE_Wallace Cleaver" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Punchologue — Comprendre Baiser de Wallace Cleaver.</span>
-          </div>
-        </div>`;
-      break;
-
     case 'sofianee':
       bodyHTML = `
         <div class="flex flex-col h-full">
@@ -804,38 +602,6 @@ function openWindow(type) {
           </div>
           <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
             <span class="block">Sofianee — Gold digger.</span>
-          </div>
-        </div>`;
-      break;
-
-    case 'udol':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/hrv_cswZlZQ?autoplay=1"
-                    title="UDOL_Gameday" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">UDOL — Gameday.</span>
-          </div>
-        </div>`;
-      break;
-
-    case 'unibet':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/Cc8gvhsg1XU?autoplay=1"
-                    title="UNIBET_Greg MMA" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Unibet — Greg MMA.</span>
           </div>
         </div>`;
       break;
@@ -856,54 +622,6 @@ function openWindow(type) {
         </div>`;
       break;
 
-    case 'anooki':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/gncKO_CvF60?autoplay=1"
-                    title="VILLEDELYON_Anooki" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Ville de Lyon — Anooki.</span>
-          </div>
-        </div>`;
-      break;
-
-    case 'whentocop':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/8Pns-vbShtg?autoplay=1"
-                    title="WHENTOCOP_Nike Air max" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Whentocop — Nike Air max.</span>
-          </div>
-        </div>`;
-      break;
-
-    case 'plus33fm':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/3L9IsKxEKFI?autoplay=1"
-                    title="PLUS33FM_Motion" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Plus33FM — Motion.</span>
-          </div>
-        </div>`;
-      break;
-
     case 'olmaillot':
       bodyHTML = `
         <div class="flex flex-col h-full">
@@ -920,22 +638,7 @@ function openWindow(type) {
         </div>`;
       break;
 
-    case 'plus33logos':
-      bodyHTML = `
-        <div class="flex flex-col h-full">
-          <div class="flex-1 min-h-0 bg-black/40 rounded-lg overflow-hidden mb-3">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/OLX8yLoVE88?autoplay=1"
-                    title="PLUS33_Logos Animées" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="origin" allowfullscreen>
-            </iframe>
-          </div>
-          <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4">
-            <span class="block">Plus33FM — Logos Animées.</span>
-          </div>
-        </div>`;
-      break;
-
+  }
   }
 
   win.innerHTML = `
@@ -951,6 +654,8 @@ function openWindow(type) {
   `;
 
   DESKTOP.appendChild(win);
+
+  if (project) setupProjectCarousel(win, project);
 
   // ─── Focus ───
   function focus() {
@@ -1119,10 +824,7 @@ document.addEventListener('mousemove', e => {
       dragState.detached = true;
       dragState.element.dataset.detached = 'true';
       dragState.element.style.zIndex = 90;
-      const box = dragState.element.querySelector('.icon-box');
-      if (box) box.style.scale = '1';
-      const label = dragState.element.querySelector('.icon-label');
-      if (label) label.style.scale = '1';
+      dragState.element.style.scale = String(ICON_SCALE);
       // Si le cercle était en pause, le relancer
       circlePaused = false;
     }
@@ -1195,15 +897,17 @@ function filterCategory(cat) {
 
 // ─── Filtre par marque ───
 const brandProjects = {
-  adidas: ['adidas', 'olmaillot'],
-  decathlon: ['puma'],
-  ol: ['ol', 'olmaillot'],
-  puma: ['puma', 'pumacrampons'],
+  adidas: ['olmaillot', 'lyonenmodefunk', 'intersportadidas'],
+  decathlon: [],
+  ol: ['olmaillot', 'lyonenmodefunk'],
+  puma: [],
   eafc: ['eafut', 'earatings'],
   highlo: ['highlo'],
-  laligue: ['laligue', 'pola'],
-  unibet: ['unibet', 'unibetnasri'],
-  whentocop: ['whentocop'],
+  laligue: [],
+  unibet: ['unibetnasri'],
+  whentocop: [],
+  boatpartysplit: ['boatpartysplit'],
+  intersport: ['intersportadidas'],
 };
 
 let activeBrand = null;
@@ -1258,9 +962,13 @@ let circleAngle = 0;
 let circleCenterX = 0;
 let circleCenterY = 0;
 let circleRadius = 0;
+let circleBaseRadius = 0;
 let circleAnimId = null;
 let circlePaused = false;
 let scrollVel = 0;
+const ICON_SCALE = 1.8; // facteur d'agrandissement des vignettes
+const MAX_SCROLL_SPEED = 120; // vélocité de scroll pour un élargissement max
+const RADIUS_EXPAND = 0.3;    // élargissement max du cercle (+30%)
 
 // ─── Positionnement en cercle des projets + rotation lente ───
 function shuffleProjectIcons() {
@@ -1272,8 +980,8 @@ function shuffleProjectIcons() {
   const dh = DESKTOP.clientHeight;
   const cx = dw / 2;
   const cy = dh / 2;
-  const radiusMultiplier = isMobile ? 0.45 : 0.27;
-  const radius = Math.min(380, Math.min(dw, dh) * radiusMultiplier);
+  const radiusMultiplier = isMobile ? 0.55 : 0.37;
+  const radius = Math.min(480, Math.min(dw, dh) * radiusMultiplier);
   const count = projectIcons.length;
   const step = (2 * Math.PI) / count;
 
@@ -1294,6 +1002,7 @@ function shuffleProjectIcons() {
   // Sauvegarder les paramètres du cercle pour la rotation
   circleCenterX = cx;
   circleCenterY = cy;
+  circleBaseRadius = radius;
   circleRadius = radius;
 
   // Position initiale + démarrer la rotation
@@ -1320,16 +1029,14 @@ function updateCirclePositions() {
     icon.style.top = `${y - halfH}px`;
 
     const depth = (sinA + 1) / 2; // 0 (fond) → 1 (avant)
-    const depthScale = 1 + 0.42 * sinA;
+    const depthScale = ICON_SCALE * (1 + 0.42 * sinA);
     const box = icon.querySelector('.icon-box');
     if (box) {
-      box.style.scale = depthScale;
       // Léger halo lumineux sur l'icône la plus en avant
       const glow = Math.max(0, sinA) * 18;
       box.style.boxShadow = glow > 0 ? `0 0 ${glow}px rgba(255,255,255,${0.04 + depth * 0.06})` : 'none';
     }
-    const label = icon.querySelector('.icon-label');
-    if (label) label.style.scale = depthScale;
+    icon.style.scale = depthScale;
     icon.style.zIndex = Math.round(50 + 40 * sinA);
     // Fondu doux : l'icône derrière s'estompe quand une autre passe devant
     // Respecter le filtre dimmed si actif
@@ -1348,6 +1055,7 @@ function startCircleRotation() {
 
   // Le scroll alimente uniquement la rotation du cercle, pas la page
   document.addEventListener('wheel', e => {
+    if (e.target.closest && e.target.closest('#photo-view')) return; // laisse scroller la galerie
     e.preventDefault();
     scrollVel += e.deltaY * 0.3;
   }, { passive: false });
@@ -1359,8 +1067,9 @@ function startCircleRotation() {
     // Ignorer si on touche une icône, une fenêtre ou le menu
     if (e.target.closest('.desktop-icon')) return;
     if (e.target.closest('.window')) return;
-    if (e.target.closest('.menu-bar')) return;
+    if (e.target.closest('.mode-toggle')) return;
     if (e.target.closest('#logos-panel')) return;
+    if (e.target.closest('#photo-view')) return;
     touchStartY = e.touches[0].clientY;
     touchActive = true;
   }, { passive: true });
@@ -1379,6 +1088,11 @@ function startCircleRotation() {
 
     // Decay naturelle de la vélocité
     scrollVel += (0 - scrollVel) * 0.08;
+
+    // Élargit le cercle selon la vitesse de scroll (revient à la base quand lent/arrêté)
+    const speedFactor = Math.min(Math.abs(scrollVel) / MAX_SCROLL_SPEED, 1);
+    const targetRadius = circleBaseRadius * (1 + RADIUS_EXPAND * speedFactor);
+    circleRadius += (targetRadius - circleRadius) * 0.1;
 
     const speed = dt * 0.00002 + scrollVel * 0.0006;
 
@@ -1412,40 +1126,34 @@ window.addEventListener('resize', () => {
   circleCenterX = dw / 2;
   circleCenterY = dh / 2;
   if (isMobile) {
-    circleRadius = Math.min(380, Math.min(dw, dh) * 0.45);
+    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.55);
   } else {
-    circleRadius = Math.min(380, Math.min(dw, dh) * 0.27);
+    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.37);
   }
+  circleRadius = circleBaseRadius;
   updateCirclePositions();
 });
 
-// ─── Ouvrir un projet à l'honneur + scroller vers le bureau ───
-function openFeatured(type) {
-  const win = openWindow(type);
-  setTimeout(() => {
-    document.getElementById('desktop').scrollIntoView({ behavior: 'smooth' });
-  }, 150);
-}
-
-// ─── Scroll-driven marquee ───
+// ─── Scroll-driven marquee (pixels, période mesurée à chaque frame) ───
 const marqueeTrack = document.querySelector('.marquee-track');
 if (marqueeTrack) {
+  const logos = marqueeTrack.querySelectorAll('.brand-logo');
+  const half = Math.floor(logos.length / 2);
   let marqueePos = 0;
   let smoothVel = 0;
+  let wrap = 0;
 
   const BASE_SPEED = 0.25;
   const SCROLL_GAIN = 0.15;
 
-  // Le scroll alimente aussi la vitesse du marquee
   document.addEventListener('wheel', e => {
     smoothVel += e.deltaY * 0.5;
   }, { passive: false });
 
-  // Sur mobile : le swipe accélère aussi le marquee
   let marqueeTouchY = 0;
   let marqueeTouching = false;
   document.addEventListener('touchstart', e => {
-    if (e.target.closest('.desktop-icon') || e.target.closest('.window') || e.target.closest('.menu-bar')) return;
+    if (e.target.closest('.desktop-icon') || e.target.closest('.window') || e.target.closest('.mode-toggle')) return;
     marqueeTouchY = e.touches[0].clientY;
     marqueeTouching = true;
   }, { passive: true });
@@ -1457,7 +1165,6 @@ if (marqueeTrack) {
   }, { passive: true });
   document.addEventListener('touchend', () => { marqueeTouching = false; }, { passive: true });
 
-  // Sur mobile : swipe horizontal direct sur la zone des logos
   const marqueeContainer = document.querySelector('.marquee-container');
   if (marqueeContainer) {
     let logoTouchX = 0;
@@ -1475,9 +1182,10 @@ if (marqueeTrack) {
       const dx = logoTouchX - e.touches[0].clientX;
       marqueePos = logoTouchStartPos + dx;
       smoothVel = 0;
-      const wrap = marqueeTrack.scrollWidth / 2;
-      if (marqueePos >= wrap) marqueePos -= wrap;
-      if (marqueePos < 0) marqueePos += wrap;
+      if (wrap > 0) {
+        if (marqueePos >= wrap) marqueePos -= wrap;
+        if (marqueePos < 0) marqueePos += wrap;
+      }
       e.preventDefault();
     }, { passive: false });
 
@@ -1486,101 +1194,26 @@ if (marqueeTrack) {
   }
 
   function tickMarquee() {
+    // Mesure de la période (exacte, auto-corrigée à chaque frame)
+    if (logos.length >= 2) {
+      const w = logos[half].offsetLeft - logos[0].offsetLeft;
+      if (w > 0) wrap = w;
+    }
+
     smoothVel += (0 - smoothVel) * 0.1;
     const speed = BASE_SPEED + smoothVel * SCROLL_GAIN;
     marqueePos += speed;
 
-    const wrap = marqueeTrack.scrollWidth / 2;
-    if (marqueePos >= wrap) marqueePos -= wrap;
-    if (marqueePos < 0) marqueePos += wrap;
+    if (wrap > 0) {
+      if (marqueePos >= wrap) marqueePos -= wrap;
+      if (marqueePos < 0) marqueePos += wrap;
+    }
 
     marqueeTrack.style.transform = `translateX(${-marqueePos}px)`;
     requestAnimationFrame(tickMarquee);
   }
   tickMarquee();
 }
-
-// ─── Anti-gravity hover : les voisins s'écartent au survol et reviennent ───
-(function() {
-  if (isMobile) return;
-  const icons = document.querySelectorAll('.desktop-icon');
-
-  function clearRepulsion() {
-    icons.forEach(icon => {
-      icon.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-      icon.style.transform = '';
-    });
-  }
-
-  function applyRepulsion(source) {
-    const RADIUS = 180;
-    const FORCE = 35;
-    const doff = DESKTOP.getBoundingClientRect();
-    const srcRect = source.getBoundingClientRect();
-    const srcCX = srcRect.left - doff.left + srcRect.width / 2;
-    const srcCY = srcRect.top  - doff.top  + srcRect.height / 2;
-
-    icons.forEach(icon => {
-      if (icon === source) return;
-      const rect = icon.getBoundingClientRect();
-      const cx = rect.left - doff.left + rect.width / 2;
-      const cy = rect.top  - doff.top  + rect.height / 2;
-      const dx = cx - srcCX;
-      const dy = cy - srcCY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < RADIUS && dist > 0) {
-        const strength = (1 - dist / RADIUS) * FORCE;
-        const angle = Math.atan2(dy, dx);
-        icon.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        icon.style.transform = `translate(${Math.cos(angle) * strength}px, ${Math.sin(angle) * strength}px)`;
-      }
-    });
-  }
-
-  icons.forEach(icon => {
-    icon.addEventListener('mouseenter', () => {
-      if (dragState) return;
-      applyRepulsion(icon);
-    });
-    icon.addEventListener('mouseleave', () => {
-      clearRepulsion();
-    });
-  });
-})();
-
-// ─── Drag sidebar ───
-const sidebar = document.querySelector('.sidebar');
-const sidebarDragbar = document.querySelector('.sidebar-dragbar');
-if (sidebar && sidebarDragbar && !isMobile) {
-  let sd = false, sX, sY, sL, sT;
-
-  sidebarDragbar.addEventListener('mousedown', e => {
-    if (e.button !== 0) return;
-    sd = true;
-    const r = sidebar.getBoundingClientRect();
-    const dr = DESKTOP.getBoundingClientRect();
-    sX = e.clientX;
-    sY = e.clientY;
-    sL = r.left - dr.left;
-    sT = r.top - dr.top;
-    sidebar.style.left = sL + 'px';
-    sidebar.style.top = sT + 'px';
-    sidebar.style.transform = 'none';
-    e.preventDefault();
-  });
-
-  document.addEventListener('mousemove', e => {
-    if (!sd) return;
-    sidebar.style.left = (sL + e.clientX - sX) + 'px';
-    sidebar.style.top = (sT + e.clientY - sY) + 'px';
-  });
-
-  document.addEventListener('mouseup', () => { sd = false; });
-}
-
-
-
 
 // ─── Mobile sidebar toggle ───
 (function() {
@@ -1595,6 +1228,11 @@ if (sidebar && sidebarDragbar && !isMobile) {
   btn.addEventListener('click', openSidebar);
   overlay.addEventListener('click', closeSidebar);
 
+  // Fermer le drawer quand on clique sur un item du menu
+  sidebar.querySelectorAll('.sidebar-item').forEach(item => {
+    item.addEventListener('click', closeSidebar);
+  });
+
   // Close on window resize to desktop
   window.addEventListener('resize', () => {
     if (window.innerWidth > 640) closeSidebar();
@@ -1603,9 +1241,10 @@ if (sidebar && sidebarDragbar && !isMobile) {
 
 // ─── Navigation ───
 function scrollToAbout() {
+  // Sur la page photo, revenir d'abord au mode vidéo pour dévoiler la section À propos
+  if (currentMode === 'photo') setMode('video');
   document.body.classList.remove('overflow-hidden');
   document.getElementById('retour-btn')?.classList.remove('hidden');
-  document.getElementById('about-mobile-btn')?.classList.add('hidden');
   document.getElementById('logos-panel')?.classList.add('fade-hidden');
   // Sur mobile, libérer aussi le desktop du fullscreen lock
   if (isMobile) {
@@ -1619,7 +1258,6 @@ function scrollToAbout() {
 
 function retourAuBureau() {
   document.getElementById('retour-btn')?.classList.add('hidden');
-  document.getElementById('about-mobile-btn')?.classList.remove('hidden');
   document.getElementById('logos-panel')?.classList.remove('fade-hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (isMobile) {
@@ -1640,3 +1278,437 @@ function sendContact(e) {
   const body = `Nom: ${name}\nEmail: ${email}\n\n${msg}`;
   window.location.href = `mailto:bouvy.mathieu@gmail.com?subject=Portfolio&body=${encodeURIComponent(body)}`;
 }
+
+// ─── Mode Vidéo / Photo ───
+let currentMode = 'video';
+let basePhotos = [];
+let galleryPhotos = [];
+let galleryIndex = 0;
+let currentRow = [];
+let currentRowWidth = 0;
+let containerWidth = 0;
+let rowHeight = 0;
+const BATCH = 40;
+
+function setMode(mode) {
+  currentMode = mode;
+  document.body.classList.toggle('mode-photo', mode === 'photo');
+  const toggle = document.getElementById('mode-toggle');
+  if (toggle) toggle.classList.toggle('photo-active', mode === 'photo');
+  document.querySelectorAll('.mode-toggle-btn').forEach((b) => {
+    b.classList.toggle('active', b.dataset.mode === mode);
+  });
+  if (mode === 'photo') {
+    circlePaused = true;
+    resetFilter();
+    if (!basePhotos.length) loadGallery();
+  } else {
+    circlePaused = false;
+  }
+}
+
+// ─── Galerie photo (layout justifié + scroll infini) ───
+function photoFor(i) {
+  return basePhotos[i % basePhotos.length];
+}
+
+function layout() {
+  const grid = document.getElementById('photo-grid');
+  containerWidth = (grid && grid.clientWidth) || window.innerWidth;
+  rowHeight = window.innerWidth < 768 ? 150 : 240;
+}
+
+function flushRow(scale) {
+  const grid = document.getElementById('photo-grid');
+  const rowEl = document.createElement('div');
+  rowEl.className = 'photo-row';
+  rowEl.style.height = `${Math.round(rowHeight * scale)}px`;
+  currentRow.forEach((entry) => {
+    const cell = document.createElement('figure');
+    cell.className = 'photo-item';
+    cell.style.width = `${Math.round(entry.width * scale)}px`;
+    const p = entry.photo;
+    cell.innerHTML = `<img src="${p.thumb}" alt="" loading="lazy" decoding="async">`;
+    cell.addEventListener('click', () => openLightbox(entry.index));
+    rowEl.appendChild(cell);
+  });
+  grid.appendChild(rowEl);
+  currentRow = [];
+  currentRowWidth = 0;
+}
+
+function appendPhotos(count) {
+  if (!basePhotos.length) return;
+  for (let k = 0; k < count; k++) {
+    const index = galleryPhotos.length;
+    const photo = photoFor(index);
+    galleryPhotos.push(photo);
+    const w = rowHeight * (photo.aspect || 1);
+    currentRow.push({ photo, index, width: w });
+    currentRowWidth += w;
+    if (currentRowWidth >= containerWidth * 0.92) flushRow(containerWidth / currentRowWidth);
+  }
+}
+
+function renderAll() {
+  const grid = document.getElementById('photo-grid');
+  layout();
+  grid.innerHTML = '';
+  currentRow = [];
+  currentRowWidth = 0;
+  if (!galleryPhotos.length) {
+    grid.innerHTML = '<p class="photo-empty">Aucune photo pour l\'instant.<br>Ajoute tes images dans <code>to add/</code> puis lance <code>npm run photos</code>.</p>';
+    return;
+  }
+  const photos = galleryPhotos.slice();
+  galleryPhotos = [];
+  photos.forEach((p) => {
+    const index = galleryPhotos.length;
+    galleryPhotos.push(p);
+    const w = rowHeight * (p.aspect || 1);
+    currentRow.push({ photo: p, index, width: w });
+    currentRowWidth += w;
+    if (currentRowWidth >= containerWidth * 0.92) flushRow(containerWidth / currentRowWidth);
+  });
+}
+
+async function loadGallery() {
+  const grid = document.getElementById('photo-grid');
+  if (!grid) return;
+  try {
+    const res = await fetch('assets/gallery/photos.json');
+    basePhotos = await res.json();
+  } catch {
+    basePhotos = [];
+  }
+  // Ordre aléatoire (Fisher-Yates)
+  for (let i = basePhotos.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [basePhotos[i], basePhotos[j]] = [basePhotos[j], basePhotos[i]];
+  }
+  galleryPhotos = [];
+  currentRow = [];
+  currentRowWidth = 0;
+  layout();
+  grid.innerHTML = '';
+  if (!basePhotos.length) {
+    grid.innerHTML = '<p class="photo-empty">Aucune photo pour l\'instant.<br>Ajoute tes images dans <code>to add/</code> puis lance <code>npm run photos</code>.</p>';
+    return;
+  }
+  appendPhotos(BATCH * 2);
+}
+
+// Scroll infini en bas de la page photo
+const photoViewEl = document.getElementById('photo-view');
+if (photoViewEl) {
+  photoViewEl.addEventListener('scroll', () => {
+    if (photoViewEl.scrollTop + photoViewEl.clientHeight >= photoViewEl.scrollHeight - 400) {
+      appendPhotos(BATCH);
+    }
+  });
+}
+
+window.addEventListener('resize', () => {
+  if (document.body.classList.contains('mode-photo') && galleryPhotos.length) renderAll();
+});
+
+// ─── Lightbox ───
+function openLightbox(i) {
+  if (!galleryPhotos.length) return;
+  galleryIndex = i;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+function updateLightbox() {
+  const p = galleryPhotos[galleryIndex];
+  if (!p) return;
+  const img = document.getElementById('lightbox-img');
+  img.src = p.full;
+  img.alt = '';
+  document.getElementById('lightbox-caption').textContent = '';
+  document.getElementById('lightbox-count').textContent = `${galleryIndex + 1} / ${galleryPhotos.length}`;
+}
+function lightboxPrev() {
+  galleryIndex = (galleryIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
+  updateLightbox();
+}
+function lightboxNext() {
+  galleryIndex = (galleryIndex + 1) % galleryPhotos.length;
+  updateLightbox();
+}
+
+(function () {
+  const lb = document.getElementById('lightbox');
+  if (!lb) return;
+  lb.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (btn) {
+      const action = btn.dataset.action;
+      if (action === 'close') closeLightbox();
+      else if (action === 'prev') lightboxPrev();
+      else if (action === 'next') lightboxNext();
+      return;
+    }
+    if (e.target.id === 'lightbox-img') lightboxNext();
+    else if (e.target === lb) closeLightbox();
+  });
+
+  let tx = 0;
+  lb.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) (dx < 0 ? lightboxNext() : lightboxPrev());
+  }, { passive: true });
+})();
+
+document.addEventListener('keydown', (e) => {
+  const lb = document.getElementById('lightbox');
+  if (!lb || !lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  else if (e.key === 'ArrowLeft') lightboxPrev();
+  else if (e.key === 'ArrowRight') lightboxNext();
+});
+
+// ─── Projets (manifest data-driven) ───
+let PROJECTS = {};
+
+async function loadProjects() {
+  try {
+    const res = await fetch('assets/projects.json');
+    const arr = await res.json();
+    PROJECTS = {};
+    arr.forEach((p) => { PROJECTS[p.id] = p; });
+  } catch (e) {
+    console.error('projects.json introuvable', e);
+  }
+}
+loadProjects();
+
+function embedUrl(item) {
+  if (item.provider === 'vimeo') {
+    return `https://player.vimeo.com/video/${item.id}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1`;
+  }
+  return `https://www.youtube.com/embed/${item.id}?autoplay=1`;
+}
+
+function buildProjectBody(project) {
+  const credits = project.credits || [];
+  const creditsHTML = credits.map((c) => `<span class="block">${c}</span>`).join('\n');
+  const creditsToggle = credits.length
+    ? '<button class="project-credits-btn text-gray-600 hover:text-gray-400 transition-colors mt-1 block text-xs">▼ Développer les crédits</button>'
+    : '';
+  return `
+    <div class="flex flex-col h-full">
+      <div class="flex-1 min-h-0 relative bg-black/40 overflow-hidden">
+        <div class="project-media"></div>
+        <button class="project-nav project-prev" aria-label="Précédent">&#8249;</button>
+        <button class="project-nav project-next" aria-label="Suivant">&#8250;</button>
+        <span class="project-counter"></span>
+        <span class="project-label"></span>
+      </div>
+      <div class="flex-shrink-0 text-xs text-gray-400 leading-relaxed space-y-1 px-5 pb-4 pt-3">
+        <span class="block">${project.description || ''}</span>
+        <div class="project-credits hidden text-gray-500 mt-1 leading-relaxed space-y-1">${creditsHTML}</div>
+        ${creditsToggle}
+      </div>
+    </div>`;
+}
+
+function setupProjectCarousel(win, project) {
+  const media = project.media || [];
+  let index = 0;
+  const mediaEl = win.querySelector('.project-media');
+  const counterEl = win.querySelector('.project-counter');
+  const prevBtn = win.querySelector('.project-prev');
+  const nextBtn = win.querySelector('.project-next');
+  const labelEl = win.querySelector('.project-label');
+
+  function render(i) {
+    if (!media.length) return;
+    index = (i + media.length) % media.length;
+    const item = media[index];
+    if (item.type === 'video') {
+      if (item.src) {
+        mountVideoPlayer(mediaEl, item);
+      } else {
+        const allow = item.provider === 'vimeo'
+          ? 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share'
+          : 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        mediaEl.innerHTML = `<iframe class="w-full h-full" src="${embedUrl(item)}" frameborder="0" allow="${allow}" allowfullscreen title="${project.title}" style="position:absolute;inset:0;width:100%;height:100%;"></iframe>`;
+      }
+    } else {
+      mediaEl.innerHTML = `<img src="${item.src}" alt="" class="w-full h-full object-contain" style="position:absolute;inset:0;background:#000;">`;
+    }
+    const multiple = media.length > 1;
+    prevBtn.style.display = multiple ? '' : 'none';
+    nextBtn.style.display = multiple ? '' : 'none';
+    counterEl.textContent = multiple ? `${index + 1} / ${media.length}` : '';
+    if (labelEl) labelEl.textContent = item.label || '';
+  }
+
+  prevBtn.addEventListener('click', () => render(index - 1));
+  nextBtn.addEventListener('click', () => render(index + 1));
+  render(0);
+
+  const creditsBtn = win.querySelector('.project-credits-btn');
+  if (creditsBtn) {
+    creditsBtn.addEventListener('click', () => {
+      const credits = win.querySelector('.project-credits');
+      const isOpen = !credits.classList.contains('hidden');
+      credits.classList.toggle('hidden', isOpen);
+      creditsBtn.textContent = isOpen ? '▼ Développer les crédits' : '▲ Réduire les crédits';
+    });
+  }
+}
+
+// ─── Lecteur vidéo custom (auto-hébergé) ───
+function formatTime(s) {
+  if (!isFinite(s) || s < 0) return '0:00';
+  s = Math.floor(s);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  return h > 0
+    ? `${h}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`
+    : `${m}:${String(sec).padStart(2, '0')}`;
+}
+
+function mountVideoPlayer(container, item) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'video-player';
+
+  const video = document.createElement('video');
+  video.src = item.src;
+  if (item.poster) video.poster = item.poster;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.loop = true;
+  video.preload = 'auto';
+  wrapper.appendChild(video);
+
+  const loading = document.createElement('div');
+  loading.className = 'video-loading';
+  const spinner = document.createElement('div');
+  spinner.className = 'spinner';
+  loading.appendChild(spinner);
+  wrapper.appendChild(loading);
+
+  const bigPlay = document.createElement('button');
+  bigPlay.className = 'video-big-play';
+  bigPlay.innerHTML = '&#9654;';
+  bigPlay.addEventListener('click', () => video.play());
+  wrapper.appendChild(bigPlay);
+
+  const controls = document.createElement('div');
+  controls.className = 'video-controls';
+
+  const playBtn = document.createElement('button');
+  playBtn.className = 'video-control-btn';
+  playBtn.innerHTML = '&#10074;&#10074;';
+  controls.appendChild(playBtn);
+
+  const time = document.createElement('span');
+  time.className = 'video-time';
+  time.textContent = '0:00 / 0:00';
+  controls.appendChild(time);
+
+  const progress = document.createElement('div');
+  progress.className = 'video-progress';
+  const fill = document.createElement('div');
+  fill.className = 'video-progress-fill';
+  progress.appendChild(fill);
+  controls.appendChild(progress);
+
+  const muteBtn = document.createElement('button');
+  muteBtn.className = 'video-control-btn';
+  muteBtn.innerHTML = '&#128266;';
+  controls.appendChild(muteBtn);
+
+  const fsBtn = document.createElement('button');
+  fsBtn.className = 'video-control-btn';
+  fsBtn.innerHTML = '&#x26F6;';
+  controls.appendChild(fsBtn);
+
+  wrapper.appendChild(controls);
+
+  function togglePlay() {
+    if (video.paused) video.play();
+    else video.pause();
+  }
+  function updateUI() {
+    const pct = video.duration ? (video.currentTime / video.duration) * 100 : 0;
+    fill.style.width = pct + '%';
+    time.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+    playBtn.innerHTML = video.paused ? '&#9654;' : '&#10074;&#10074;';
+    wrapper.classList.toggle('paused', video.paused);
+  }
+
+  playBtn.addEventListener('click', togglePlay);
+  video.addEventListener('click', togglePlay);
+  bigPlay.addEventListener('click', () => video.play());
+
+  muteBtn.addEventListener('click', () => {
+    video.muted = !video.muted;
+    muteBtn.innerHTML = video.muted ? '&#128263;' : '&#128266;';
+  });
+
+  fsBtn.addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+  });
+
+  progress.addEventListener('click', (e) => {
+    if (!video.duration) return;
+    const rect = progress.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    video.currentTime = pct * video.duration;
+  });
+
+  video.addEventListener('timeupdate', updateUI);
+  video.addEventListener('play', updateUI);
+  video.addEventListener('pause', updateUI);
+  video.addEventListener('loadedmetadata', updateUI);
+
+  // Indicateur de chargement
+  loading.classList.add('visible');
+  video.addEventListener('canplay', () => loading.classList.remove('visible'));
+  video.addEventListener('playing', () => loading.classList.remove('visible'));
+  video.addEventListener('waiting', () => loading.classList.add('visible'));
+  video.addEventListener('error', () => loading.classList.remove('visible'));
+
+  // Auto-masquage des contrôles pendant la lecture
+  let hideTimer = null;
+  wrapper.addEventListener('mousemove', () => {
+    wrapper.classList.add('active');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => wrapper.classList.remove('active'), 1000);
+  });
+  wrapper.addEventListener('mouseleave', () => wrapper.classList.remove('active'));
+
+  container.innerHTML = '';
+  container.appendChild(wrapper);
+  updateUI();
+  // Autoplay fiable : l'attribut seul peut être ignoré, on force play()
+  video.play().catch(() => {});
+}
+
+// ─── Écran de chargement + intro du cercle ───
+let introPlayed = false;
+function playIntro() {
+  if (introPlayed || !circleBaseRadius) return;
+  introPlayed = true;
+  circleRadius = circleBaseRadius * 1.6;
+  scrollVel = 80;
+}
+function hideLoader() {
+  const loader = document.getElementById('loader');
+  if (!loader || loader.classList.contains('hidden')) return;
+  loader.classList.add('hidden');
+  setTimeout(() => loader.remove(), 600);
+  playIntro();
+}
+window.addEventListener('load', hideLoader);
+setTimeout(() => hideLoader(), 4000);

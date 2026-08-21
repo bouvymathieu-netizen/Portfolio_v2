@@ -1,0 +1,222 @@
+[
+  {
+    "id": "nikon",
+    "title": "NIKON Mono no Aware",
+    "w": 720,
+    "h": 500,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Nikon%20Film%20Festival%202026/mono%20no%20aware.mp4", "label": "Film" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Nikon%20Film%20Festival%202026/Making%20of%20(1).mp4", "label": "Making of 1" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Nikon%20Film%20Festival%202026/Making%20of%20(2).mp4", "label": "Making of 2" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Nikon%20Film%20Festival%202026/Making%20of%20(3).mp4", "label": "Making of 3" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Nikon%20Film%20Festival%202026/Making%20of%20(4).mp4", "label": "Making of 4" }
+    ],
+    "description": "« Mono no Aware » est un concept esthétique et spirituel japonais, pouvant être traduit comme « l'empathie envers les choses » ou « la sensibilité pour l'éphémère ».",
+    "credits": [
+      "Réalisation : Julien ROOSE, Anthony VUILLEROT",
+      "Scénario : Julien ROOSE",
+      "Casting : Cheyenne BOUTAULT",
+      "Photographie : Mathieu BOUVY, Maxime SADRIN",
+      "Son : Anthony VUILLEROT",
+      "Montage : Anthony VUILLEROT",
+      "VFX : Mathieu BOUVY",
+      "Étalonnage : Mathieu BOUVY",
+      "Mixage son : Anthony VUILLEROT",
+      "Remerciements à : Thomas AUBERTIN, Clément DAZIN, Océane DUMAS, Marie NIETO, Alexandre ROOSE, Didier ROOSE"
+    ]
+  },
+  {
+    "id": "youtube",
+    "title": "SAMPLE Raska Isia",
+    "w": 720,
+    "h": 454,
+    "media": [
+      { "type": "video", "provider": "youtube", "id": "6qIcuHd1Vzc", "label": "Épisode" },
+      { "type": "photo", "src": "assets/backstage/raska-isia-photo-1.webp", "label": "Photo" },
+      { "type": "video", "provider": "youtube", "id": "n6qQ-nT0Kms", "label": "Épisode 2" },
+      { "type": "video", "provider": "youtube", "id": "_J3yUOVxb4o", "label": "Épisode 3" },
+      { "type": "video", "provider": "youtube", "id": "dJMIaFsv1x4", "label": "Épisode 4" },
+      { "type": "video", "provider": "youtube", "id": "tY7PLiZQKnQ", "label": "Épisode 5" }
+    ],
+    "description": "Raska et Isia s'affrontent pour trouver la bonne boîte et repartir avec un mystérieux cadeau.",
+    "credits": [
+      "Qui sera le plus stratège et repartira avec la bonne boîte ? La réponse est dans cet épisode…",
+      "Présentateur : @ryan_mahie",
+      "Réalisation : @anthony.debrant @justiine.v @ryan_mahie",
+      "Model : @mediabelmefre",
+      "Designer : @flor.fantasy",
+      "Photographe : @pierre.bars",
+      "Production : @Mothaiba",
+      "Montage : @mathieu.bouvy",
+      "Étalonnage : @mathieu.bouvy",
+      "Motion designer : @louietlavue",
+      "Photo : @mths.raw"
+    ]
+  },
+  {
+    "id": "eafut",
+    "title": "EA Fut Birthday",
+    "w": 380,
+    "h": 725,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/EA%20Sports%20-%20FUT%20Birthday/EA_Fut%20Birthday.mp4", "label": "Vidéo" }
+    ],
+    "description": "Quel ballon d'or est né le 17.04.01 ?",
+    "credits": [
+      "Creative lead : @enneite.drllb",
+      "Filmaker : @docteurrayan_",
+      "Motion & Editing : @mathieu.bouvy",
+      "Sound : @Kraft_production",
+      "Client : @easportsfcfr",
+      "Athlete : @bradley_dls",
+      "Talent : @mouloutrk"
+    ]
+  },
+  {
+    "id": "earatings",
+    "title": "EA Ratings OM",
+    "w": 720,
+    "h": 454,
+    "media": [
+      { "type": "video", "provider": "youtube", "id": "gJcIfowmhUU", "label": "Vidéo" }
+    ],
+    "description": "Lever de rideau ! Découvrez les notes #FC25 de nos Olympiens et dites-nous en commentaires ce que vous en pensez !",
+    "credits": [
+      "Creative Lead : @ralfone @enneite.drllb",
+      "Real : @spireprod",
+      "Filming : @dam_koman @mathieu.bouvy @kfrmd",
+      "Editing : @mathieu.bouvy",
+      "Dop : @romanefleury_",
+      "Vfx : @karlouchki",
+      "Setup : @picturebylouis",
+      "Talent : @bigcolombien @benj.da.silva",
+      "Club : @olympiquedemarseille",
+      "Client : @easportsfcfr"
+    ]
+  },
+  {
+    "id": "manou",
+    "title": "Manou Vaste Monde",
+    "w": 640,
+    "h": 360,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Vaste%20Monde%20-%20Manou/manou%20-%20vaste%20monde.mp4", "label": "Film" },
+      { "type": "photo", "src": "assets/backstage/manou-look-1.webp", "label": "Look 1 · @hugo_lbp" },
+      { "type": "photo", "src": "assets/backstage/manou-look-2.webp", "label": "Look 2 · @hugo_lbp" },
+      { "type": "photo", "src": "assets/backstage/manou-look-3.webp", "label": "Look 3 · @hugo_lbp" },
+      { "type": "photo", "src": "assets/backstage/manou-look-4.webp", "label": "Look 4 · @hugo_lbp" }
+    ],
+    "description": "Comme un semblant d'harmonie dans le désordre, à travers la frénésie du béton…",
+    "credits": [
+      "se cache un sentiment nouveau, une envie d'ailleurs, et d'ici. Explorer ce n'est plus fuir. C'est faire avec.",
+      "DA/conception : @manoubxr @manou_.bxr",
+      "Video : @mathieu.bouvy",
+      "Photography : @hugo_lbp",
+      "Models : @_ziifloow @gaby_bnrd @oswena_ @lenny_flrt",
+      "Special thanks : @terredecuir @merlainefeutre"
+    ]
+  },
+  {
+    "id": "highlo",
+    "title": "HIGHLO Bushi",
+    "w": 380,
+    "h": 675,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Bushi%20-%20Transbordeur/HIGHLO_Bushi%20(1).mp4", "label": "Vidéo" }
+    ],
+    "description": "HighLo — Bushi.",
+    "credits": []
+  },
+  {
+    "id": "nikon2024",
+    "title": "Behind The Screen",
+    "w": 720,
+    "h": 454,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Nikon%20Film%20Festival%202025/Behind%20The%20Screen.mp4", "label": "Vidéo" }
+    ],
+    "description": "Dans le cadre du Nikon Film Festival 2024. Thème : Un superpouvoir",
+    "credits": []
+  },
+  {
+    "id": "unibetnasri",
+    "title": "UNIBET Greg MMA x SAmir NASRI",
+    "w": 380,
+    "h": 675,
+    "media": [
+      { "type": "video", "provider": "youtube", "id": "FI33Ajr09xE", "label": "Vidéo" }
+    ],
+    "description": "Unibet — Greg MMA x SAmir NASRI.",
+    "credits": []
+  },
+  {
+    "id": "olmaillot",
+    "title": "OL Nouveau Maillot",
+    "w": 720,
+    "h": 454,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/OL%20-%20Maillot%20Away/D%C3%A9couvrez%20notre%20nouveau%20maillot%20ext%C3%A9rieur%20%20Olympique%20Lyonnais.mp4", "label": "Vidéo" }
+    ],
+    "description": "OL — Nouveau maillot extérieur.",
+    "credits": []
+  },
+  {
+    "id": "boatpartysplit",
+    "title": "Boat Party Split",
+    "w": 720,
+    "h": 500,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/12_VLOG%20CONNOR.mp4", "label": "VLOG Connor" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/Reel_Snap.mp4", "label": "Snap" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/Reel_Interview%20Megz.mp4", "label": "Interview Megz" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/Reel_Vlog%20Grant.mp4", "label": "Vlog Grant" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/Reel_Peehole.mp4", "label": "Peehole" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/Reel_B2B%20grant%20connor%20%2B%20Little%20fritter.mp4", "label": "B2B Grant Connor + Little Fritter" }
+    ],
+    "description": "Boat Party Split.",
+    "credits": []
+  },
+  {
+    "id": "intersportadidas",
+    "title": "Intersport x Adidas",
+    "w": 640,
+    "h": 640,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Intersport_Hero_16x9.mp4", "label": "Hero" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_01.mp4", "label": "Capsule 01" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_02.mp4", "label": "Capsule 02" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_03.mp4", "label": "Capsule 03" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_04.mp4", "label": "Capsule 04" }
+    ],
+    "description": "Intersport x Adidas.",
+    "credits": []
+  },
+  {
+    "id": "lyonenmodefunk",
+    "title": "Lyon en mode Funk",
+    "w": 720,
+    "h": 454,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Lyon%20en%20mode%20Funk/OL_Adidas_Teaser%20Funk_final_lowres.mp4", "label": "Teaser" }
+    ],
+    "description": "Lyon en mode Funk.",
+    "credits": []
+  },
+  {
+    "id": "rcsa",
+    "title": "RCSA",
+    "w": 720,
+    "h": 500,
+    "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/RCSA/RCSA%20-%201.mp4", "label": "Vidéo 1" },
+      { "type": "photo", "src": "assets/backstage/rcsa-backstage-1.webp", "label": "Backstage" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/RCSA/RCSA%20-%202.mp4", "label": "Vidéo 2" },
+      { "type": "photo", "src": "assets/backstage/rcsa-backstage-2.webp", "label": "Backstage" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/RCSA/RCSA%20-%203.mp4", "label": "Vidéo 3" },
+      { "type": "photo", "src": "assets/backstage/rcsa-backstage-3.webp", "label": "Backstage" },
+      { "type": "photo", "src": "assets/backstage/rcsa-backstage-4.webp", "label": "Backstage" }
+    ],
+    "description": "RCSA.",
+    "credits": []
+  }
+]

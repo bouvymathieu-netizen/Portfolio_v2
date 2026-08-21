@@ -1,2 +1,12 @@
-.aider*
-sk-*
+# OS
+Thumbs.db
+.DS_Store
+
+# Dépendances
+node_modules/
+
+# Sources lourdes (non publiées)
+*.psd
+*.mp4
+to add/
+backstage-src/
