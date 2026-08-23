@@ -146,7 +146,7 @@
     "media": [
       { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Unibet%20-%20Greg%20x%20Samir/UNIBET_Greg%20MMA%20x%20SAmir%20NASRI.mp4", "label": "Vidéo" }
     ],
-    "description": "Unibet — Greg MMA x SAmir NASRI.",
+    "description": "Unibet — Greg MMA x SAmir NASRI. Post-production : Mathieu BOUVY.",
     "credits": []
   },
   {
@@ -185,10 +185,10 @@
     "h": 640,
     "media": [
       { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Intersport_Hero_16x9.mp4", "label": "Hero" },
-      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_01.mp4", "label": "Capsule 01" },
-      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_02.mp4", "label": "Capsule 02" },
-      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_03.mp4", "label": "Capsule 03" },
-      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_04.mp4", "label": "Capsule 04" }
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_01_4x5.mp4", "label": "Capsule 01" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_02_4x5.mp4", "label": "Capsule 02" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_03_4x5.mp4", "label": "Capsule 03" },
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Caspule_04_4x5.mp4", "label": "Capsule 04" }
     ],
     "description": "Intersport x Adidas.",
     "credits": []
@@ -218,7 +218,11 @@
       { "type": "photo", "src": "assets/backstage/rcsa-backstage-3.webp", "label": "Backstage" },
       { "type": "photo", "src": "assets/backstage/rcsa-backstage-4.webp", "label": "Backstage" }
     ],
-    "description": "RCSA.",
-    "credits": []
+    "description": "Vidéos réalisées dans le cadre de la sortie des maillots Home, Away et Third du RCSA en 2026.",
+    "credits": [
+      "Réalisation : @tom_menetrey & @greengardenops",
+      "Montage : @tom_menetrey & @mathieu.bouvy",
+      "VFX : @mathieu.bouvy"
+    ]
   }
 ]

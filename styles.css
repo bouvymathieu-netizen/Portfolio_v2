@@ -529,12 +529,18 @@ textarea.contact-field {
 
   /* Desktop Ã¢â‚¬â€ full screen lockÃƒÂ© comme sur l'ordi */
   #desktop {
+    height: 100vh !important;
     height: 100dvh !important;
+    min-height: 100vh;
+    min-height: 100dvh;
     overflow: hidden !important;
     touch-action: none;
     padding: 0 !important;
     padding-top: 56px !important;
     padding-bottom: 0 !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
   }
 
   /* Cacher le sÃƒÂ©parateur et le bouton Qui suis-je dans le menu mobile */
@@ -828,6 +834,7 @@ textarea.contact-field {
   z-index: 60;
   background: #0a0a0a;
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   padding: 0;
   opacity: 0;
@@ -1096,7 +1103,8 @@ body.mode-photo #logos-panel {
   z-index: 10;
 }
 .video-player.active .video-controls,
-.video-player.paused .video-controls {
+.video-player.paused .video-controls,
+.video-player.seeking .video-controls {
   opacity: 1;
 }
 .video-player:not(.active):not(.paused) {

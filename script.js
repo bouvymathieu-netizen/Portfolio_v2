@@ -733,6 +733,7 @@ function openWindow(type) {
   });
   }
   openWindows[type] = win;
+  updateBurgerState();
   return win;
 }
 
@@ -744,6 +745,22 @@ function closeWindow(win) {
   win.classList.add('closing');
   setTimeout(() => win.remove(), 180);
   windowCount = Math.max(0, windowCount - 1);
+  updateBurgerState();
+}
+
+// ─── Burger mobile : devient "retour" quand une fenêtre est ouverte ───
+function updateBurgerState() {
+  if (!isMobile) return;
+  const btn = document.getElementById('mobile-menu-btn');
+  if (!btn) return;
+  const hasWindow = Object.values(openWindows).some((w) => document.body.contains(w));
+  if (hasWindow) {
+    btn.dataset.mode = 'back';
+    btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
+  } else {
+    btn.dataset.mode = 'menu';
+    btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>';
+  }
 }
 
 // ─── Restaurer la taille initiale (bouton jaune) ───
@@ -1243,7 +1260,20 @@ if (marqueeTrack) {
   function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('visible'); }
   function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('visible'); }
 
-  btn.addEventListener('click', openSidebar);
+  btn.addEventListener('click', () => {
+    if (btn.dataset.mode === 'back') {
+      let frontWin = null;
+      let maxZ = -1;
+      Object.values(openWindows).forEach((w) => {
+        if (!document.body.contains(w)) return;
+        const z = parseInt(w.style.zIndex, 10) || 0;
+        if (z > maxZ) { maxZ = z; frontWin = w; }
+      });
+      if (frontWin) closeWindow(frontWin);
+      return;
+    }
+    openSidebar();
+  });
   overlay.addEventListener('click', closeSidebar);
 
   // Fermer le drawer quand on clique sur un item du menu
@@ -1490,6 +1520,28 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === 'ArrowRight') lightboxNext();
 });
 
+// ─── Barre espace : pause/lecture de la vidéo au premier plan ───
+document.addEventListener('keydown', (e) => {
+  if (e.code !== 'Space') return;
+  const tag = e.target && e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
+
+  const windows = document.querySelectorAll('.window');
+  let front = null;
+  let maxZ = -1;
+  windows.forEach((w) => {
+    const z = parseInt(w.style.zIndex, 10) || 0;
+    if (z > maxZ) { maxZ = z; front = w; }
+  });
+  if (!front) return;
+  const video = front.querySelector('video');
+  if (!video) return;
+
+  e.preventDefault();
+  if (video.paused) video.play();
+  else video.pause();
+});
+
 // ─── Projets (manifest data-driven) ───
 let PROJECTS = {};
 
@@ -1678,12 +1730,39 @@ function mountVideoPlayer(container, item) {
     else if (wrapper.requestFullscreen) wrapper.requestFullscreen();
   });
 
-  progress.addEventListener('click', (e) => {
+  let hideTimer = null;
+
+  // Drag de la barre de lecture (souris + tactile)
+  let seeking = false;
+  function seekFromEvent(e) {
     if (!video.duration) return;
     const rect = progress.getBoundingClientRect();
-    const pct = (e.clientX - rect.left) / rect.width;
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
     video.currentTime = pct * video.duration;
+    fill.style.width = (pct * 100) + '%';
+    time.textContent = `${formatTime(pct * video.duration)} / ${formatTime(video.duration)}`;
+  }
+  progress.addEventListener('pointerdown', (e) => {
+    seeking = true;
+    wrapper.classList.add('seeking');
+    clearTimeout(hideTimer);
+    try { progress.setPointerCapture(e.pointerId); } catch (err) {}
+    seekFromEvent(e);
+    e.preventDefault();
   });
+  progress.addEventListener('pointermove', (e) => {
+    if (!seeking) return;
+    seekFromEvent(e);
+  });
+  function endSeek() {
+    seeking = false;
+    wrapper.classList.remove('seeking');
+    wrapper.classList.add('active');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => wrapper.classList.remove('active'), 1000);
+  }
+  progress.addEventListener('pointerup', endSeek);
+  progress.addEventListener('pointercancel', endSeek);
 
   video.addEventListener('timeupdate', updateUI);
   video.addEventListener('play', updateUI);
@@ -1698,7 +1777,6 @@ function mountVideoPlayer(container, item) {
   video.addEventListener('error', () => loading.classList.remove('visible'));
 
   // Auto-masquage des contrôles pendant la lecture
-  let hideTimer = null;
   wrapper.addEventListener('mousemove', () => {
     wrapper.classList.add('active');
     clearTimeout(hideTimer);
