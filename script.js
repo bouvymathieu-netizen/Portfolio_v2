@@ -123,12 +123,13 @@ icons.forEach(icon => {
       } else if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
         clearTimeout(longPressTimer);
         iconSwipeActive = true;
+        circlePaused = true; // gèle la rotation auto pendant le swipe pour éviter le tremblement
+        scrollVel = 0;
         swipeStartAngle = circleAngle;
         swipeRefX = t.clientX;
         swipePrevX = t.clientX;
         swipeLastDx = 0;
         swipeVel = 0;
-        // Pas de circlePaused ici : le cercle continue de tourner légèrement pendant le swipe
         const totalDx = t.clientX - swipeRefX;
         circleAngle = swipeStartAngle - totalDx * 0.004;
         updateCirclePositions();
@@ -148,6 +149,7 @@ icons.forEach(icon => {
       // Fin du swipe : appliquer le momentum basé sur le dernier delta
       scrollVel = -swipeVel * 12;
       iconSwipeActive = false;
+      circlePaused = false;
     } else if (touchStartPos) {
       // Tap simple → ouvre la fenêtre
       const type = icon.dataset.window;
@@ -165,6 +167,7 @@ icons.forEach(icon => {
       circlePaused = false;
     }
     iconSwipeActive = false;
+    circlePaused = false;
     touchStartPos = null;
   }, { passive: true });
 });
