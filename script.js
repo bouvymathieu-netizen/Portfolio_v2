@@ -1004,7 +1004,7 @@ function shuffleProjectIcons() {
   const dh = DESKTOP.clientHeight;
   const cx = dw / 2;
   const cy = dh / 2;
-  const radiusMultiplier = isMobile ? 0.55 : 0.42;
+  const radiusMultiplier = isMobile ? 0.8 : 0.42;
   const radius = Math.min(480, Math.min(dw, dh) * radiusMultiplier);
   const count = projectIcons.length;
   const step = (2 * Math.PI) / count;
@@ -1038,7 +1038,7 @@ function shuffleProjectIcons() {
 
 function updateCirclePositions() {
   const icons = document.querySelectorAll('.desktop-icon[data-category]');
-  const radiusY = circleRadius * 0.45;
+  const radiusY = circleRadius * 0.32;
 
   icons.forEach(icon => {
     if (icon.dataset.detached === 'true') return;
@@ -1155,7 +1155,7 @@ window.addEventListener('resize', () => {
   circleCenterX = dw / 2;
   circleCenterY = dh / 2;
   if (isMobile) {
-    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.55);
+    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.8);
   } else {
     circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.42);
   }
@@ -1624,9 +1624,9 @@ document.querySelectorAll('.desktop-icon[data-window]').forEach((icon) => {
 
 function embedUrl(item) {
   if (item.provider === 'vimeo') {
-    return `https://player.vimeo.com/video/${item.id}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1`;
+    return `https://player.vimeo.com/video/${item.id}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1`;
   }
-  return `https://www.youtube.com/embed/${item.id}?autoplay=1`;
+  return `https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&playsinline=1`;
 }
 
 function buildProjectBody(project) {
@@ -1720,8 +1720,11 @@ function mountVideoPlayer(container, item) {
   if (item.poster) video.poster = item.poster;
   video.autoplay = true;
   video.playsInline = true;
+  video.muted = true;
   video.loop = true;
   video.preload = 'auto';
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
   wrapper.appendChild(video);
 
   const loading = document.createElement('div');
@@ -1759,7 +1762,7 @@ function mountVideoPlayer(container, item) {
 
   const muteBtn = document.createElement('button');
   muteBtn.className = 'video-control-btn';
-  muteBtn.innerHTML = '&#128266;';
+  muteBtn.innerHTML = '&#128263;';
   controls.appendChild(muteBtn);
 
   const fsBtn = document.createElement('button');
