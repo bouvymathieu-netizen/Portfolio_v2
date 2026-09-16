@@ -1652,9 +1652,9 @@ document.querySelectorAll('.desktop-icon[data-window]').forEach((icon) => {
 
 function embedUrl(item) {
   if (item.provider === 'vimeo') {
-    return `https://player.vimeo.com/video/${item.id}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1`;
+    return `https://player.vimeo.com/video/${item.id}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1`;
   }
-  return `https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&playsinline=1`;
+  return `https://www.youtube.com/embed/${item.id}?autoplay=1&playsinline=1`;
 }
 
 function buildProjectBody(project) {
@@ -1748,7 +1748,6 @@ function mountVideoPlayer(container, item) {
   if (item.poster) video.poster = item.poster;
   video.autoplay = true;
   video.playsInline = true;
-  video.muted = true;
   video.loop = true;
   video.preload = 'auto';
   video.setAttribute('playsinline', '');
@@ -1790,7 +1789,7 @@ function mountVideoPlayer(container, item) {
 
   const muteBtn = document.createElement('button');
   muteBtn.className = 'video-control-btn';
-  muteBtn.innerHTML = '&#128263;';
+  muteBtn.innerHTML = '&#128266;';
   controls.appendChild(muteBtn);
 
   const fsBtn = document.createElement('button');
