@@ -11,7 +11,8 @@
         "label": "Film",
         "start": 35,
         "zoom": 1.3,
-        "poster": "assets/posters/nikon.jpg"
+        "poster": "assets/posters/nikon.jpg",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Nikon%20Film%20Festival%202026/mono%20no%20aware_preview.mp4?v=2"
       },
       {
         "type": "video",
@@ -58,7 +59,8 @@
         "type": "video",
         "provider": "youtube",
         "id": "6qIcuHd1Vzc",
-        "label": "Épisode"
+        "label": "Épisode",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/previews/SAMPLE_Raska_Isia.mp4?v=2"
       },
       {
         "type": "photo",
@@ -139,7 +141,8 @@
         "type": "video",
         "provider": "youtube",
         "id": "gJcIfowmhUU",
-        "label": "Vidéo"
+        "label": "Vidéo",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/previews/EA_Ratings_OM.mp4?v=3"
       }
     ],
     "description": "Lever de rideau ! Découvrez les notes #FC25 de nos Olympiens et dites-nous en commentaires ce que vous en pensez !",
@@ -166,7 +169,8 @@
         "type": "video",
         "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Vaste%20Monde%20-%20Manou/manou%20-%20vaste%20monde.mp4",
         "label": "Film",
-        "poster": "assets/posters/manou.jpg"
+        "poster": "assets/posters/manou.jpg",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Vaste%20Monde%20-%20Manou/manou%20-%20vaste%20monde_preview.mp4?v=2"
       },
       {
         "type": "photo",
@@ -209,7 +213,8 @@
         "type": "video",
         "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Bushi%20-%20Transbordeur/HIGHLO_Bushi%20(1).mp4",
         "label": "Vidéo",
-        "poster": "assets/posters/highlo.jpg"
+        "poster": "assets/posters/highlo.jpg",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Bushi%20-%20Transbordeur/HIGHLO_Bushi%20(1)_preview.mp4?v=2"
       }
     ],
     "description": "HighLo — Bushi.",
@@ -226,7 +231,8 @@
         "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Nikon%20Film%20Festival%202025/Behind%20The%20Screen.mp4",
         "label": "Vidéo",
         "start": 31,
-        "poster": "assets/posters/nikon2024.jpg"
+        "poster": "assets/posters/nikon2024.jpg",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Nikon%20Film%20Festival%202025/Behind%20The%20Screen_preview.mp4?v=3"
       }
     ],
     "description": "Dans le cadre du Nikon Film Festival 2024. Thème : Un superpouvoir",
@@ -356,7 +362,7 @@
         "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Lyon%20en%20mode%20Funk/LEMF_Aftermovie_4x5.mp4",
         "label": "Aftermovie",
         "poster": "assets/posters/lyonenmodefunk.jpg",
-        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Lyon%20en%20mode%20Funk/LEMF_Aftermovie_4x5_preview.mp4"
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Lyon%20en%20mode%20Funk/LEMF_Aftermovie_4x5_preview.mp4?v=2"
       },
       {
         "type": "video",
@@ -382,7 +388,8 @@
         "type": "video",
         "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/RCSA/RCSA%20-%201.mp4",
         "label": "Vidéo 1",
-        "poster": "assets/posters/rcsa.jpg"
+        "poster": "assets/posters/rcsa.jpg",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/RCSA/RCSA%20-%201_preview.mp4?v=2"
       },
       {
         "type": "photo",

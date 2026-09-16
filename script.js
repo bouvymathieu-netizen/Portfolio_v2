@@ -1704,37 +1704,45 @@ function showVideoPreview(id) {
   if (first.type !== 'video') return;
   clearTimeout(previewHideTimer);
 
-  // YouTube → miniature de la vidéo
-  if (!first.src && first.provider === 'youtube') {
-    currentPreviewId = id;
-    previewMode = 'image';
-    previewReady = false;
-    previewVideo.pause();
-    previewVideo.style.display = 'none';
-    previewImg.style.display = '';
+  const videoSrc = first.preview || first.src;
+  const posterSrc = first.poster
+    || (first.provider === 'youtube' ? `https://img.youtube.com/vi/${first.id}/maxresdefault.jpg` : '');
+
+  // Vidéo (auto-hébergée ou preview MP4) → lecture
+  if (videoSrc) {
+    if (currentPreviewId !== id) {
+      currentPreviewId = id;
+      previewMode = 'video';
+      previewReady = false;
+      previewImg.onerror = null;
+      previewImg.src = posterSrc;
+      previewImg.style.display = posterSrc ? '' : 'none';
+      previewImg.style.transform = first.zoom ? `scale(${first.zoom})` : '';
+      previewVideo.style.display = '';
+      previewVideo.src = videoSrc;
+      previewVideo.dataset.start = '0';
+      previewVideo.loop = true;
+      previewVideo.style.transform = first.zoom ? `scale(${first.zoom})` : '';
+    }
+    videoPreview.classList.add('visible');
+    return;
+  }
+
+  // Pas de source vidéo → miniature YouTube
+  currentPreviewId = id;
+  previewMode = 'image';
+  previewReady = false;
+  previewVideo.pause();
+  previewVideo.style.display = 'none';
+  previewImg.style.display = '';
+  previewImg.style.transform = '';
+  if (first.provider === 'youtube') {
     const thumb = `https://img.youtube.com/vi/${first.id}/maxresdefault.jpg`;
     previewImg.onerror = () => {
       previewImg.onerror = null;
       previewImg.src = `https://img.youtube.com/vi/${first.id}/hqdefault.jpg`;
     };
     previewImg.src = thumb;
-    videoPreview.classList.add('visible');
-    return;
-  }
-
-  if (!first.src) return;
-  if (currentPreviewId !== id) {
-    currentPreviewId = id;
-    previewMode = 'video';
-    previewReady = false;
-    previewImg.onerror = null;
-    previewImg.src = first.poster || '';
-    previewImg.style.display = '';
-    previewImg.style.transform = first.zoom ? `scale(${first.zoom})` : '';
-    previewVideo.style.display = '';
-    previewVideo.src = first.preview || first.src;
-    previewVideo.dataset.start = String(first.start || 0);
-    previewVideo.style.transform = first.zoom ? `scale(${first.zoom})` : '';
   }
   videoPreview.classList.add('visible');
 }
