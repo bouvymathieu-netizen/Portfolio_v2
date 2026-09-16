@@ -16,6 +16,32 @@ if (isMobile) {
 // ─── Icônes ───
 const icons = document.querySelectorAll('.desktop-icon');
 
+// ─── Inclinaison du cercle vers la souris (desktop, parallaxe) ───
+let tiltX = 0, tiltY = 0;
+if (!isMobile) {
+  const MAX_TILT = 28;
+  let targetTiltX = 0, targetTiltY = 0;
+
+  DESKTOP.addEventListener('mousemove', (e) => {
+    const r = DESKTOP.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / r.width - 0.5;
+    const ny = (e.clientY - r.top) / r.height - 0.5;
+    targetTiltX = -ny * MAX_TILT;
+    targetTiltY = nx * MAX_TILT;
+  });
+  DESKTOP.addEventListener('mouseleave', () => {
+    targetTiltX = 0;
+    targetTiltY = 0;
+  });
+
+  function tickTilt() {
+    tiltX += (targetTiltX - tiltX) * 0.08;
+    tiltY += (targetTiltY - tiltY) * 0.08;
+    requestAnimationFrame(tickTilt);
+  }
+  requestAnimationFrame(tickTilt);
+}
+
 // Sélection (desktop only)
 if (!isMobile) {
 icons.forEach(icon => {
@@ -990,7 +1016,7 @@ let circleBaseRadius = 0;
 let circleAnimId = null;
 let circlePaused = false;
 let scrollVel = 0;
-const ICON_SCALE = 1.8; // facteur d'agrandissement des vignettes
+const ICON_SCALE = isMobile ? 1.8 : 0.9; // facteur d'agrandissement des vignettes
 const MAX_SCROLL_SPEED = 120; // vélocité de scroll pour un élargissement max
 const RADIUS_EXPAND = 0.3;    // élargissement max du cercle (+30%)
 
@@ -1050,8 +1076,10 @@ function updateCirclePositions() {
     const y = circleCenterY + radiusY * sinA;
     const halfW = icon.offsetWidth / 2 || 44;
     const halfH = icon.offsetHeight / 2 || 50;
-    icon.style.left = `${x - halfW}px`;
-    icon.style.top = `${y - halfH}px`;
+    const parX = !isMobile ? tiltY * sinA * 1.1 : 0;
+    const parY = !isMobile ? -tiltX * sinA * 1.1 : 0;
+    icon.style.left = `${x - halfW + parX}px`;
+    icon.style.top = `${y - halfH + parY}px`;
 
     const depth = (sinA + 1) / 2; // 0 (fond) → 1 (avant)
     const depthScale = ICON_SCALE * (1 + 0.42 * sinA);
