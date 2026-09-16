@@ -11,9 +11,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
   background: rgba(10, 10, 10, 0.4);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -115,7 +115,7 @@ body {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
+    border-radius: 4px;
     padding: 12px;
     min-width: 160px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -210,6 +210,69 @@ body {
 }
 .desktop-icon:hover .icon-label {
   opacity: 1;
+}
+
+/* ─── Liste des titres de projets (bureau) ─── */
+#project-titles {
+  position: absolute;
+  top: 60px;
+  right: 24px;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  pointer-events: auto;
+}
+.project-title-item {
+  font-family: 'CS Caleb Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.55);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-align: right;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  transition: color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+.project-title-item:hover {
+  color: #C32933;
+  background: rgba(0, 0, 0, 0.35);
+  transform: translateX(-4px);
+}
+.project-title-item.highlighted {
+  color: #C32933;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.brand-link {
+  font-family: 'CS Caleb Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  padding: 2px 6px;
+  margin-left: -6px;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.brand-link:hover {
+  color: #C32933;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.desktop-icon.elevated .icon-box {
+  transform: translateY(-20px) scale(1.15);
+}
+
+@media (max-width: 768px), (max-height: 600px) {
+  #project-titles {
+    display: none !important;
+  }
 }
 
 /* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Windows Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
@@ -478,7 +541,7 @@ textarea.contact-field {
     z-index: 10001;
     width: 48px;
     height: 48px;
-    border-radius: 50%;
+    border-radius: 4px;
     background: rgba(10,10,10,0.25);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255,255,255,0.06);
@@ -784,47 +847,45 @@ textarea.contact-field {
 .mode-toggle {
   position: relative;
   display: inline-flex;
-  gap: 0;
+  align-items: center;
+  gap: 18px;
   background: rgba(10, 10, 10, 0.35);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 3px;
+  border-radius: 4px;
+  padding: 8px 14px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-.mode-toggle-indicator {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 76px;
-  height: calc(100% - 6px);
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  pointer-events: none;
-}
-.mode-toggle.photo-active .mode-toggle-indicator {
-  transform: translateX(100%);
+  font-family: 'CS Caleb Mono', monospace;
 }
 .mode-toggle-btn {
-  position: relative;
-  z-index: 1;
-  width: 76px;
-  padding: 6px 0;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   border: none;
-  border-radius: 7px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 12px;
-  font-weight: 500;
+  background: none;
+  padding: 0;
   cursor: pointer;
-  transition: color 0.25s ease;
+  font-family: inherit;
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.35);
+  transition: color 0.2s ease;
+}
+.mode-toggle-mark {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 .mode-toggle-btn.active {
   color: #fff;
+}
+.mode-toggle-btn.active .mode-toggle-mark {
+  background: #C32933;
+  border-color: #C32933;
 }
 
 /* ═══ Vue Galerie Photo ═══ */
@@ -845,6 +906,9 @@ body.mode-photo .photo-view {
   visibility: visible;
 }
 body.mode-photo .desktop-icon {
+  display: none !important;
+}
+body.mode-photo #project-titles {
   display: none !important;
 }
 body.mode-photo #logos-panel {

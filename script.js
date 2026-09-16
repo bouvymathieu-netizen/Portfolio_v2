@@ -549,9 +549,9 @@ function openWindow(type) {
           <p class="text-xs text-gray-400">Laissez-moi un message.</p>
           <form onsubmit="sendContact(event)">
             <div class="space-y-3">
-              <input type="text" placeholder="Nom" class="contact-field" id="contact-name">
-              <input type="email" placeholder="Email" class="contact-field" id="contact-email">
-              <textarea placeholder="Message" class="contact-field" rows="4" id="contact-msg"></textarea>
+              <input type="text" placeholder="Nom" name="name" class="contact-field" id="contact-name">
+              <input type="email" placeholder="Email" name="email" class="contact-field" id="contact-email">
+              <textarea placeholder="Message" name="message" class="contact-field" rows="4" id="contact-msg"></textarea>
             </div>
             <button type="submit"
                     class="mt-5 w-full py-2.5 rounded-lg text-sm font-medium transition-all duration-200
@@ -560,6 +560,7 @@ function openWindow(type) {
                            active:scale-[0.98]">
               Envoyer
             </button>
+            <p class="contact-status text-xs mt-2 text-gray-400"></p>
           </form>
         </div>`;
       break;
@@ -1003,7 +1004,7 @@ function shuffleProjectIcons() {
   const dh = DESKTOP.clientHeight;
   const cx = dw / 2;
   const cy = dh / 2;
-  const radiusMultiplier = isMobile ? 0.55 : 0.37;
+  const radiusMultiplier = isMobile ? 0.55 : 0.42;
   const radius = Math.min(480, Math.min(dw, dh) * radiusMultiplier);
   const count = projectIcons.length;
   const step = (2 * Math.PI) / count;
@@ -1032,6 +1033,7 @@ function shuffleProjectIcons() {
   circleAngle = 0;
   updateCirclePositions();
   startCircleRotation();
+  buildProjectTitles();
 }
 
 function updateCirclePositions() {
@@ -1155,7 +1157,7 @@ window.addEventListener('resize', () => {
   if (isMobile) {
     circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.55);
   } else {
-    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.37);
+    circleBaseRadius = Math.min(480, Math.min(dw, dh) * 0.42);
   }
   circleRadius = circleBaseRadius;
   updateCirclePositions();
@@ -1310,7 +1312,7 @@ function scrollToAbout() {
 function retourAuBureau() {
   document.getElementById('retour-btn')?.classList.add('hidden');
   document.getElementById('logos-panel')?.classList.remove('fade-hidden');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo(0, 0);
   if (isMobile) {
     document.getElementById('desktop').style.overflow = 'hidden';
     document.getElementById('desktop').style.height = '100dvh';
@@ -1321,13 +1323,36 @@ function retourAuBureau() {
 }
 
 // ─── Contact ───
-function sendContact(e) {
+async function sendContact(e) {
   e.preventDefault();
+  const form = e.target;
   const name = document.getElementById('contact-name')?.value.trim() || '';
   const email = document.getElementById('contact-email')?.value.trim() || '';
   const msg = document.getElementById('contact-msg')?.value.trim() || '';
-  const body = `Nom: ${name}\nEmail: ${email}\n\n${msg}`;
-  window.location.href = `mailto:bouvy.mathieu@gmail.com?subject=Portfolio&body=${encodeURIComponent(body)}`;
+  const btn = form.querySelector('button[type="submit"]');
+  const status = form.querySelector('.contact-status');
+
+  if (!name || !email || !msg) {
+    if (status) { status.textContent = 'Merci de remplir tous les champs.'; status.style.color = '#f87171'; }
+    return;
+  }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Envoi…'; }
+
+  try {
+    const res = await fetch('https://formsubmit.co/ajax/bouvy.mathieu@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email, message: msg })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    if (status) { status.textContent = 'Merci ! Votre message a bien été envoyé.'; status.style.color = '#4ade80'; }
+    if (btn) { btn.textContent = 'Envoyé ✓'; }
+    form.reset();
+  } catch (err) {
+    if (status) { status.textContent = "Échec de l'envoi. Réessayez dans un instant."; status.style.color = '#f87171'; }
+    if (btn) { btn.disabled = false; btn.textContent = 'Envoyer'; }
+  }
 }
 
 // ─── Mode Vidéo / Photo ───
@@ -1550,15 +1575,52 @@ let PROJECTS = {};
 
 async function loadProjects() {
   try {
-    const res = await fetch('assets/projects.json');
+    const res = await fetch('assets/projects.json', { cache: 'no-store' });
     const arr = await res.json();
     PROJECTS = {};
     arr.forEach((p) => { PROJECTS[p.id] = p; });
   } catch (e) {
     console.error('projects.json introuvable', e);
   }
+  buildProjectTitles();
 }
 loadProjects();
+
+function buildProjectTitles() {
+  const nav = document.getElementById('project-titles');
+  if (!nav) return;
+  nav.innerHTML = '';
+  const icons = Array.from(document.querySelectorAll('.desktop-icon[data-window]'));
+  if (icons.every((i) => i.dataset.angle !== undefined)) {
+    icons.sort((a, b) => parseFloat(a.dataset.angle) - parseFloat(b.dataset.angle));
+  }
+  icons.forEach((icon) => {
+    const id = icon.dataset.window;
+    const title = (PROJECTS[id] && PROJECTS[id].title)
+      || icon.querySelector('.icon-label')?.textContent
+      || id;
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'project-title-item';
+    item.dataset.window = id;
+    item.textContent = title;
+    item.addEventListener('mouseenter', () => icon.classList.add('elevated'));
+    item.addEventListener('mouseleave', () => icon.classList.remove('elevated'));
+    item.addEventListener('click', () => openWindow(id));
+    nav.appendChild(item);
+  });
+}
+
+// Hover d'une icône → surligne le titre correspondant dans la liste
+document.querySelectorAll('.desktop-icon[data-window]').forEach((icon) => {
+  const id = icon.dataset.window;
+  icon.addEventListener('mouseenter', () => {
+    document.querySelector(`.project-title-item[data-window="${id}"]`)?.classList.add('highlighted');
+  });
+  icon.addEventListener('mouseleave', () => {
+    document.querySelector(`.project-title-item[data-window="${id}"]`)?.classList.remove('highlighted');
+  });
+});
 
 function embedUrl(item) {
   if (item.provider === 'vimeo') {

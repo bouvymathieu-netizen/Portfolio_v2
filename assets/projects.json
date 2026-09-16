@@ -96,7 +96,7 @@
   },
   {
     "id": "manou",
-    "title": "Manou Vaste Monde",
+    "title": "MANOU Vaste Monde",
     "w": 640,
     "h": 360,
     "media": [
@@ -129,7 +129,7 @@
   },
   {
     "id": "nikon2024",
-    "title": "Behind The Screen",
+    "title": "NIKON Behind The Screen",
     "w": 720,
     "h": 454,
     "media": [
@@ -164,7 +164,7 @@
   },
   {
     "id": "boatpartysplit",
-    "title": "Boat Party Split",
+    "title": "BOAT PARTY SPLIT",
     "w": 720,
     "h": 500,
     "media": [
@@ -180,7 +180,7 @@
   },
   {
     "id": "intersportadidas",
-    "title": "Intersport x Adidas",
+    "title": "INTERSPORT x ADIDAS",
     "w": 640,
     "h": 640,
     "media": [
@@ -195,18 +195,24 @@
   },
   {
     "id": "lyonenmodefunk",
-    "title": "Lyon en mode Funk",
+    "title": "ADIDAS Lyon En Mode Funk",
     "w": 720,
     "h": 454,
     "media": [
+      { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Lyon%20en%20mode%20Funk/LEMF_Aftermovie_4x5.mp4", "label": "Aftermovie" },
       { "type": "video", "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Lyon%20en%20mode%20Funk/OL_Adidas_Teaser%20Funk_final_lowres.mp4", "label": "Teaser" }
     ],
-    "description": "Lyon en mode Funk.",
-    "credits": []
+    "description": "Lyon s'est réunie autour du football et de la funk pour mettre à l'honneur le nouveau maillot Third de l'@ol et @ol.lyonnes avec @adidasfr.",
+    "credits": [
+      "Réalisation : @guardiolhash et @mathieu.bouvy",
+      "Captation : @mathieu.bouvy et @kenny_stillberg",
+      "Drone : @peulgnnt_",
+      "Montage : @mathieu.bouvy"
+    ]
   },
   {
     "id": "rcsa",
-    "title": "RCSA",
+    "title": "RCSA Reveal Maillots",
     "w": 720,
     "h": 500,
     "media": [

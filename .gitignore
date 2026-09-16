@@ -10,3 +10,9 @@ node_modules/
 *.mp4
 to add/
 backstage-src/
+
+# macOS AppleDouble
+._*
+
+# Cloudflare Wrangler (état local)
+.wrangler/
