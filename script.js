@@ -1076,8 +1076,8 @@ function updateCirclePositions() {
     const y = circleCenterY + radiusY * sinA;
     const halfW = icon.offsetWidth / 2 || 44;
     const halfH = icon.offsetHeight / 2 || 50;
-    const parX = !isMobile ? tiltY * sinA * 1.1 : 0;
-    const parY = !isMobile ? -tiltX * sinA * 1.1 : 0;
+    const parX = !isMobile ? tiltY * sinA * 1.4 : 0;
+    const parY = !isMobile ? -tiltX * sinA * 1.4 : 0;
     icon.style.left = `${x - halfW + parX}px`;
     icon.style.top = `${y - halfH + parY}px`;
 
