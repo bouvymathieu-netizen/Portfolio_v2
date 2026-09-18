@@ -1615,16 +1615,19 @@ async function loadProjects() {
 }
 loadProjects();
 
-// Précharge les vidéos de preview en arrière-plan pour un survol instantané (pas de freeze frame)
+// Précharge les vidéos ET les posters de preview en arrière-plan
 function preloadPreviews() {
-  const urls = [];
+  const videoUrls = [];
+  const posterUrls = [];
   Object.values(PROJECTS).forEach((p) => {
     const m = p.media && p.media[0];
     if (!m || m.type !== 'video') return;
     const src = m.preview || m.src;
-    if (src && !urls.includes(src)) urls.push(src);
+    if (src && !videoUrls.includes(src)) videoUrls.push(src);
+    const poster = m.poster;
+    if (poster && !posterUrls.includes(poster)) posterUrls.push(poster);
   });
-  urls.forEach((url) => {
+  videoUrls.forEach((url) => {
     const v = document.createElement('video');
     v.muted = true;
     v.playsInline = true;
@@ -1633,6 +1636,10 @@ function preloadPreviews() {
     v.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;';
     document.body.appendChild(v);
     v.load();
+  });
+  posterUrls.forEach((url) => {
+    const img = new Image();
+    img.src = url;
   });
 }
 
@@ -1772,6 +1779,7 @@ function showVideoPreview(id) {
       previewImg.style.display = posterSrc ? '' : 'none';
       previewImg.style.transform = first.zoom ? `scale(${first.zoom})` : '';
       previewVideo.style.display = '';
+      previewVideo.poster = posterSrc;
       previewVideo.src = videoSrc;
       previewVideo.dataset.start = '0';
       previewVideo.loop = true;

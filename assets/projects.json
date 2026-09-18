@@ -60,7 +60,8 @@
         "provider": "youtube",
         "id": "6qIcuHd1Vzc",
         "label": "Épisode",
-        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/previews/SAMPLE_Raska_Isia.mp4?v=2"
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/previews/SAMPLE_Raska_Isia.mp4?v=2",
+        "poster": "assets/posters/youtube.jpg?v=1"
       },
       {
         "type": "photo",
@@ -143,7 +144,8 @@
         "provider": "youtube",
         "id": "gJcIfowmhUU",
         "label": "Vidéo",
-        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/previews/EA_Ratings_OM.mp4?v=3"
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/previews/EA_Ratings_OM.mp4?v=3",
+        "poster": "assets/posters/youtube.jpg?v=1"
       }
     ],
     "description": "Lever de rideau ! Découvrez les notes #FC25 de nos Olympiens et dites-nous en commentaires ce que vous en pensez !",
