@@ -117,7 +117,8 @@
         "type": "video",
         "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/EA%20Sports%20-%20FUT%20Birthday/EA_Fut%20Birthday.mp4",
         "label": "Vidéo",
-        "poster": "assets/posters/eafut.jpg"
+        "poster": "assets/posters/eafut.jpg",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/previews/EA_Fut_Birthday.mp4"
       }
     ],
     "description": "Quel ballon d'or est né le 17.04.01 ?",
@@ -248,11 +249,16 @@
         "type": "video",
         "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Unibet%20-%20Greg%20x%20Samir/UNIBET_Greg%20MMA%20x%20SAmir%20NASRI.mp4",
         "label": "Vidéo",
-        "poster": "assets/posters/unibetnasri.jpg"
+        "poster": "assets/posters/unibetnasri.jpg",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/previews/UNIBET_Greg_MMA.mp4"
       }
     ],
     "description": "Unibet — Greg MMA x SAmir NASRI. Post-production : Mathieu BOUVY.",
-    "credits": []
+    "credits": [
+      "Réalisation : @spireprod",
+      "Cadrage : @spireprod et @dam.koman",
+      "Montage : @mathieu.bouvy"
+    ]
   },
   {
     "id": "olmaillot",
@@ -264,7 +270,8 @@
         "type": "video",
         "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/OL%20-%20Maillot%20Away/D%C3%A9couvrez%20notre%20nouveau%20maillot%20ext%C3%A9rieur%20%20Olympique%20Lyonnais.mp4",
         "label": "Vidéo",
-        "poster": "assets/posters/olmaillot.jpg"
+        "poster": "assets/posters/olmaillot.jpg",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/previews/OL_Maillot.mp4"
       }
     ],
     "description": "OL — Nouveau maillot extérieur.",
@@ -280,10 +287,10 @@
     "media": [
       {
         "type": "video",
-        "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/12_VLOG%20CONNOR.mp4",
-        "label": "VLOG Connor",
-        "poster": "assets/posters/boatpartysplit.jpg",
-        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/12_VLOG%20CONNOR_preview.mp4"
+        "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/Reel_Interview%20Megz.mp4?v=2",
+        "label": "Interview Megz",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/Reel_Interview%20Megz_preview.mp4",
+        "poster": "assets/posters/boatpartysplit.jpg"
       },
       {
         "type": "video",
@@ -292,8 +299,10 @@
       },
       {
         "type": "video",
-        "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/Reel_Interview%20Megz.mp4",
-        "label": "Interview Megz"
+        "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/12_VLOG%20CONNOR.mp4?v=2",
+        "label": "VLOG Connor",
+        "poster": "assets/posters/boatpartysplit.jpg",
+        "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Boat%20Party%20Split/12_VLOG%20CONNOR_preview.mp4"
       },
       {
         "type": "video",
@@ -322,7 +331,7 @@
     "media": [
       {
         "type": "video",
-        "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Intersport_Hero_16x9.mp4",
+        "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Intersport_Hero_16x9.mp4?v=2",
         "label": "Hero",
         "poster": "assets/posters/intersportadidas.jpg",
         "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Intersport%20x%20Adidas/Intersport_Hero_16x9_preview.mp4"
@@ -349,7 +358,9 @@
       }
     ],
     "description": "Intersport x Adidas.",
-    "credits": []
+    "credits": [
+      "Réalisation montage : @mathieu.bouvy"
+    ]
   },
   {
     "id": "lyonenmodefunk",
@@ -359,7 +370,7 @@
     "media": [
       {
         "type": "video",
-        "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Lyon%20en%20mode%20Funk/LEMF_Aftermovie_4x5.mp4",
+        "src": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Lyon%20en%20mode%20Funk/LEMF_Aftermovie_4x5.mp4?v=2",
         "label": "Aftermovie",
         "poster": "assets/posters/lyonenmodefunk.jpg",
         "preview": "https://pub-f932ceb2e6044df5b1c033ff5d632136.r2.dev/Lyon%20en%20mode%20Funk/LEMF_Aftermovie_4x5_preview.mp4?v=2"
