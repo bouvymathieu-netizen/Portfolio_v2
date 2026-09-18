@@ -1611,8 +1611,30 @@ async function loadProjects() {
     console.error('projects.json introuvable', e);
   }
   buildProjectTitles();
+  preloadPreviews();
 }
 loadProjects();
+
+// Précharge les vidéos de preview en arrière-plan pour un survol instantané (pas de freeze frame)
+function preloadPreviews() {
+  const urls = [];
+  Object.values(PROJECTS).forEach((p) => {
+    const m = p.media && p.media[0];
+    if (!m || m.type !== 'video') return;
+    const src = m.preview || m.src;
+    if (src && !urls.includes(src)) urls.push(src);
+  });
+  urls.forEach((url) => {
+    const v = document.createElement('video');
+    v.muted = true;
+    v.playsInline = true;
+    v.preload = 'auto';
+    v.src = url;
+    v.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;';
+    document.body.appendChild(v);
+    v.load();
+  });
+}
 
 function buildProjectTitles() {
   const nav = document.getElementById('project-titles');
@@ -1632,25 +1654,57 @@ function buildProjectTitles() {
     item.className = 'project-title-item';
     item.dataset.window = id;
     item.textContent = title;
-    item.addEventListener('mouseenter', () => { icon.classList.add('elevated'); showVideoPreview(id); });
-    item.addEventListener('mouseleave', () => { icon.classList.remove('elevated'); hideVideoPreview(); });
     item.addEventListener('click', () => openWindow(id));
     nav.appendChild(item);
   });
 }
 
-// Hover d'une icône → surligne le titre correspondant dans la liste + aperçu vidéo
+// ─── Hover unifié (icône + liste) : surligne titre, surélève miniature, aperçu vidéo ───
+let activeHoverId = null;
+
+function setProjectHover(id) {
+  if (id === activeHoverId) return;
+  clearProjectHover();
+  activeHoverId = id;
+  document.querySelector(`.desktop-icon[data-window="${id}"]`)?.classList.add('elevated');
+  document.querySelector(`.project-title-item[data-window="${id}"]`)?.classList.add('highlighted');
+  showVideoPreview(id);
+}
+
+function clearProjectHover() {
+  if (activeHoverId) {
+    document.querySelector(`.desktop-icon[data-window="${activeHoverId}"]`)?.classList.remove('elevated');
+    document.querySelector(`.project-title-item[data-window="${activeHoverId}"]`)?.classList.remove('highlighted');
+  }
+  activeHoverId = null;
+  hideVideoPreview();
+}
+
+// Hover d'une icône
 document.querySelectorAll('.desktop-icon[data-window]').forEach((icon) => {
-  const id = icon.dataset.window;
-  icon.addEventListener('mouseenter', () => {
-    document.querySelector(`.project-title-item[data-window="${id}"]`)?.classList.add('highlighted');
-    showVideoPreview(id);
-  });
-  icon.addEventListener('mouseleave', () => {
-    document.querySelector(`.project-title-item[data-window="${id}"]`)?.classList.remove('highlighted');
-    hideVideoPreview();
-  });
+  icon.addEventListener('mouseenter', () => setProjectHover(icon.dataset.window));
+  icon.addEventListener('mouseleave', clearProjectHover);
 });
+
+// Hover de la liste : le titre le plus proche du curseur reste actif (pas de trou)
+const projectTitlesNav = document.getElementById('project-titles');
+if (projectTitlesNav) {
+  projectTitlesNav.addEventListener('mousemove', (e) => {
+    let nearest = null;
+    let nearestDist = Infinity;
+    document.querySelectorAll('.project-title-item').forEach((item) => {
+      const r = item.getBoundingClientRect();
+      const cy = (r.top + r.bottom) / 2;
+      const dist = Math.abs(e.clientY - cy);
+      if (dist < nearestDist) {
+        nearestDist = dist;
+        nearest = item.dataset.window;
+      }
+    });
+    if (nearest) setProjectHover(nearest);
+  });
+  projectTitlesNav.addEventListener('mouseleave', clearProjectHover);
+}
 
 // ─── Aperçu vidéo au survol (fond à droite) ───
 const videoPreview = document.createElement('div');
@@ -1705,8 +1759,7 @@ function showVideoPreview(id) {
   clearTimeout(previewHideTimer);
 
   const videoSrc = first.preview || first.src;
-  const posterSrc = first.poster
-    || (first.provider === 'youtube' ? `https://img.youtube.com/vi/${first.id}/maxresdefault.jpg` : '');
+  const posterSrc = first.poster || '';
 
   // Vidéo (auto-hébergée ou preview MP4) → lecture
   if (videoSrc) {
